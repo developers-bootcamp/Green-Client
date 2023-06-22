@@ -7,11 +7,11 @@ import SignUp from './components/signUp';
 function App() {
   return (
     <div className="App">
-      {/* <Routes>
-        <Route path='/' element={<LandingPage />} />
+      <Routes>
+        {/* <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/signUp' element={<SignUp />} />
-      </Routes> */}
+        <Route path='/signUp' element={<SignUp />} /> */}
+      </Routes>
     </div>
   );
 }
