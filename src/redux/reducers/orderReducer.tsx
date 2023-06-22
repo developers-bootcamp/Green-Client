@@ -11,7 +11,7 @@ const initialState = {
     shouldDisplayErrorMessage: false
 }
 
-const ordersReducer: Reducer<any, any> = (state, action) => {
+const ordersReducer: Reducer<any, any> = (state = initialState, action) => {
     switch (action.type) {
         case 'FETCH_ALL_ORDERS_REQUEST':
             return {} // to decide what to do in each action
