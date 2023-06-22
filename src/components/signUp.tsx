@@ -1,7 +1,7 @@
-const SignUp: React.FC = () => {
+const SignUp=()=> {
     return <>
         <p>sign up component here</p>
     </>
 }
 
-export default SignUp
+export default SignUp;
