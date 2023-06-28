@@ -1,0 +1,27 @@
+.sign-up-wrapper {
+    border: 3px solid;
+    border-radius: 15px;
+    padding: 50px;
+    text-align: center;
+    width: 80vw;
+    height: 80vw;
+    flex-flow: row;
+    align-items: center;
+    text-align: center;
+}
+
+.the-left {
+    margin-right: 300px;
+    height: 100%;
+    width: 75%;
+}
+
+.the-right {
+    width: 25%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    float: right;
+    margin-top: -1200px;
+    padding: 50px;
+    background-color: rgb(227, 224, 218);
+}

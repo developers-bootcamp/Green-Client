@@ -4,10 +4,10 @@ import { fetchAllOrders } from '../redux/actions/orderAction'
 
 const LandingPage: React.FC = () => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchAllOrders())
+        // dispatch(fetchAllOrders())
     }, [])
 
     return <>
