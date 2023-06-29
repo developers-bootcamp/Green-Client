@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core"
-import img from './images/gifts.png'
-import './signUp.css'
-import { User } from "./interfaces/user"
+import img from '../../images/gifts.png'
+import './SignUp.css'
+import { User } from "../../interfaces/user"
 const SignUp: React.FC = () => {
 
     const user: User = {
