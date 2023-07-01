@@ -1,43 +1,45 @@
-import { TextField } from "@material-ui/core"
 import img from '../../images/gifts.png'
-import './SignUp.css'
-import { User } from "../../interfaces/user"
+import Grid from '@mui/material/Grid';
+import { useStyles } from './SignUp.styles'
+import SignUpForm from './SignUpForm';
+import { Container, DialogContent, Link } from '@mui/material';
+import { useState } from 'react';
+
 const SignUp: React.FC = () => {
 
-    const user: User = {
-        fullName: "",
-        companyName: "",
-        password: "",
-        email: ""
-    };
+    const [open, setOpen] = useState(false);
 
-    const save = (e: any) => {
-        e.preventDefault()
-        console.log(user);
+    const classes = useStyles()
+
+    const handleOpenDiaolog = () => {
+        setOpen(true)
     }
 
-    return <div className="sign-up-wrapper">
-        <div className="the-left" >
-            <h1>Set up your account</h1>
-            <form onSubmit={save}>
-                <label htmlFor="fullname">Full name</label><br />
-                <TextField id="fullname" variant="outlined" onChange={(e) => { user.fullName = e.target.value }} /><br /><br />
-                <label htmlFor="companyname">Company name</label><br />
-                <TextField id="companyname" variant="outlined" onChange={(e) => { user.companyName = e.target.value }} /><br /><br />
-                <label htmlFor="password">Password</label><br />
-                <TextField id="password" variant="outlined" onChange={(e) => { user.password = e.target.value }} /><br /><br />
-                <label htmlFor="email">Email address</label><br />
-                <TextField id="email" variant="outlined" onChange={(e) => { user.email = e.target.value }} /><br /><br />
-                <input type="checkbox" name="agree" id="agree" />
-                <label htmlFor="agree"> I agree to the Terms of Service and Privacy Policy</label><br />
-                <input type="submit" value="Sign  Up" />
-            </form>
-        </div>
-        <div className="the-right">
-            <img src={img} alt="img" width="300px" height="350px"/>
-            <p>Fill in your details so you can login later</p>
-        </div>
-    </div>
+    const handleCloseDiaolog = () => {
+        setOpen(false)
+    }
+
+    return <>
+        {!open && <Link onClick={handleOpenDiaolog} className={classes.signInButton}>sign Up</Link >}
+        <dialog onClose={handleCloseDiaolog} open={open} className={classes.dialog}>
+            <DialogContent>
+                <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" className={classes.mainGrid}>
+                    <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.leftGrid} >
+                        <div>
+                            <h1>Set up your account</h1>
+                            <SignUpForm />
+                        </div>
+                    </Grid>
+                    <Grid container item zeroMinWidth wrap="nowrap" xs={4} md={4} className={classes.rightGrid}>
+                        <div>
+                            <img src={img} alt="img" className={classes.pic} />
+                            <h3>Fill in your details so you can login later</h3>
+                        </div>
+                    </Grid>
+                </Grid>
+            </DialogContent>
+        </dialog>
+    </>
 }
 
 export default SignUp
