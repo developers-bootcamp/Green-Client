@@ -20,13 +20,13 @@ const SignUp: React.FC = () => {
     }
 
     return <>
-        {!open && <Link onClick={handleOpenDiaolog} className={classes.signInButton}>sign Up</Link >}
+        {!open && <Link onClick={handleOpenDiaolog} className={classes.signUpButton}>sign Up</Link >}
         <dialog onClose={handleCloseDiaolog} open={open} className={classes.dialog}>
             <DialogContent>
                 <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" className={classes.mainGrid}>
                     <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.leftGrid} >
                         <div>
-                            <h1>Set up your account</h1>
+                            <h2>Set up your account</h2>
                             <SignUpForm />
                         </div>
                     </Grid>

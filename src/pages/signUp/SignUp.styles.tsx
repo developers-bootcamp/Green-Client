@@ -7,16 +7,17 @@ export const useStyles = makeStyles({
         borderRadius: '15px',
     },
     mainGrid: {
-        backgroundColor: 'rgb(255, 255, 255)',
-        padding: '0',
+        // textAlign: 'center'
     },
     leftGrid: {
-        // padding: '50px',
+        textAlign: 'start',
+        justifyItems: 'center',
         borderTopLeftRadius: '15px',
         borderBottomLeftRadius: '15px',
+        paddingRight:'50px',
     },
     rightGrid: {
-        // padding: '50px',
+        textAlign: 'center',
         borderTopRightRadius: '15px',
         borderBottomRightRadius: '15px',
         backgroundColor: 'rgb(216, 223, 225)',
@@ -26,11 +27,15 @@ export const useStyles = makeStyles({
         borderRadius: ' 15px',
         width: '80%',
     },
-    signInButton: {
+    signUpWrapper: {
+        textAlign: 'end'
+    },
+    signUpButton: {
         position: 'absolute',
         backgroundColor: 'EB9F6E !important',
         color: 'EB9F6E !important',
         top: '10px',
+        width: '40%',
         borderRadius: '15px',
     },
     pic: {
