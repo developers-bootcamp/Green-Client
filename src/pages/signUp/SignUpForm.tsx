@@ -1,19 +1,16 @@
-import React, { useState } from "react";
 import axios from 'axios';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Box, Container, CssBaseline, IconButton, Input, InputAdornment, InputLabel, OutlinedInput, Typography } from "@mui/material";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import swal from 'sweetalert';
 import * as yup from 'yup';
+import swal from 'sweetalert';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
-import { Formik, FormikProps, Form, Field, ErrorMessage } from 'formik';
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React, { useState } from "react";
 import { useStyles } from "./SignUp.styles";
 import { useNavigate } from "react-router-dom";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -25,7 +22,7 @@ const validationSchema = yup.object({
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
     companyName: yup.string().required('Name is required'),
-    termsAccepted: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
+    acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
 });
 
 const SignUpForm: React.FC = () => {
@@ -45,19 +42,17 @@ const SignUpForm: React.FC = () => {
         validationSchema,
         onSubmit: (values) => {
 
-            console.log(values);
-
             async function signUpRequest() {
                 try {
                     const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
                     console.log(values);
-                    swal("you dont have a error", "good", "success");
+                    swal("you sign up seccessfully", "good", "success");
                     navigate("/landingPage")
                     return (res.data);
                 } catch (error) {
                     console.log(values);
                     swal("you have a error", `${error}`, "error");
-                    navigate("/landingPage")
+                    navigate("/login")
                 }
             }
             signUpRequest();
@@ -69,10 +64,6 @@ const SignUpForm: React.FC = () => {
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
-    const save = (e: any) => {
-        e.preventDefault();
-    }
 
     return (
         <div>
@@ -145,7 +136,6 @@ const SignUpForm: React.FC = () => {
                     <Button type="submit" variant="contained" className={classes.signUpButton}>Sign Up</Button>
                 </div>
             </form>
-
         </div >
     );
 };

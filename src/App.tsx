@@ -26,7 +26,6 @@ function App() {
           <Route path='/landingPage' element={<LandingPage />} />
           <Route path='/signUp' element={<SignUp />} />
         </Routes>
-        <SignUp />
       </div>
     </Provider>
   );
