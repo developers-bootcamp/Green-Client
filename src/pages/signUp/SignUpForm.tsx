@@ -49,18 +49,18 @@ const SignUpForm: React.FC = () => {
 
             async function signUpRequest() {
                 try {
-                    const res = await axios.post(`http://localhost:8080/signUp`, values);
+                    const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
                     console.log(values);
                     swal("you dont have a error", "good", "success");
-                    navigate("/LandingPage")
+                    navigate("/landingPage")
                     return (res.data);
                 } catch (error) {
                     console.log(values);
                     swal("you have a error", `${error}`, "error");
-                    navigate("/LandingPage")
+                    navigate("/landingPage")
                 }
             }
-
+            signUpRequest();
         }
     });
 
