@@ -1,10 +1,5 @@
 import { Reducer } from 'react';
 
-export interface Order {
-    costumer: string,
-    product: string
-}
-
 const initialState = {
     orders: [],
     errorMessage: "",
