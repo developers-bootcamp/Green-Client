@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux';
 import { AnyAction } from 'redux';
 import { GET_ALL_ORDERS_URL } from '../../config/config';
-import ordersReducer, { Order } from "../reducers/orderReducer"
+import ordersReducer from "../reducers/orderReducer"
+import { Order } from '../../interfaces/order';
 
 
 //ation types
