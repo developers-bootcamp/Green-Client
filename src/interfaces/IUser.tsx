@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
     fullName: string,
     companyName: string,
     password: string,

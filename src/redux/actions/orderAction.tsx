@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { AnyAction } from 'redux';
 import { GET_ALL_ORDERS_URL } from '../../config/config';
 import ordersReducer from "../reducers/orderReducer"
-import { Order } from '../../interfaces/order';
+import { IOrder } from '../../interfaces/IOrder';
 
 
 //ation types
@@ -15,7 +15,7 @@ export const fetchAllOrdersRequest: any = () => ({
     type: FETCH_ALL_ORDERS_REQUEST,
 })
 
-export const fetchAllOrdersSuccess: any = (orders: Order[]) => ({
+export const fetchAllOrdersSuccess: any = (orders: IOrder[]) => ({
     type: FETCH_ALL_ORDERS_SUCCESS,
     payload: orders
 })
