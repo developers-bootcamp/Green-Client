@@ -11,6 +11,7 @@ import { useStyles } from "./SignUp.styles";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { PALLETE } from '../../config/config';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -21,7 +22,7 @@ const validationSchema = yup.object({
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
-    companyName: yup.string().required('Name is required'),
+    companyName: yup.string().required('Company Name is required'),
     acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
 });
 
@@ -41,18 +42,17 @@ const SignUpForm: React.FC = () => {
         },
         validationSchema,
         onSubmit: (values) => {
-
             async function signUpRequest() {
                 try {
                     const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
                     console.log(values);
                     swal("you sign up seccessfully", "good", "success");
-                    navigate("/landingPage")
+                    navigate("/login")
                     return (res.data);
                 } catch (error) {
                     console.log(values);
                     swal("you have a error", `${error}`, "error");
-                    navigate("/login")
+                    navigate("/landingPage")
                 }
             }
             signUpRequest();
@@ -133,9 +133,13 @@ const SignUpForm: React.FC = () => {
                 ) : null}
                 <br />
                 < div className={classes.signUpWrapper}>
-                    <Button type="submit" variant="contained" className={classes.signUpButton}>Sign Up</Button>
+                    <Button
+                        sx={{ backgroundColor: PALLETE.YELLOW }}
+                        type="submit" variant="contained" className={classes.signUpButton}>
+                        Sign Up
+                    </Button>
                 </div>
-            </form>
+            </form >
         </div >
     );
 };

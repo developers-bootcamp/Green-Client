@@ -33,7 +33,7 @@ export const useStyles = makeStyles({
     },
     signUpButton: {
         position: 'absolute',
-        backgroundColor: 'EB9F6E !important',
+        backgroundColor: PALLETE.YELLOW,
         color: 'EB9F6E !important',
         width: '40%',
         borderRadius: '15px',

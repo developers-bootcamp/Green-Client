@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
                             <SignUpForm />
                         </div>
                     </Grid>
-                    <Grid container item zeroMinWidth wrap="nowrap" xs={4} md={4} className={classes.rightGrid}>
+                    <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.rightGrid} >
                         <div>
                             <img src={img} alt="img" className={classes.pic} />
                             <h3>Fill in your details so you can login later</h3>
