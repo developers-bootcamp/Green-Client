@@ -2,7 +2,7 @@ import img from '../../images/gifts.png'
 import Grid from '@mui/material/Grid';
 import { useStyles } from './SignUp.styles'
 import SignUpForm from './SignUpForm';
-import { Container, DialogContent, Link } from '@mui/material';
+import { DialogContent, Link } from '@mui/material';
 import { useState } from 'react';
 
 const SignUp: React.FC = () => {
@@ -11,17 +11,17 @@ const SignUp: React.FC = () => {
 
     const classes = useStyles()
 
-    const handleOpenDiaolog = () => {
+    const handleOpenDialog = () => {
         setOpen(true)
     }
 
-    const handleCloseDiaolog = () => {
+    const handleCloseDialog = () => {
         setOpen(false)
     }
 
     return <>
-        {/* {!open && <Link onClick={handleOpenDiaolog} className={classes.signUpButton}>sign Up</Link >} */}
-        <dialog onClose={handleCloseDiaolog} open={open} className={classes.dialog}>
+        {/* {!open && <Link onClick={handleOpenDialog} className={classes.signUpButton}>sign Up</Link >} */}
+        <dialog onClose={handleCloseDialog} open={open} className={classes.dialog}>
             <DialogContent>
                 <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" className={classes.mainGrid}>
                     <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.leftGrid} >
