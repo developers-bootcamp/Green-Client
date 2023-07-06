@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const SignUp: React.FC = () => {
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const classes = useStyles()
 
@@ -20,7 +20,7 @@ const SignUp: React.FC = () => {
     }
 
     return <>
-        {!open && <Link onClick={handleOpenDiaolog} className={classes.signUpButton}>sign Up</Link >}
+        {/* {!open && <Link onClick={handleOpenDiaolog} className={classes.signUpButton}>sign Up</Link >} */}
         <dialog onClose={handleCloseDiaolog} open={open} className={classes.dialog}>
             <DialogContent>
                 <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" className={classes.mainGrid}>
