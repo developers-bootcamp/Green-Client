@@ -2,26 +2,26 @@ import img from '../../images/gifts.png'
 import Grid from '@mui/material/Grid';
 import { useStyles } from './SignUp.styles'
 import SignUpForm from './SignUpForm';
-import { Container, DialogContent, Link } from '@mui/material';
+import { DialogContent, Link } from '@mui/material';
 import { useState } from 'react';
 
 const SignUp: React.FC = () => {
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const classes = useStyles()
 
-    const handleOpenDiaolog = () => {
+    const handleOpenDialog = () => {
         setOpen(true)
     }
 
-    const handleCloseDiaolog = () => {
+    const handleCloseDialog = () => {
         setOpen(false)
     }
 
     return <>
-        {!open && <Link onClick={handleOpenDiaolog} className={classes.signUpButton}>sign Up</Link >}
-        <dialog onClose={handleCloseDiaolog} open={open} className={classes.dialog}>
+        {/* {!open && <Link onClick={handleOpenDialog} className={classes.signUpButton}>sign Up</Link >} */}
+        <dialog onClose={handleCloseDialog} open={open} className={classes.dialog}>
             <DialogContent>
                 <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" className={classes.mainGrid}>
                     <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.leftGrid} >
@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
                             <SignUpForm />
                         </div>
                     </Grid>
-                    <Grid container item zeroMinWidth wrap="nowrap" xs={4} md={4} className={classes.rightGrid}>
+                    <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} className={classes.rightGrid} >
                         <div>
                             <img src={img} alt="img" className={classes.pic} />
                             <h3>Fill in your details so you can login later</h3>

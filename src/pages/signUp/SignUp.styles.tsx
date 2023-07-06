@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { PALLETE } from '../../config/config';
 
 export const useStyles = makeStyles({
     dialog: {
@@ -14,7 +15,7 @@ export const useStyles = makeStyles({
         justifyItems: 'center',
         borderTopLeftRadius: '15px',
         borderBottomLeftRadius: '15px',
-        paddingRight:'50px',
+        paddingRight: '50px',
     },
     rightGrid: {
         textAlign: 'center',
@@ -32,10 +33,8 @@ export const useStyles = makeStyles({
     },
     signUpButton: {
         position: 'absolute',
-        backgroundColor: 'EB9F6E !important',
+        backgroundColor: PALLETE.YELLOW,
         color: 'EB9F6E !important',
-        bottom: '140px',
-        left:'50%',
         width: '40%',
         borderRadius: '15px',
     },
