@@ -9,7 +9,7 @@ import { Reducer, createStore } from 'redux';
 import Loader from './components/globalLoader/Loader';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const startLoading = () => {
     setIsLoading(false);
@@ -32,6 +32,7 @@ function App() {
     <Provider store={store}>
       <div className="App">
         {isLoading && <Loader />}
+        {"kkkkkkkkkkkk"}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
