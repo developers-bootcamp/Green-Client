@@ -32,7 +32,6 @@ function App() {
     <Provider store={store}>
       <div className="App">
         {isLoading && <Loader />}
-        {"kkkkkkkkkkkk"}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
