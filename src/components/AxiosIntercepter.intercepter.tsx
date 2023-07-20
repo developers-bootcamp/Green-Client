@@ -4,7 +4,7 @@ import Loader from './Loader';
 
     
 
-export const axiosInterceptor =(store:any)=>{
+export const axiosInterceptor =(store : any)=>{
     const [loading, setLoading] = useState(false);
     const axiosInstance: AxiosInstance = axios.create();
 
