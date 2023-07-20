@@ -8,6 +8,7 @@ import CatalogManager from './tabComponnent/CatalogManager';
 import UsersManagement from './tabComponnent/UsersManagement';
 import Dashboard from './tabComponnent/Dashboard';
 import { useStyles } from './TabsComponent.styles';
+import { PALLETE } from '../../config/config';
 interface TabPanelProps {
   children?: React.ReactNode;
 }
