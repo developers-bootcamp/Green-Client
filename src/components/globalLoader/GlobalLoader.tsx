@@ -6,6 +6,7 @@ const GlobalLoader: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const axiosInstance: AxiosInstance = axios.create();
 
+  //
   useEffect(() => {
     // Add request interceptor
     const requestInterceptor = axiosInstance.interceptors.request.use(
