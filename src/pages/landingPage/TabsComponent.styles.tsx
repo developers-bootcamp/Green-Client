@@ -6,46 +6,25 @@ export const useStyles = makeStyles({
         fontSize:"125%",
         color: "black"
     }
-//     dialog: {
-//         marginTop: '50px',
-//         border: '3px solid',
-//         borderRadius: '15px',
-//     },
-//     mainGrid: {
-//         // textAlign: 'center'
-//     },
-//     leftGrid: {
-//         textAlign: 'start',
-//         justifyItems: 'center',
-//         borderTopLeftRadius: '15px',
-//         borderBottomLeftRadius: '15px',
-//         paddingRight:'50px',
-//     },
-//     rightGrid: {
-//         textAlign: 'center',
-//         borderTopRightRadius: '15px',
-//         borderBottomRightRadius: '15px',
-//         backgroundColor: 'rgb(216, 223, 225)',
-//     },
-//     text: {
-//         margin: 'normal',
-//         borderRadius: ' 15px',
-//         width: '80%',
-//     },
-//     signUpWrapper: {
-//         textAlign: 'end'
-//     },
-//     signUpButton: {
-//         position: 'absolute',
-//         backgroundColor: 'EB9F6E !important',
-//         color: 'EB9F6E !important',
-//         top: '10px',
-//         width: '40%',
-//         borderRadius: '15px',
-//     },
-//     pic: {
-//         height: '60%',
-//         width: '90%',
-//         marginTop: '30%'
-//     },
  })
+
+//  import { styled } from '@mui/system';
+// import { PALLETE } from '../../config/config';
+
+// export const MyTxtField = styled('Tab')({
+//     width: '90% !important'
+// })
+
+// export const MyMsdError = styled('div')({
+//     color: `${PALLETE.RED} !important`,
+//     fontSize: "10px"
+// })
+
+// export const MyArrowIcon = styled('div')({
+//     color: 'red !important',
+// })
+
+// export const MyFieldContainer = styled('div')({
+//     display: 'flex',
+//     alignItems: 'center',
+// })

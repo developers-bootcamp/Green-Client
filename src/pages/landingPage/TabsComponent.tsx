@@ -3,7 +3,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {  Pending } from '@mui/icons-material';
 import PendingOrders from './tabComponnent/PendingOrders';
 import CatalogManager from './tabComponnent/CatalogManager';
 import UsersManagement from './tabComponnent/UsersManagement';
@@ -11,18 +10,11 @@ import Dashboard from './tabComponnent/Dashboard';
 import { useStyles } from './TabsComponent.styles';
 interface TabPanelProps {
   children?: React.ReactNode;
-  index: number;
-  value: number;
 }
 
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
+function TabPanel({children}: TabPanelProps) {
   return (
-    <div
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}>
+    <div>
         <Box sx={{ p: 8 }}>
           <Typography>{children}</Typography>
         </Box>
@@ -51,14 +43,14 @@ const TabsComponent:React.FC=()=> {
       <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
         <Tabs variant="fullWidth"  value={numOfOpenTab} onChange={handleTabChange}>
           <Tab style={{textTransform: "none",fontSize:"125%",color: "black"}}label="Pending Orders" {...a11yProps(0)} />
-          <Tab style={{textTransform: "none",fontSize:"125%",color: "black"}}label="Dashboard" {...a11yProps(1)} />
+          <Tab style={{textTransform: "none",fontSize:"125%",color: "black"}}label="Dashboard" {...a11yProps(1)}  />
           <Tab style={{textTransform: "none",fontSize:"125%",color: "black"}}label="Catalog Manager" {...a11yProps(2)} />
           <Tab style={{textTransform: "none",fontSize:"125%",color: "black"}}label="Users' Management" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={numOfOpenTab} index={0}>
+      <TabPanel>
         <SelectedComponent name={SelectedComponent.displayName} type={SelectedComponent.name}/>
-      </CustomTabPanel>
+      </TabPanel>
       </Box>
       </>
   );
