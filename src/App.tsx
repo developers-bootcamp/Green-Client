@@ -5,6 +5,8 @@ import LandingPage from './pages/landingPage/LandingPage';
 import Login from './pages/login/Login';
 import { Provider } from 'react-redux';
 import { Reducer, createStore } from 'redux';
+import CustomPaginationActionsTable from './components/GlobalTable';
+import GlobalTableTest from './components/GlobaleTableTest';
 
 function App() {
 
@@ -25,6 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/landingPage' element={<LandingPage />} />
           <Route path='/signUp' element={<SignUp />} />
+          <Route path='/globalTableTest' element={<GlobalTableTest/>} />
         </Routes>
       </div>
     </Provider>

@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from 'react-router-dom';
 export default function LoginStyles() {
 
     const useStyles = makeStyles((theme: Theme) =>
@@ -17,9 +17,11 @@ export default function LoginStyles() {
     const classes = useStyles();
     const navigate = useNavigate();
 
-    return <>
+    return (
+    <>
         <Button variant="contained" color="primary" onClick={() => { navigate("/signUp") }} disableElevation>
             signUp
         </Button>
     </>
+    )
 }

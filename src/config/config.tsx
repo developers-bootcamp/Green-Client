@@ -2,9 +2,11 @@ const BASE_URL= process.env.DASHBOARD_API_BASE_URL;
 
 const GET_ALL_ORDERS_URL = `${BASE_URL}/orders`;
 
-const LOG_IN = `${BASE_URL}/login/logIn`
+const LOG_IN = `${BASE_URL}/login/logIn`;
+const GET_ALL_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`;
 
-export { GET_ALL_ORDERS_URL, LOG_IN }
+
+export { GET_ALL_ORDERS_URL, LOG_IN,GET_ALL_PRODUCT_CATEGORY }
 
 export const PALLETE = {
     BLUE: '#6794CF',
