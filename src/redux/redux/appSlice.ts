@@ -15,11 +15,11 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
-     if(action.payload)
+      if(action.payload)
         state.requestCounter++;
-     else
+      else
         state.requestCounter--;
-     state.isLoading = state.requestCounter>0;
+      state.isLoading = state.requestCounter>0;
     },
   },
 });
