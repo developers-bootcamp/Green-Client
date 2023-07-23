@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { Reducer, createStore } from 'redux';
 //import Loader from './components/globalLoader/Loader';
 import TabsComponent from './pages/landingPage/TabsComponent';
-import LandingPage from './pages/landingPage/LandingPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
