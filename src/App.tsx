@@ -9,15 +9,7 @@ import { Reducer, createStore } from 'redux';
 import Loader from './components/globalLoader/Loader';
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(false);
 
-  // const startLoading = () => {
-  //   setIsLoading(true);
-  // };
-
-  // const stopLoading = () => {
-  //   setIsLoading(false);
-  // };
 
   const rootReducer: Reducer<any, any> = (state = {}, action) => {
     switch (action.type) {
