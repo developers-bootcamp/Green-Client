@@ -3,7 +3,7 @@ import {IOrder} from "../interfaces/IOrder"
 import { BASE_URL } from "../config/config";
 
 export const addNewOrder=async(order:IOrder)=>{
-  const  { REACT_APP_BASE_URL } = process.env
+
     
     const token = localStorage.getItem("token");
     const req = {

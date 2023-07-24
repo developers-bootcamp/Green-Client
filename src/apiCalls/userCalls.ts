@@ -6,6 +6,6 @@ export const getCustomersAutocomplete=async (prefix:string) :Promise<{ [key: str
 
 
     const config = { headers: { 'Authorization':localStorage.getItem("token") } };
-const x= await axios.get(`${BASE_URL}/user/getAllByPrefix/${prefix}` ,config);
+const x= await axios.get(`${BASE_URL}/user/${prefix}` ,config);
 return  (await x).data;
 }
