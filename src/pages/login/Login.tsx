@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       navigate("/")
     } catch (err: any) {
       console.log(err);
-      if(err.response?.status==401 || err.response?.status==404){
+      if(err.response?.status==404){
       navigate("/signup")
       swal("please sign-Up before you login");
     }
