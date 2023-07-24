@@ -21,7 +21,7 @@ const LandingPage: React.FC = () => {
     return <>
       <div>
 <Button variant="outlined" onClick={handleShow}>
-  Open alert dialog
+  New Order
 </Button>
 <div className="dialog">
 <Dialog
@@ -31,14 +31,13 @@ const LandingPage: React.FC = () => {
   fullWidth
   maxWidth="lg"
   
-  // aria-labelledby="alert-dialog-title"
-  // aria-describedby="alert-dialog-description"
+
  
 >
 
   <DialogContent >
-    <div className="newOrder">
- <NewOrder ></NewOrder></div>
+    <div  style={{ borderRadius: '50%' }}>
+ <NewOrder  ></NewOrder></div>
   </DialogContent>
 </Dialog></div>
 </div>

@@ -21,8 +21,8 @@ import { getProductsAutocomplete } from "../../apiCalls/productCalls";
 import { IUser } from "../../interfaces/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import { Button } from '@material-ui/core';
-import baloon from '../../images/baloon.png';
-import { MyButton } from './NewOrder.style';
+import gifts from '../../images/gifts.png';
+import { MyButton,AddButton,BaloonImg } from './NewOrder.style';
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
@@ -161,7 +161,7 @@ const NewOrder: React.FC = (props) => {
                                     {/* <label htmlFor="discount" className="discountLbl" > Discount</label> */}
                                     <Grid className="product" container><Grid   item xs={12} >
                                             <div >
-                                                <Grid item xs={8}>
+                                                <Grid item xs={6}>
                                                 <MyAutocomplete getFunction={getProductsAutocomplete}
                                                     setItem={(chosen: IProduct) => { formik.values.product = chosen }} displayField={1}></MyAutocomplete></Grid>
                                               <Grid item xs={2}>  <TextField variant="outlined" onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)} type="number" /> </Grid> 
@@ -177,8 +177,8 @@ const NewOrder: React.FC = (props) => {
 
                                     </Grid>
                                     <Grid item xs={12}>
-                                    <Button onClick={() => add()}
-                                        variant="contained">Add</Button></Grid>
+                                    <AddButton onClick={() => add()}
+                                        variant="contained">Add</AddButton></Grid>
                                 </div>
                             </Grid>
                             <Grid item xs={5}>
@@ -234,9 +234,10 @@ const NewOrder: React.FC = (props) => {
 
                 </Grid >
                 <Grid item xs={4}>
-                    <div className="img">
-                        <img src={baloon} alt="baloon" />
-                    </div>
+                    <BaloonImg >
+                        <img src={gifts} alt="baloon" />
+                    </BaloonImg>
+
                 </Grid>
             </Grid >
         </div >

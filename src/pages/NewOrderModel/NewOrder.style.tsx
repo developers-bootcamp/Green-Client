@@ -7,8 +7,23 @@ import { hover } from '@testing-library/user-event/dist/hover';
 const MyButton = styled(Button)({
   
   backgroundColor: PALLETE.ORANGE,
-  color:PALLETE.ORANGE
+  color:PALLETE.GRAY
 
   
 });
-export{ MyButton}
+const AddButton = styled(Button)({
+  
+ width:'100%',
+ backgroundColor:PALLETE.BLUE
+
+  
+});
+const BaloonImg = styled('div')({
+  
+height:'100%',
+position:'absolute',
+  backgroundColor:PALLETE.GRAY
+ 
+   
+ });
+export{ MyButton,AddButton, BaloonImg}
