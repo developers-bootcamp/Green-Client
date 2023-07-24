@@ -1,5 +1,6 @@
 import axios from "axios";
 import {IOrder} from "../interfaces/IOrder"
+import { BASE_URL } from "../config/config";
 
 export const addNewOrder=async(order:IOrder)=>{
   const  { REACT_APP_BASE_URL } = process.env
@@ -10,7 +11,7 @@ export const addNewOrder=async(order:IOrder)=>{
                 headers: { 'Content-Type': 'application/json', 'token': token != null ? token : "" },
                 body: JSON.stringify(order)
             }
-            const d = await fetch(`http://localhost:8081/orders`, req);
+            const d = await fetch(`${BASE_URL}/orders`, req);
 }
 export const calculateOrder=async(order:IOrder)=>{
     const req = {
@@ -18,9 +19,9 @@ export const calculateOrder=async(order:IOrder)=>{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)
     }
-    const d = await fetch(`http://localhost:8081/orders/calculate`, req);
-    const a = await d.json()
-    return a;
+    const ans = await fetch(`${BASE_URL}/orders/calculate`, req);
+    return await ans.json()
+  
 }
 
 

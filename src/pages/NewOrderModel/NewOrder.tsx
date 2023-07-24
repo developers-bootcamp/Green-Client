@@ -21,7 +21,8 @@ import { getProductsAutocomplete } from "../../apiCalls/productCalls";
 import { IUser } from "../../interfaces/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import { Button } from '@material-ui/core';
-import baloon from '../../images/baloon.png'
+import baloon from '../../images/baloon.png';
+import { MyButton } from './NewOrder.style';
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
@@ -55,6 +56,7 @@ const NewOrder: React.FC = (props) => {
             setCalculatedOrder(a);
             if (calculatedOrder["-1"] as { [key: number]: number }) {
                 let sum = Object.keys(calculatedOrder["-1"])[0];
+                debugger
                 setSumPrice(parseInt(sum));
             }
         }
@@ -85,7 +87,7 @@ const NewOrder: React.FC = (props) => {
         }
     });
     const itemToString = (e: IOrderItem, i: number): string => {
-        debugger
+       
         let s = "";
         if (e.productId.id in calculatedOrder)
             s += e.quantity + " " + e.productId.name + "price: " + Object.keys(calculatedOrder[e.productId.id])[0]//JSON.stringify(calculatedOrder[e.productId.id][])
@@ -96,6 +98,20 @@ const NewOrder: React.FC = (props) => {
     }
     const add = async () => {
         debugger
+        const tmp=orderItems.find(e=>e.productId.id==formik.values.product.id)
+        if(tmp!=null)
+        {
+            if(window.confirm("you already ordered this product\n would ypu like to order more?"))
+                {
+                    orderItems.forEach(e=>{
+                        if(e.productId.id==formik.values.product.id)
+                            e.quantity+=formik.values.quantity
+                    })
+                    theOrder.orderItemsList=orderItems
+                    await calc()
+                }
+    }
+        else{
         const prod: IOrderItem = {
             
             productId: formik.values.product,
@@ -110,7 +126,7 @@ const NewOrder: React.FC = (props) => {
         theOrder.currency = formik.values.currency
         let g = [...orderItems, prod]
         setOrderItems(g)
-        await calc();
+        await calc();}
     }
     const deleteItem = async (i: number) => {
         debugger
@@ -118,8 +134,7 @@ const NewOrder: React.FC = (props) => {
         orderItems.forEach((e, index) => {
             if (index !== i)
                 tmp.push(e);
-            else
-                setSumPrice(sumPrice - e.amount)
+   
         })
         setOrderItems(tmp)
         theOrder.orderItemsList = tmp
@@ -161,8 +176,9 @@ const NewOrder: React.FC = (props) => {
                                         </Grid>
 
                                     </Grid>
+                                    <Grid item xs={12}>
                                     <Button onClick={() => add()}
-                                        variant="contained">Add</Button>
+                                        variant="contained">Add</Button></Grid>
                                 </div>
                             </Grid>
                             <Grid item xs={5}>
@@ -211,7 +227,7 @@ const NewOrder: React.FC = (props) => {
                                         onBlur={formik.handleBlur}
                                     /></Grid>
                                 <Grid item xs={2}>
-                                    <Button variant="contained" type="submit">buy now</Button></Grid></Grid>
+                                    <MyButton  type="submit">buy now</MyButton></Grid></Grid>
                         </form>
 
                     </Grid>
