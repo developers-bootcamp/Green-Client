@@ -1,5 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import { PALLETE } from '../config/config';
+
+
 const useStylesForTable = makeStyles((color) => ({
     sideColor: {
         border: " 5px",

@@ -14,6 +14,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { PALLETE } from '../config/config';
 
 export default function GlobalTable(props:any) {
+  console.log(props.rows);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
   const rows=props.rows;
@@ -50,8 +52,9 @@ export default function GlobalTable(props:any) {
             ).map((row:any) => (
               <>
               <TableRow className={classes.sideColor}key={row.id}  >
+                
                 <TableCell className={classes.try2}component="th" scope="row">
-                  {row.product}
+                  {row.name}
                 </TableCell>
                 <TableCell className={classes.try2}style={{ width: 1000 }}>
                   {row.description}

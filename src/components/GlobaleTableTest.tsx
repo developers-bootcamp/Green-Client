@@ -24,7 +24,7 @@ const GlobalTableTest = () => {
     const[allCategory,setAllCategory]=useState();
     const getAllCategoryAsync=async()=>{
         await getAllCategory().then(res=>setAllCategory(res.data));
-        console.log();
+        console.log(allCategory);
         
       }
       useEffect(()=>{
@@ -32,7 +32,7 @@ const GlobalTableTest = () => {
       },[])
   return (
     <>
-    <GlobalTable rows={rows}head={head}></GlobalTable>
+    {allCategory!=null&&<GlobalTable rows={allCategory}rowsDescription={["id","name","description"]}head={head}></GlobalTable>}
     </>
   );
 };
