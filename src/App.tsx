@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './pages/signUp/SignUp';
-import LandingPage from './pages/landingPage/LandingPage';
 import Login from './pages/login/Login';
 import { Provider } from 'react-redux';
 import { Reducer, createStore } from 'redux';
-import Loader from './components/globalLoader/Loader';
+//import Loader from './components/globalLoader/Loader';
+import TabsComponent from './pages/landingPage/TabsComponent';
+import LandingPage from './pages/landingPage/LandingPage';
 
 function App() {
 
@@ -25,9 +26,10 @@ function App() {
       <div className="App">
         {<Loader />}
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<TabsComponent/>} />
+          <Route path="/landingPage" element={<LandingPage/>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/landingPage" element={<LandingPage />} />
+          <Route path="/tabsComponent" element={<TabsComponent/>} />
           <Route path="/signUp" element={<SignUp />} />
         </Routes>
       </div>
