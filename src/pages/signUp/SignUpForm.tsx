@@ -7,14 +7,18 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
-import { useStyles } from "./SignUp.styles";
+import { SignUpButton, Text, SignUpWrapper } from "./SignUp.styles";
 import { useNavigate } from "react-router-dom";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Autocomplete, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { PALLETE } from '../../config/config';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../redux/Store';
+import ICurrencyState from '../../interfaces/ICurrencyState';
 
 const validationSchema = yup.object({
-    fullName: yup.string().required('Name is required'),
+    fullName: yup.string().required('Name is required').max(20, 'Name cannot be longer than 20 letters'),
+    companyName: yup.string().required('Company Name is required').max(20, 'Company Name cannot be longer than 20 letters'),
     email: yup.string().email('Invalid email address').required('Email is required'),
     password: yup.string()
         .required('Password is required')
@@ -22,13 +26,17 @@ const validationSchema = yup.object({
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
             'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
-    companyName: yup.string().required('Company Name is required'),
     acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
 });
 
 const SignUpForm: React.FC = () => {
 
-    const classes = useStyles()
+    const dispatch = useAppDispatch();
+
+
+    const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
+
+    const [currency, setCurrency] = React.useState("DOLLAR");
 
     const navigate = useNavigate()
 
@@ -47,12 +55,12 @@ const SignUpForm: React.FC = () => {
                     const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
                     console.log(values);
                     swal("you sign up seccessfully", "good", "success");
-                    navigate("/login")
+                    navigate("/landingPage")
                     return (res.data);
                 } catch (error) {
                     console.log(values);
                     swal("you have a error", `${error}`, "error");
-                    navigate("/landingPage")
+                    navigate("/login")
                 }
             }
             signUpRequest();
@@ -69,34 +77,48 @@ const SignUpForm: React.FC = () => {
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="fullName">Full Name</label><br />
-                <TextField className={classes.text} margin='normal' id="fullName" name="fullName"
+                <Text><TextField margin='normal' id="fullName" name="fullName"
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.fullName && Boolean(formik.errors.fullName)}
                     helperText={formik.touched.fullName && formik.errors.fullName}
-                />
+                /></Text>
 
                 <br /><label htmlFor="companyName">Company Name</label><br />
-                <TextField className={classes.text} margin='normal' id="companyName" name="companyName"
+                <Text><TextField margin='normal' id="companyName" name="companyName"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.companyName && Boolean(formik.errors.companyName)}
                     helperText={formik.touched.companyName && formik.errors.companyName}
+                /></Text>
+
+                <Autocomplete
+                    fullWidth
+                    value={currency}
+                    defaultValue={currency}
+                    options={listOfCurrencies.map((c: string) => c)}
+                    inputValue={currency}
+                    onInputChange={(event, newInputValue) => {
+                        setCurrency(newInputValue);
+                    }}
+                    renderInput={(params) => (
+                        <TextField {...params} />
+                    )}
                 />
 
                 <br /><label htmlFor="email">Email Address</label><br />
-                <TextField className={classes.text} margin='normal' id="email" name="email"
+                <Text><TextField margin='normal' id="email" name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
-                />
+                /></Text>
 
                 <br /><label htmlFor="password">Password</label><br />
-                <TextField className={classes.text} id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                <Text><TextField id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -111,7 +133,7 @@ const SignUpForm: React.FC = () => {
                             </InputAdornment>
                         ),
                     }}
-                />
+                /></Text>
 
                 <FormControlLabel
                     control={
@@ -132,13 +154,14 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
-                < div className={classes.signUpWrapper}>
+
+                <SignUpWrapper>
                     <Button
-                        sx={{ backgroundColor: PALLETE.YELLOW }}
-                        type="submit" variant="contained" className={classes.signUpButton}>
+                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, }}
+                        type="submit" variant="contained" >
                         Sign Up
                     </Button>
-                </div>
+                </SignUpWrapper>
             </form >
         </div >
     );

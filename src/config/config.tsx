@@ -1,10 +1,12 @@
-const BASE_URL= process.env.DASHBOARD_API_BASE_URL;
+const BASE_URL = process.env.DASHBOARD_API_BASE_URL;
 
 const GET_ALL_ORDERS_URL = `${BASE_URL}/orders`;
 
-const LOG_IN = `${BASE_URL}/login/logIn`
+const LOG_IN_URL = `${BASE_URL}/login/logIn`
 
-export { GET_ALL_ORDERS_URL, LOG_IN }
+const SIGN_UP_URL = `${BASE_URL}/user/signUp`
+
+export { GET_ALL_ORDERS_URL, LOG_IN_URL, SIGN_UP_URL }
 
 export const PALLETE = {
     BLUE: '#6794CF',
