@@ -10,15 +10,7 @@ import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
 
-  const startLoading = () => {
-    setIsLoading(false);
-  };
-
-  const stopLoading = () => {
-    setIsLoading(false);
-  };
 
   const rootReducer: Reducer<any, any> = (state = {}, action) => {
     switch (action.type) {
@@ -32,7 +24,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        {/* {isLoading && <Loader />} */}
+        {<Loader />}
         <Routes>
           <Route path="/" element={<TabsComponent/>} />
           <Route path="/landingPage" element={<LandingPage/>} />

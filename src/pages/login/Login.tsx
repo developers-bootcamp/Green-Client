@@ -8,6 +8,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { PALLETE } from '../../config/config';
+import swal from 'sweetalert';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,17 +26,21 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       await login();
+      navigate("/")
     } catch (err: any) {
-      setErr(err.response.data?.message);
+      console.log(err);
+      if(err.response?.status==404){
+      navigate("/signup")
+      swal("please sign-Up before you login");
     }
-  }
+      else
+      swal("you have a error", `${err}`, "error");}
+    }
+  
 
   const login = async () => {
-    const res = await axios.get(`http://localhost:8081/user/login/${email}/${password}`, {
-      withCredentials: true,
-    });
+    const res = await axios.get(`http://localhost:8081/user/${email}/${password}`);
     localStorage.setItem("token", res.data.accesToken)
-    navigate("/landingPage")
   }
 
   return (
