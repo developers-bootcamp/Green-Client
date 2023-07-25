@@ -20,16 +20,16 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
     }
     const sort = () => {
-        debugger
+
         var a = [...data];
         if (sortBy == 0)
            { a.sort((a, b) => { return a.customerId.fullName > b.customerId.fullName ? 1 : 0 })
-        console.log(a)}
+        }
         else
           {  a.sort((a, b) => { return Object.values(a)[sortBy] - Object.values(b)[sortBy] })
-        console.log(a)}
+        }
         setData(a);
-        console.log(data)
+      
     }
     useEffect(() => {
         let c: IUser = {

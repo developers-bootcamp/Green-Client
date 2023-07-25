@@ -8,7 +8,7 @@ axios.interceptors.request.use(
         if (config.url.indexOf(LOG_IN) !== 0 && token) {
             config.headers["Authorization"] = token;
         }
-        console.log(config);
+     
         return config;
     },
     (error: any) => {

@@ -34,7 +34,7 @@ function MyAutocomplete(props: prp) {
         if (input.length >= 1) {
             let DataFromServer: { [key: string]: any } = {} as { [key: string]: any };
             DataFromServer = await props.getFunction(input);
-            console.log(DataFromServer)
+      
             setData2(DataFromServer);
             let x = [{ id: "z1", name: "try" }];
             Object.entries(DataFromServer).forEach(e => { const p = { id: e[0], name: e[1] }; x.push(p) })
@@ -43,7 +43,7 @@ function MyAutocomplete(props: prp) {
     }
 
     const chosenValue = (chosen: { [key: string]: any } | null) => {
-        debugger
+      
         if (chosen != null)
             props.setItem(chosen)
 

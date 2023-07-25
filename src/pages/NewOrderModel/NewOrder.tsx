@@ -50,13 +50,13 @@ const NewOrder: React.FC = (props) => {
     }
     const calc = async () => {
         try {
-            debugger
+          
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
             setCalculatedOrder(a);
             if (calculatedOrder["-1"] as { [key: number]: number }) {
                 let sum = Object.keys(calculatedOrder["-1"])[0];
-                debugger
+              
                 setSumPrice(parseInt(sum));
             }
         }
@@ -97,7 +97,7 @@ const NewOrder: React.FC = (props) => {
         return s;
     }
     const add = async () => {
-        debugger
+
         const tmp=orderItems.find(e=>e.productId.id==formik.values.product.id)
         if(tmp!=null)
         {
@@ -129,7 +129,7 @@ const NewOrder: React.FC = (props) => {
         await calc();}
     }
     const deleteItem = async (i: number) => {
-        debugger
+      
         let tmp: IOrderItem[] = [] as IOrderItem[];
         orderItems.forEach((e, index) => {
             if (index !== i)

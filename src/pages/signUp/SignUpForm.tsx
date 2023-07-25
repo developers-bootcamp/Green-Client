@@ -45,12 +45,12 @@ const SignUpForm: React.FC = () => {
             async function signUpRequest() {
                 try {
                     const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
-                    console.log(values);
+                   
                     swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
                     return (res.data);
                 } catch (error) {
-                    console.log(values);
+                   
                     swal("you have a error", `${error}`, "error");
                     navigate("/landingPage")
                 }
