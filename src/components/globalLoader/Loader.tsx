@@ -11,6 +11,7 @@ const Loader: React.FC = () => {
     return null;
   }
 
+
   return <div>
          <Backdrop
            sx={{ color: '#00000080;', zIndex: (theme) => theme.zIndex.drawer + 1 }}
