@@ -1,14 +1,13 @@
 import axios from 'axios';
-import { LOG_IN } from "../config/config"
+import { LOG_IN_URL } from "../config/config"
 
 axios.interceptors.request.use(
     (config: any) => {
-
         let token = localStorage.getItem("token");
-        if (config.url.indexOf(LOG_IN) !== 0 && token) {
+        if (config.url.indexOf(LOG_IN_URL) !== 0 && token) {
             config.headers["Authorization"] = token;
         }
-     
+        console.log(config);
         return config;
     },
     (error: any) => {
