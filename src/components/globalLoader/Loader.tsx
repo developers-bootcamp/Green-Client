@@ -5,7 +5,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Loader: React.FC = () => {
-  const isLoading = useSelector((state: RootState) => state.app?.isLoading || true);
+  const isLoading = useSelector((state: RootState) => state.app?.isLoading || false);
 
   const colors = ['#ff0000', '#6794CF', '#FAE282', '#EE696A', '#7ED787', '#EB9F6E',  '#0000ff'];
   
