@@ -7,7 +7,7 @@ import PendingOrders from './tabComponnent/PendingOrders';
 import CatalogManager from './tabComponnent/CatalogManager';
 import UsersManagement from './tabComponnent/UsersManagement';
 import Dashboard from './tabComponnent/Dashboard';
-import { useStyles } from './TabsComponent.styles';
+//import { useStyles } from './TabsComponent.styles';
 interface TabPanelProps {
   children?: React.ReactNode;
 }
@@ -32,7 +32,7 @@ function a11yProps(index: number) {
 const TabsComponent:React.FC=()=> {
   const [numOfOpenTab, setnumOfOpenTab] = React.useState(0);
   const ComponentArray=[PendingOrders,Dashboard,CatalogManager,UsersManagement];
-  const classes = useStyles()
+  //const classes = useStyles()
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setnumOfOpenTab(newValue);
   };

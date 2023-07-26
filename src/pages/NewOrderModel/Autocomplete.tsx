@@ -37,7 +37,7 @@ export default function NewOrderModal() {
       setCustomerSearchTerm(value);
       if (value.length >= 2) {
         setTimeout(() => {
-          console.log('Searching for customers:', value);
+   
         }, 1000);
       }
     }
@@ -52,7 +52,7 @@ export default function NewOrderModal() {
       setProductSearchTerm(value);
       if (value.length >= 2) {
         setTimeout(() => {
-          console.log('Searching for products:', value);
+       
         }, 1000);
       }
     }
@@ -67,7 +67,7 @@ export default function NewOrderModal() {
         getOptionLabel={(customer) => customer.name}
         value={null} 
         onChange={(event, newValue) => {
-          console.log('Selected customer:', newValue);
+         
         }}
         onInputChange={handleCustomerInputChange}      
         sx={{width:'15vw'}}
@@ -83,7 +83,7 @@ export default function NewOrderModal() {
         getOptionLabel={(product) => product.name}
         value={null} 
         onChange={(event, newValue) => {
-          console.log('Selected product:', newValue);
+       
         }}
         onInputChange={handleProductInputChange}
         sx={{width:'15vw'}}

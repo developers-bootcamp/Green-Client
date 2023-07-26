@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { PALLETE } from '../../config/config';
+import { LOG_IN, PALLETE } from '../../config/config';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,11 +31,13 @@ const Login: React.FC = () => {
   }
 
   const login = async () => {
-    const res = await axios.get(`http://localhost:8081/user/login/${email}/${password}`, {
-      withCredentials: true,
-    });
-    localStorage.setItem("token", res.data.accesToken)
-    navigate("/landingPage")
+    const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
+    //   withCredentials: false,
+    console.log(res.data);
+    
+    // }
+    localStorage.setItem("token", res.data)
+    navigate("/")
   }
 
   return (
