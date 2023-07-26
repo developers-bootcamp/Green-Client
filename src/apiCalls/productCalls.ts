@@ -1,9 +1,12 @@
 import axios from "axios";
-import { BASE_URL } from "../config/config";
+import { GET_PRODUCTS } from "../config/config";
 export const getProductsAutocomplete=async (prefix:string) :Promise<{ [key: string]: any; }[]> =>{
    
-    const config = { headers: { 'Authorization':localStorage.getItem("token") } };
-    const x= await axios.get(`${BASE_URL}/user/${prefix}` ,config);
-    return  (await x).data
+    let t=localStorage.getItem("token");
+    if(t==undefined)
+        t="qqq"
+    const config = { headers: { 'Authorization': t} };
+    const x= await axios.get(`${GET_PRODUCTS}/${prefix}`,config);
+    return  (await x).data;
     
     }

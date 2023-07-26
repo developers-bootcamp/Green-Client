@@ -20,7 +20,6 @@ import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
 import { getProductsAutocomplete } from "../../apiCalls/productCalls";
 import { IUser } from "../../interfaces/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-import { Button } from '@material-ui/core';
 import gifts from '../../images/gifts.png';
 import { MyButton,AddButton,BaloonImg } from './NewOrder.style';
 const validationSchema = yup.object({
@@ -35,12 +34,12 @@ const NewOrder: React.FC = (props) => {
     const [sumPrice, setSumPrice] = useState(0);
     const [calculatedOrder, setCalculatedOrder] = useState({} as { [key: string]: any })
     const theOrder: IOrder = {
-        employeeId: null,
-        customerId: {} as IUser,
+        employee: null,
+        customer: {} as IUser,
         totalAmount: sumPrice,
         orderItemsList: [],
         orderStatus: "",
-        companyId: null,
+        company: null,
         creditCardNumber: "",
         expiryOn: new Date(),
         cvc: "",
@@ -50,7 +49,7 @@ const NewOrder: React.FC = (props) => {
     }
     const calc = async () => {
         try {
-          
+         
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
             setCalculatedOrder(a);
@@ -61,7 +60,7 @@ const NewOrder: React.FC = (props) => {
             }
         }
         catch (e) {
-            alert(JSON.stringify(e))
+            console.log(JSON.stringify(e))
         }
 
     }
@@ -78,7 +77,7 @@ const NewOrder: React.FC = (props) => {
         },
         validationSchema,
         onSubmit: async () => {
-            theOrder.customerId = formik.values.customer
+            theOrder.customer = formik.values.customer
             theOrder.creditCardNumber = formik.values.ccn
             theOrder.orderStatus = "CREATED"
             theOrder.cvc = formik.values.cvv
@@ -89,22 +88,22 @@ const NewOrder: React.FC = (props) => {
     const itemToString = (e: IOrderItem, i: number): string => {
        
         let s = "";
-        if (e.productId.id in calculatedOrder)
-            s += e.quantity + " " + e.productId.name + "price: " + Object.keys(calculatedOrder[e.productId.id])[0]//JSON.stringify(calculatedOrder[e.productId.id][])
+        if (e.product.id in calculatedOrder)
+            s += e.quantity + " " + e.product.name + "price: " + Object.keys(calculatedOrder[e.product.id])[0]//JSON.stringify(calculatedOrder[e.productId.id][])
 
-                + "  discount: " + calculatedOrder[e.productId.id][Object.keys(calculatedOrder[e.productId.id])[0]]//+ JSON.stringify(calculatedOrder[e.productId.id]);
-        e.productId.discountType == "FIXED_AMOUNT" ? s += " " + formik.values.currency + " " : s += "% "
+                + "  discount: " + calculatedOrder[e.product.id][Object.keys(calculatedOrder[e.product.id])[0]]//+ JSON.stringify(calculatedOrder[e.productId.id]);
+        e.product.discountType == "FIXED_AMOUNT" ? s += " " + formik.values.currency + " " : s += "% "
         return s;
     }
     const add = async () => {
 
-        const tmp=orderItems.find(e=>e.productId.id==formik.values.product.id)
+        const tmp=orderItems.find(e=>e.product.id==formik.values.product.id)
         if(tmp!=null)
         {
             if(window.confirm("you already ordered this product\n would ypu like to order more?"))
                 {
                     orderItems.forEach(e=>{
-                        if(e.productId.id==formik.values.product.id)
+                        if(e.product.id==formik.values.product.id)
                             e.quantity+=formik.values.quantity
                     })
                     theOrder.orderItemsList=orderItems
@@ -114,12 +113,12 @@ const NewOrder: React.FC = (props) => {
         else{
         const prod: IOrderItem = {
             
-            productId: formik.values.product,
+            product: formik.values.product,
             amount: formik.values.product.price,
             quantity: formik.values.quantity
         }
         theOrder.orderItemsList = [...orderItems, prod]
-        theOrder.customerId = formik.values.customer
+        theOrder.customer = formik.values.customer
         theOrder.creditCardNumber = ""
         theOrder.orderStatus = "CREATED"
         theOrder.cvc = ""

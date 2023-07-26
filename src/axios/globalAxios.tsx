@@ -7,7 +7,7 @@ const axiosInstance =(store:any)=>{
 
 axios.interceptors.request.use(
     (config: any) => {
-
+        debugger
         let token = localStorage.getItem("token");
         if (config.url.indexOf(LOG_IN) !== 0 && token) {
             config.headers["Authorization"] = token;

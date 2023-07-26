@@ -1,13 +1,13 @@
 import axios from 'axios';
 import * as yup from 'yup';
-import swal from 'sweetalert';
+//import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
-import { useStyles } from "./SignUp.styles";
+//import { useStyles } from "./SignUp.styles";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -28,7 +28,7 @@ const validationSchema = yup.object({
 
 const SignUpForm: React.FC = () => {
 
-    const classes = useStyles()
+    /////////const classes = useStyles()
 
     const navigate = useNavigate()
 
@@ -45,13 +45,13 @@ const SignUpForm: React.FC = () => {
             async function signUpRequest() {
                 try {
                     const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
-                   
-                    swal("you sign up seccessfully", "good", "success");
+                    console.log(values);
+                    //swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
                     return (res.data);
                 } catch (error) {
-                   
-                    swal("you have a error", `${error}`, "error");
+                    console.log(values);
+                   // swal("you have a error", `${error}`, "error");
                     navigate("/landingPage")
                 }
             }
@@ -69,7 +69,7 @@ const SignUpForm: React.FC = () => {
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="fullName">Full Name</label><br />
-                <TextField className={classes.text} margin='normal' id="fullName" name="fullName"
+                <TextField  margin='normal' id="fullName" name="fullName"
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -78,7 +78,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="companyName">Company Name</label><br />
-                <TextField className={classes.text} margin='normal' id="companyName" name="companyName"
+                <TextField  margin='normal' id="companyName" name="companyName"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -87,7 +87,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="email">Email Address</label><br />
-                <TextField className={classes.text} margin='normal' id="email" name="email"
+                <TextField  margin='normal' id="email" name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -96,7 +96,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="password">Password</label><br />
-                <TextField className={classes.text} id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                <TextField  id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -132,10 +132,10 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
-                < div className={classes.signUpWrapper}>
+                < div >
                     <Button
                         sx={{ backgroundColor: PALLETE.YELLOW }}
-                        type="submit" variant="contained" className={classes.signUpButton}>
+                        type="submit" variant="contained" >
                         Sign Up
                     </Button>
                 </div>

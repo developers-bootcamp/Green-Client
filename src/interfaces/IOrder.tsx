@@ -2,12 +2,12 @@ import { IOrderItem } from "./IOrderItem";
 import { IUser } from "./IUser";
 
 export interface IOrder {
-    employeeId: any,
-    customerId: IUser,
+    employee: any,
+    customer: IUser,
     totalAmount: number,
     orderItemsList: IOrderItem[],
     orderStatus: string,
-    companyId: any,
+    company: any,
     creditCardNumber: string,
     expiryOn: Date,
     cvc: string,
