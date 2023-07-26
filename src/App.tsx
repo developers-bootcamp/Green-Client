@@ -5,7 +5,7 @@ import SignUp from './pages/signUp/SignUp';
 import Login from './pages/login/Login';
 import { Provider } from 'react-redux';
 import { Reducer, createStore } from 'redux';
-//import Loader from './components/globalLoader/Loader';
+import Loader from './components/globalLoader/Loader';
 import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 
@@ -24,7 +24,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        {/* {<Loader />} */}
+        {<Loader />}
         <Routes>
           <Route path="/" element={<TabsComponent/>} />
           <Route path="/landingPage" element={<LandingPage/>} />
