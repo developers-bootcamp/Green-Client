@@ -24,7 +24,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        {<Loader />}
+        {/* {<Loader />} */}
         <Routes>
           <Route path="/" element={<TabsComponent/>} />
           <Route path="/landingPage" element={<LandingPage/>} />
