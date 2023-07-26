@@ -20,7 +20,6 @@ import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
 import { getProductsAutocomplete } from "../../apiCalls/productCalls";
 import { IUser } from "../../interfaces/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-
 import gifts from '../../images/gifts.png';
 import { MyButton,AddButton,BaloonImg } from './NewOrder.style';
 const validationSchema = yup.object({
@@ -50,7 +49,7 @@ const NewOrder: React.FC = (props) => {
     }
     const calc = async () => {
         try {
-          debugger
+         
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
             setCalculatedOrder(a);
