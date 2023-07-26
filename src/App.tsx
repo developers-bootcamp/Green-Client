@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import {  Routes } from 'react-router';
+
 import SignUp from './pages/signUp/SignUp';
 import Login from './pages/login/Login';
 import { Provider } from 'react-redux';

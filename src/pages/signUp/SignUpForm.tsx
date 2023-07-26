@@ -31,6 +31,7 @@ const SignUpForm: React.FC = () => {
     /////////const classes = useStyles()
 
     const navigate = useNavigate()
+    
 
     const formik = useFormik({
         initialValues: {
