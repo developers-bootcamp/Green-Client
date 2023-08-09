@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { AnyAction } from 'redux';
 import { GET_ALL_ORDERS_URL } from '../../config/config';
-import { IOrder } from '../../interfaces/IOrder';
+import IOrder from '../../interfaces/model/IOrder';
 
 
 //ation types

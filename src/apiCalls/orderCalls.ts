@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IOrder } from "../interfaces/IOrder"
+import IOrder from "../interfaces/model/IOrder"
 import { ORDER } from "../config/config";
 
 export const addNewOrder = async (order: IOrder) => {

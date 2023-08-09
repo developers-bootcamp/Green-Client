@@ -1,17 +1,16 @@
 import axios from 'axios';
 import * as yup from 'yup';
-//import swal from 'sweetalert';
+import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
-//import { useStyles } from "./SignUp.styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { PALLETE } from '../../config/config';
+import { PALLETE, SIGN_UP } from '../../config/config';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -28,8 +27,6 @@ const validationSchema = yup.object({
 
 const SignUpForm: React.FC = () => {
 
-    /////////const classes = useStyles()
-
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -41,18 +38,18 @@ const SignUpForm: React.FC = () => {
             acceptTerms: false,
         },
         validationSchema,
-        onSubmit: (values) => {
+        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string ,acceptTerms:boolean}) => {
             async function signUpRequest() {
                 try {
-                    const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
-                    console.log(values);
-                    //swal("you sign up seccessfully", "good", "success");
-                    navigate("/login")
-                    return (res.data);
+                    const res = await axios.post(`${SIGN_UP}?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
+                    console.log(res.data);
+                    localStorage.setItem("token", res.data)
+                    swal("you sign up seccessfully", "good", "success");
+                    navigate("/landingPage")
                 } catch (error) {
                     console.log(values);
-                   // swal("you have a error", `${error}`, "error");
-                    navigate("/landingPage")
+                    swal("you have a error", `${error}`, "error");
+                    navigate("/login")
                 }
             }
             signUpRequest();
@@ -69,7 +66,7 @@ const SignUpForm: React.FC = () => {
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="fullName">Full Name</label><br />
-                <TextField  margin='normal' id="fullName" name="fullName"
+                <TextField margin='normal' id="fullName" name="fullName"
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -78,7 +75,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="companyName">Company Name</label><br />
-                <TextField  margin='normal' id="companyName" name="companyName"
+                <TextField margin='normal' id="companyName" name="companyName"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -87,7 +84,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="email">Email Address</label><br />
-                <TextField  margin='normal' id="email" name="email"
+                <TextField margin='normal' id="email" name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -96,7 +93,7 @@ const SignUpForm: React.FC = () => {
                 />
 
                 <br /><label htmlFor="password">Password</label><br />
-                <TextField  id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                <TextField id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

@@ -1,10 +1,8 @@
 // import { Button, Dialog, DialogContent } from "@mui/material";
 import React, { useState } from "react"
-// import NewOrder from "../../NewOrderModel/NewOrder";
-
 import { Button, Dialog, DialogContent } from "@mui/material"
-import { IOrder } from "../../../interfaces/IOrder"
-import { IUser } from "../../../interfaces/IUser"
+import IOrder from "../../../interfaces/model/IOrder"
+import IUser from "../../../interfaces/model/IUser"
 
 import { string } from "yup"
 import NewOrder from "../../NewOrderModel/NewOrder"
