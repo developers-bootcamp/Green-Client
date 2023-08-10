@@ -7,7 +7,6 @@ import store, { RootState } from '../../redux/redux/store';
 import axios from 'axios';
 import {clearError, setError} from '../../redux/redux/errorSlice';
 
-
 export const ErrorModel:React.FC = () => {
   debugger
 const open = useSelector((state: RootState) => state.error?.isOpen || false);

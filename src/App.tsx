@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './pages/signUp/SignUp';
@@ -8,6 +8,8 @@ import { Reducer, createStore } from 'redux';
 import Loader from './components/globalLoader/Loader';
 import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
+import { ErrorModel } from './components/globalErrorModel/ErrorModel';
+import AxiosInstance from './axios/globalAxios';
 
 function App() {
 
@@ -20,10 +22,17 @@ function App() {
   };
 
   const store = createStore(rootReducer);
+  useEffect(() => {
+    const cleanupAxios = AxiosInstance(store);
 
+    // return () => {
+    //   cleanupAxios(); // Cleanup Axios interceptors when the component is unmounted
+    // };
+  }, []);
   return (
     <Provider store={store}>
       <div className="App">
+        {<ErrorModel></ErrorModel>}
         {<Loader />}
         <Routes>
           <Route path="/" element={<TabsComponent/>} />

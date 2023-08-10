@@ -8,6 +8,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
+import { setError } from '../../redux/redux/errorSlice';
+import store from '../../redux/redux/store';
+import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,29 +27,34 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      await login();
+      const res=await login();
+      localStorage.setItem('token',res.data)
       navigate("/")
     } catch (err: any) {
-      console.log(err);
+      console.log("err",err);
+      console.log("err.response?.status",err.response?.status);
+      console.log("err.request",err.request);
       if (err.response?.status == 404) {
+        console.log("in 404 if");
+        store.dispatch(setError("signup"));
         navigate("/signup")
-        alert("sighnup")
-        //swal("please sign-Up before you login");
+        //alert("sighnup")
       }
       else
-        alert("err")
-      //swal("you have a error", `${err}`, "error");}
+     {
+       const errorMessage = err.response?.data.message || 'An error occurred!';
+      store.dispatch(setError(errorMessage));
+     }
+
     }
   }
 
     const login = async () => {
-      const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
+      const res = await axios.get(`http://localhost:8081/user/${email}/${password}`);// {
       //   withCredentials: false,
-      console.log(res.data);
-
-      // }
-      localStorage.setItem("token", res.data)
-      navigate("/")
+      console.log(res);
+      return res;
+      //localStorage.setItem("token", res.data)
     }
 
     return (
