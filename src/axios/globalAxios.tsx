@@ -45,16 +45,17 @@ const responseInterceptor=axios.interceptors.response.use(
   },
    (error) => {
     console.log("in error globalaxiossssss");
-     store.dispatch(setLoading(false));
-    store.dispatch(setError("An error occurred!"));
-    return
-    if (error.response && error.response.data && error.response.data.message) {
-      store.dispatch(setError(error.response.data.message));
-      return;
-    } else {
+    if(error.response?.status == 500){
+      store.dispatch(setLoading(false));
       store.dispatch(setError("An error occurred!"));
       return
-    }
+      if (error.response.data && error.response.data.message) {
+        store.dispatch(setError(error.response.data.message));
+        return;
+      } else {
+        store.dispatch(setError("An error occurred!"));
+        return
+      }}
     return Promise.reject(error);
   }
    
