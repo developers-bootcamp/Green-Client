@@ -31,6 +31,7 @@ const requestInterceptor= axios.interceptors.request.use(
     store.dispatch(setLoading(true))
     return next;
   },
+  
   //  (error) =>{
   //   return Promise.reject(error);
   // }
@@ -38,17 +39,21 @@ const requestInterceptor= axios.interceptors.request.use(
 
 const responseInterceptor=axios.interceptors.response.use(
   (next)=> {
-    console.log("❤️❤️in globalaxios");
-    return store.dispatch(setLoading(false))
-   },
+    console.log("in globalaxios");
+    store.dispatch(setLoading(false))
+    return Promise.resolve(next);
+  },
    (error) => {
-    console.log("💕💕in error globalaxios");
-    store.dispatch(setLoading(false));
+    console.log("in error globalaxiossssss");
+     store.dispatch(setLoading(false));
+    store.dispatch(setError("An error occurred!"));
+    return
     if (error.response && error.response.data && error.response.data.message) {
       store.dispatch(setError(error.response.data.message));
-
+      return;
     } else {
       store.dispatch(setError("An error occurred!"));
+      return
     }
     return Promise.reject(error);
   }
