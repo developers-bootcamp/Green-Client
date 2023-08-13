@@ -59,7 +59,7 @@ export default function NewOrderModal() {
   };
 
   return (
-    <div>
+    <>
       <Autocomplete<Customer>
         disablePortal
         id="customer-autocomplete"
@@ -75,7 +75,6 @@ export default function NewOrderModal() {
           <TextField {...params} label="Customer" variant="outlined" />
         )}
       />
-      <br />
       <Autocomplete<Product>
         disablePortal
         id="product-autocomplete"
@@ -91,6 +90,6 @@ export default function NewOrderModal() {
           <TextField {...params} label="Product" variant="outlined" />
         )}
       />
-    </div>
+    </>
   );
 }

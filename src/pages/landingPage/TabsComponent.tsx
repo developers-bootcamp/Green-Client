@@ -14,12 +14,10 @@ interface TabPanelProps {
 
 function TabPanel({children}: TabPanelProps) {
   return (
-    <div>
-        <Box sx={{ p: 8 }}>
-          <Typography>{children}</Typography>
-        </Box>
-    </div>
-  );
+    <Box sx={{ p: 8 }}>
+      <Typography>{children}</Typography>
+    </Box>
+);
 }
 
 function a11yProps(index: number) {
