@@ -21,7 +21,7 @@ import { getProductsAutocomplete } from "../../apiCalls/productCalls";
 import IUser from "../../interfaces/model/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import gifts from '../../images/gifts.png';
-import { MyButton,AddButton,BaloonImg } from './NewOrder.style';
+import { MyButton, AddButton, BaloonImg } from './NewOrder.style';
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
@@ -49,13 +49,13 @@ const NewOrder: React.FC = (props) => {
     }
     const calc = async () => {
         try {
-         
+
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
             setCalculatedOrder(a);
             if (calculatedOrder["-1"] as { [key: number]: number }) {
                 let sum = Object.keys(calculatedOrder["-1"])[0];
-              
+
                 setSumPrice(parseInt(sum));
             }
         }
@@ -86,7 +86,7 @@ const NewOrder: React.FC = (props) => {
         }
     });
     const itemToString = (e: IOrderItem, i: number): string => {
-       
+
         let s = "";
         if (e.product.id in calculatedOrder)
             s += e.quantity + " " + e.product.name + "price: " + Object.keys(calculatedOrder[e.product.id])[0]//JSON.stringify(calculatedOrder[e.productId.id][])
@@ -97,43 +97,42 @@ const NewOrder: React.FC = (props) => {
     }
     const add = async () => {
 
-        const tmp=orderItems.find(e=>e.product.id==formik.values.product.id)
-        if(tmp!=null)
-        {
-            if(window.confirm("you already ordered this product\n would ypu like to order more?"))
-                {
-                    orderItems.forEach(e=>{
-                        if(e.product.id==formik.values.product.id)
-                            e.quantity+=formik.values.quantity
-                    })
-                    theOrder.orderItemsList=orderItems
-                    await calc()
-                }
-    }
-        else{
-        const prod: IOrderItem = {
-            
-            product: formik.values.product,
-            amount: formik.values.product.price,
-            quantity: formik.values.quantity
+        const tmp = orderItems.find(e => e.product.id == formik.values.product.id)
+        if (tmp != null) {
+            if (window.confirm("you already ordered this product\n would ypu like to order more?")) {
+                orderItems.forEach(e => {
+                    if (e.product.id == formik.values.product.id)
+                        e.quantity += formik.values.quantity
+                })
+                theOrder.orderItemsList = orderItems
+                await calc()
+            }
         }
-        theOrder.orderItemsList = [...orderItems, prod]
-        theOrder.customer = formik.values.customer
-        theOrder.creditCardNumber = ""
-        theOrder.orderStatus = "CREATED"
-        theOrder.cvc = ""
-        theOrder.currency = formik.values.currency
-        let g = [...orderItems, prod]
-        setOrderItems(g)
-        await calc();}
+        else {
+            const prod: IOrderItem = {
+
+                product: formik.values.product,
+                amount: formik.values.product.price,
+                quantity: formik.values.quantity
+            }
+            theOrder.orderItemsList = [...orderItems, prod]
+            theOrder.customer = formik.values.customer
+            theOrder.creditCardNumber = ""
+            theOrder.orderStatus = "CREATED"
+            theOrder.cvc = ""
+            theOrder.currency = formik.values.currency
+            let g = [...orderItems, prod]
+            setOrderItems(g)
+            await calc();
+        }
     }
     const deleteItem = async (i: number) => {
-      
+
         let tmp: IOrderItem[] = [] as IOrderItem[];
         orderItems.forEach((e, index) => {
             if (index !== i)
                 tmp.push(e);
-   
+
         })
         setOrderItems(tmp)
         theOrder.orderItemsList = tmp
@@ -158,26 +157,26 @@ const NewOrder: React.FC = (props) => {
                                     </div>
                                     <label htmlFor="product" className="productLbl">Product</label>
                                     {/* <label htmlFor="discount" className="discountLbl" > Discount</label> */}
-                                    <Grid className="product" container><Grid   item xs={12} >
-                                            <div >
-                                                <Grid item xs={6}>
+                                    <Grid className="product" container><Grid item xs={12} >
+                                        <div >
+                                            <Grid item xs={6}>
                                                 <MyAutocomplete getFunction={getProductsAutocomplete}
                                                     setItem={(chosen: IProduct) => { formik.values.product = chosen }} displayField={1}></MyAutocomplete></Grid>
-                                              <Grid item xs={2}>  <TextField variant="outlined" onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)} type="number" /> </Grid> 
+                                            <Grid item xs={2}>  <TextField variant="outlined" onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)} type="number" /> </Grid>
                                             <Grid item xs={2}>   <select
-                                                    onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
-                                                >
-                                                    <option value={"ISL"}>ISL</option>
-                                                    <option value={"USA"}>USA</option>
-                                                </select>
-                                             </Grid>
-                                            </div>
-                                        </Grid>
+                                                onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
+                                            >
+                                                <option value={"ISL"}>ISL</option>
+                                                <option value={"USA"}>USA</option>
+                                            </select>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
 
                                     </Grid>
                                     <Grid item xs={12}>
-                                    <AddButton onClick={() => add()}
-                                        variant="contained">Add</AddButton></Grid>
+                                        <AddButton onClick={() => add()}
+                                            variant="contained">Add</AddButton></Grid>
                                 </div>
                             </Grid>
                             <Grid item xs={5}>
@@ -226,7 +225,7 @@ const NewOrder: React.FC = (props) => {
                                         onBlur={formik.handleBlur}
                                     /></Grid>
                                 <Grid item xs={2}>
-                                    <MyButton  type="submit">buy now</MyButton></Grid></Grid>
+                                    <MyButton type="submit">buy now</MyButton></Grid></Grid>
                         </form>
 
                     </Grid>

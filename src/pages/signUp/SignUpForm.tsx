@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as yup from 'yup';
 import swal from 'sweetalert';
 import Button from '@mui/material/Button';
@@ -8,9 +7,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Autocomplete, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { PALLETE, SIGN_UP } from '../../config/config';
+import { PALLETE } from '../../config/config';
+import { SignUpWrapper } from "./SignUp.styles";
+import ICurrencyState from '../../interfaces/ICurrencyState';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { signUp } from '../../axios/SignUpAxios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -27,6 +31,10 @@ const validationSchema = yup.object({
 
 const SignUpForm: React.FC = () => {
 
+    const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
+
+    const [currency, setCurrency] = React.useState("DOLLAR");
+
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -38,16 +46,14 @@ const SignUpForm: React.FC = () => {
             acceptTerms: false,
         },
         validationSchema,
-        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string ,acceptTerms:boolean}) => {
+        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = await axios.post(`${SIGN_UP}?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
-                    console.log(res.data);
-                    localStorage.setItem("token", res.data)
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
+                    localStorage.setItem("token", (await res).data)
                     swal("you sign up seccessfully", "good", "success");
                     navigate("/landingPage")
                 } catch (error) {
-                    console.log(values);
                     swal("you have a error", `${error}`, "error");
                     navigate("/login")
                 }
@@ -81,6 +87,20 @@ const SignUpForm: React.FC = () => {
                     onBlur={formik.handleBlur}
                     error={formik.touched.companyName && Boolean(formik.errors.companyName)}
                     helperText={formik.touched.companyName && formik.errors.companyName}
+                />
+
+                <Autocomplete
+                    fullWidth
+                    value={currency}
+                    defaultValue={currency}
+                    options={listOfCurrencies.map((c: string) => c)}
+                    inputValue={currency}
+                    onInputChange={(event, newInputValue) => {
+                        setCurrency(newInputValue);
+                    }}
+                    renderInput={(params) => (
+                        <TextField {...params} />
+                    )}
                 />
 
                 <br /><label htmlFor="email">Email Address</label><br />
@@ -129,13 +149,14 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
-                < div >
+
+                <SignUpWrapper>
                     <Button
                         sx={{ backgroundColor: PALLETE.YELLOW }}
                         type="submit" variant="contained" >
                         Sign Up
                     </Button>
-                </div>
+                </SignUpWrapper>
             </form >
         </div >
     );
