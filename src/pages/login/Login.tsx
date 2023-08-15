@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import axios from 'axios';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Paper, TextField } from '@mui/material';
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       await login();
-      navigate("/")
+      navigate("/tabsComponent")
     } catch (err: any) {
       console.log(err);
       if (err.response?.status == 404) {
@@ -39,67 +39,67 @@ const Login: React.FC = () => {
     }
   }
 
-    const login = async () => {
-      const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
-      //   withCredentials: false,
-      console.log(res.data);
+  const login = async () => {
+    const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
+    //   withCredentials: false,
+    console.log(res.data);
 
-      // }
-      localStorage.setItem("token", res.data)
-      navigate("/")
-    }
+    // }
+    localStorage.setItem("token", res.data)
+    navigate("/")
+  }
 
-    return (
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
-        <Paper sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '600px', height: '400px' }}>
-          <p style={{ marginTop: '0px' }}>Log in to your account</p>
-          <h4>Enter your email and password</h4>
-          <div style={{ marginBottom: '10px' }}>
-            <TextField id="email" label="Email address" variant="outlined" sx={{ marginBottom: '10px', width: '300px' }}
-              onChange={(e) => { setEmail(e.target.value) }} />
-          </div>
-          <div>
-            <FormControl sx={{ marginBottom: '10px', width: '300px' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? 'text' : 'password'}
-                onChange={(e) => { setPassword(e.target.value) }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-              <Button
-                type='submit'
-                variant="contained"
-                sx={{
-                  backgroundColor: PALLETE.YELLOW,
-                  bottom: '-30px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '65%',
-                  borderRadius: '15px'
-                }}
-                onClick={handleSubmit}>
-                Sign Up
-              </Button>
-              {err && <p>{err}</p>}
-            </FormControl>
-          </div>
+  return (
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
+      <Paper sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '600px', height: '400px' }}>
+        <p style={{ marginTop: '0px' }}>Log in to your account</p>
+        <h4>Enter your email and password</h4>
+        <div style={{ marginBottom: '10px' }}>
+          <TextField id="email" label="Email address" variant="outlined" sx={{ marginBottom: '10px', width: '300px' }}
+            onChange={(e) => { setEmail(e.target.value) }} />
+        </div>
+        <div>
+          <FormControl sx={{ marginBottom: '10px', width: '300px' }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              onChange={(e) => { setPassword(e.target.value) }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+            <Button
+              type='submit'
+              variant="contained"
+              sx={{
+                backgroundColor: PALLETE.YELLOW,
+                bottom: '-30px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '65%',
+                borderRadius: '15px'
+              }}
+              onClick={handleSubmit}>
+              Sign Up
+            </Button>
+            {err && <p>{err}</p>}
+          </FormControl>
+        </div>
 
-        </Paper>
-      </Box>
-    );
-  };
+      </Paper>
+    </Box>
+  );
+};
 
 export default Login;

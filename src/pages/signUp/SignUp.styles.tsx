@@ -1,48 +1,51 @@
-// import { makeStyles } from "@material-ui/core";
-// import { PALLETE } from '../../config/config';
+import { PALLETE } from '../../config/config';
+import { styled } from '@mui/system'
 
-// export const useStyles = makeStyles({
-//     dialog: {
-//         marginTop: '50px',
-//         border: '3px solid',
-//         borderRadius: '15px',
-//     },
-//     mainGrid: {
-//         // textAlign: 'center'
-//     },
-//     leftGrid: {
-//         textAlign: 'start',
-//         justifyItems: 'center',
-//         borderTopLeftRadius: '15px',
-//         borderBottomLeftRadius: '15px',
-//         paddingRight: '50px',
-//     },
-//     rightGrid: {
-//         textAlign: 'center',
-//         borderTopRightRadius: '15px',
-//         borderBottomRightRadius: '15px',
-//         backgroundColor: 'rgb(216, 223, 225)',
-//     },
-//     text: {
-//         margin: 'normal',
-//         borderRadius: ' 15px',
-//         width: '80%',
-//     },
-//     signUpWrapper: {
-//         textAlign: 'end'
-//     },
-//     signUpButton: {
-//         position: 'absolute',
-//         backgroundColor: PALLETE.YELLOW,
-//         color: 'EB9F6E !important',
-//         width: '40%',
-//         borderRadius: '15px',
-//     },
-//     pic: {
-//         height: '60%',
-//         width: '90%',
-//         marginTop: '30%'
-//     },
-// })
+export const MainDialog = styled('div')({
+    // marginTop: '50px',
+    // border: '3px solid',
+    // borderRadius: '15px',
+})
 
-export default {}
+export const MainGrid = styled('div')({
+    // textAlign: 'center'
+})
+
+export const LeftGrid = styled('div')({
+    // textAlign: 'start',
+    // justifyItems: 'center',
+    // borderTopLeftRadius: '15px',
+    // borderBottomLeftRadius: '15px',
+    // paddingRight: '50px',
+})
+
+export const RightGrid = styled('div')({
+    // textAlign: 'center',
+    // borderTopRightRadius: '15px',
+    // borderBottomRightRadius: '15px',
+    // backgroundColor: 'rgb(216, 223, 225)',
+})
+
+export const Text = styled('div')({
+    // margin: 'normal',
+    // borderRadius: ' 15px',
+    // width: '80%',
+})
+
+export const SignUpWrapper = styled('div')({
+    // textAlign: 'end',
+})
+
+export const SignUpButton = styled('div')({
+    // position: 'absolute',
+    // backgroundColor: `${PALLETE.YELLOW} !important`,
+    // color: 'EB9F6E !important',
+    // width: '40%',
+    // borderRadius: '15px',
+})
+
+export const Pic = styled('div')({
+    // height: '40%',
+    // width: '90%',
+    // marginTop: '30%'
+})

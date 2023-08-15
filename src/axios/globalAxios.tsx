@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { LOG_IN } from "../config/config"
-import { setLoading } from '../redux/redux/appSlice'
+import { setLoading } from '../redux/slices/LoadingSlice'
 
 
 const axiosInstance =(store:any)=>{
