@@ -10,6 +10,7 @@ import LandingPage from './pages/landingPage/LandingPage';
 import { useAppDispatch } from './redux/store';
 import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './axios/CurrencyAxios';
+import TokenAxios from './axios/TokenAxios';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <div className="App">
+      <TokenAxios/>
       {<Loader />}
       <Routes>
         <Route path="/" element={<Login />} />
