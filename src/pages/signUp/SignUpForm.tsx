@@ -44,7 +44,7 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values) => {
             async function signUpRequest() {
                 try {
-                    const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
+                    const res = await axios.post(`http://localhost:8080/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
                     console.log(values);
                     //swal("you sign up seccessfully", "good", "success");
                     navigate("/login")

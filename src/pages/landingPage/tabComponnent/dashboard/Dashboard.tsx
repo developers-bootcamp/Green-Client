@@ -10,6 +10,34 @@ import CreateNewBoard from "./CreateNewBoard";
 
 const Dashboard: React.FC = () => {
 
+  const [BarChartData, setBarChartData] = useState([]);
+
+  const [LineGraphData, setLineGraphData] = useState([]);
+
+  const [pieChartData, setPieChartData] = useState([]);
+
+  const fetchData = async () => {
+    const responses = await Promise.all([
+      //fetch('http://localhost:8080/Graph/'),
+      fetch('http://localhost:8080/Graph/getDeliverCancelOrders'),
+      fetch('http://localhost:8080/Graph/topEmployee'),
+    ]);
+
+    const data:any = await Promise.all(responses.map((response) => response.json()));
+
+    // setBarChartData(data[0])
+
+    setLineGraphData(data[0])
+    //2
+    setPieChartData(data[1])
+    
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
   const Item = styled('div')({
     backgroundColor: PALLETE.GRAY,
     padding: 5,
@@ -20,13 +48,13 @@ const Dashboard: React.FC = () => {
         <>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid xs={6} >
-                  <Item><BarChart/></Item>
+                  {/* <Item><BarChart/></Item> */}
                 </Grid>
                 <Grid xs={6}>
-                  <Item><PieChart/></Item>
+                  <Item><PieChart pieChartData = {pieChartData}/></Item>
                 </Grid>
                 <Grid xs={6}>
-                  <Item><LineGraph/></Item>
+                  <Item><LineGraph LineGraphData = {LineGraphData}/></Item>
                 </Grid>
                 <Grid xs={6}>
                   <Item><CreateNewBoard></CreateNewBoard></Item>

@@ -6,16 +6,18 @@ import { PALLETE } from '../../../../config/config';
     backgroundColor: PALLETE.GRAY
   };
 
+  interface prop{
+    pieChartData:{[key:string]:any}[]
+  }
   
-  const PieChart:React.FC=()=>{
+  const PieChart:React.FC<prop>=({pieChartData})=>{
+
+    const MyPieChartData = pieChartData.map(x => [x.User.fullName, x.countOfDeliveredOrders])
+    console.log(MyPieChartData);
 
     const data = [
       ["Employee name", "Count Of Delivered Orders"],
-      ["Work", 6],
-      ["Eat", 4],
-      ["Commute", 3],
-      ["Watch TV", 2],
-      ["Sleep", 1],
+      ...MyPieChartData
     ];
     
     return (
