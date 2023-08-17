@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       {<Loader />}
       <Routes>
-        <Route path="/" element={<SignUp />} />
+        <Route path="/" element={<Login />} />
         <Route path="/landingPage" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/tabsComponent" element={<TabsComponent />} />
