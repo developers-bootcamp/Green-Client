@@ -12,7 +12,7 @@ export interface RootState {
   }
 }
 
-const store = configureStore({
+ const store = configureStore({
   reducer: {
     app: appReducer,
     error: errorReducer,

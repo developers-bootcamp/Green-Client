@@ -5,7 +5,6 @@ import { ErrorModel } from '../components/globalErrorModel/ErrorModel';
 import { setError } from '../redux/redux/errorSlice';
 
 
-
 const  AxiosInstance =(store:any)=>{
 
 axios.interceptors.request.use(
@@ -45,6 +44,7 @@ const responseInterceptor=axios.interceptors.response.use(
   },
    (error) => {
     console.log("in error globalaxiossssss");
+    console.log(error);
     if(error.response?.status == 500){
       store.dispatch(setLoading(false));
       store.dispatch(setError("An error occurred!"));
@@ -55,7 +55,8 @@ const responseInterceptor=axios.interceptors.response.use(
       } else {
         store.dispatch(setError("An error occurred!"));
         return
-      }}
+      }
+    }
     return Promise.reject(error);
   }
    

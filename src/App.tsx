@@ -10,6 +10,7 @@ import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 import { ErrorModel } from './components/globalErrorModel/ErrorModel';
 import AxiosInstance from './axios/globalAxios';
+import store from './redux/redux/store';
 
 function App() {
 
@@ -21,16 +22,14 @@ function App() {
     }
   };
 
-  const store = createStore(rootReducer);
+
   useEffect(() => {
     const cleanupAxios = AxiosInstance(store);
-
     // return () => {
     //   cleanupAxios(); // Cleanup Axios interceptors when the component is unmounted
     // };
   }, []);
   return (
-    <Provider store={store}>
       <div className="App">
         {<ErrorModel></ErrorModel>}
         {<Loader />}
@@ -42,7 +41,6 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
         </Routes>
       </div>
-    </Provider>
   );
 }
 
