@@ -10,11 +10,3 @@ export const Text = styled('div')({
 export const SignUpWrapper = styled('div')({
     textAlign: 'end',
 })
-
-export const SignUpButton = styled('div')({
-    // position: 'absolute',
-    backgroundColor: `${PALLETE.YELLOW} !important`,
-    // color: 'EB9F6E !important',
-    // width: '40%',
-    // borderRadius: '15px',
-})

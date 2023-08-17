@@ -163,7 +163,7 @@ const SignUpForm: React.FC = () => {
 
                 <SignUpWrapper>
                     <Button
-                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important` }}
+                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '1rem' }}
                         type="submit" variant="contained" >
                         Sign Up
                     </Button>
