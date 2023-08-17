@@ -30,7 +30,7 @@ const Login: React.FC = () => {
       console.log(err);
       if (err.response?.status == 404) {
         navigate("/signup")
-        alert("sighnup")
+        alert("signup")
         //swal("please sign-Up before you login");
       }
       else
@@ -83,7 +83,7 @@ const Login: React.FC = () => {
               type='submit'
               variant="contained"
               sx={{
-                backgroundColor: PALLETE.YELLOW,
+                backgroundColor: `${PALLETE.YELLOW} !important`,
                 bottom: '-30px',
                 left: '50%',
                 transform: 'translateX(-50%)',

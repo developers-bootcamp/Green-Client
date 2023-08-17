@@ -5,7 +5,7 @@ import IOrder from "../../../interfaces/model/IOrder"
 import IUser from "../../../interfaces/model/IUser"
 
 import { string } from "yup"
-import NewOrder from "../../NewOrderModel/NewOrder"
+import NewOrder from "../../newOrderModel/NewOrder"
 
 interface prop {
     name: string | undefined,
