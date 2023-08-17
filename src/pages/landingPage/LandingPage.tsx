@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import NewOrder from "../NewOrderModel/NewOrder"
+import NewOrder from "../newOrderModel/NewOrder"
 import { Button, Dialog, DialogContent } from "@mui/material"
 
 const LandingPage: React.FC = () => {

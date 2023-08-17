@@ -1,8 +1,8 @@
-import orderReducer from './slices/CurrencySlice';
-import currencyReducer from './slices/CurrencySlice';
-import userReducer from './slices/UserSlice';
-import productReducer from './slices/ProductSlice';
-import loadingReducer from './slices/LoadingSlice';
+import currencyReducer from './slices/currencySlice';
+import orderReducer from './slices/orderSlice';
+import userReducer from './slices/userSlice';
+import productReducer from './slices/productSlice';
+import loadingReducer from './slices/loadingSlice';
 import { useDispatch } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 
