@@ -6,9 +6,12 @@ import Box from '@mui/material/Box';
 import PendingOrders from './tabComponnent/PendingOrders';
 import CatalogManager from './tabComponnent/CatalogManager';
 import UsersManagement from './tabComponnent/UsersManagement';
-import Dashboard from './tabComponnent/Dashboard';
+
 import { MyTab } from './TabsComponent.styles';
 import { PALLETE } from '../../config/config';
+
+import Dashboard from './tabComponnent/dashboard/Dashboard';
+
 interface TabPanelProps {
   children?: React.ReactNode;
 }

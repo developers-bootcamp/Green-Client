@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import axios from 'axios';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Paper, TextField } from '@mui/material';
@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { PALLETE } from '../../config/config';
+import { LOG_IN, PALLETE } from '../../config/config';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,17 +25,28 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       await login();
+      navigate("/tabsComponent")
     } catch (err: any) {
-      setErr(err.response.data?.message);
+      console.log(err);
+      if (err.response?.status == 404) {
+        navigate("/signup")
+        alert("signup")
+        //swal("please sign-Up before you login");
+      }
+      else
+        alert("err")
+      //swal("you have a error", `${err}`, "error");}
     }
   }
 
   const login = async () => {
-    const res = await axios.get(`http://localhost:8081/user/login/${email}/${password}`, {
-      withCredentials: true,
-    });
-    localStorage.setItem("token", res.data.accesToken)
-    navigate("/landingPage")
+    const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
+    //   withCredentials: false,
+    console.log(res.data);
+
+    // }
+    localStorage.setItem("token", res.data)
+    navigate("/")
   }
 
   return (
@@ -72,7 +83,7 @@ const Login: React.FC = () => {
               type='submit'
               variant="contained"
               sx={{
-                backgroundColor: PALLETE.YELLOW,
+                backgroundColor: `${PALLETE.YELLOW} !important`,
                 bottom: '-30px',
                 left: '50%',
                 transform: 'translateX(-50%)',

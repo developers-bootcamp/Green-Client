@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as yup from 'yup';
 import swal from 'sweetalert';
 import Button from '@mui/material/Button';
@@ -7,11 +6,16 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
-import { useStyles } from "./SignUp.styles";
-import { useNavigate } from "react-router-dom";
-import { IconButton, InputAdornment } from "@mui/material";
+import { useNavigate } from "react-router";
+import { Autocomplete, FormHelperText, IconButton, InputAdornment, Grid } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { PALLETE } from '../../config/config';
+import { SignUpWrapper, Text } from "./SignUp.styles";
+import ICurrencyState from '../../interfaces/ICurrencyState';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { signUp } from '../../apiCalls/userCalls';
+import { fontSize } from '@mui/system';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -28,7 +32,9 @@ const validationSchema = yup.object({
 
 const SignUpForm: React.FC = () => {
 
-    const classes = useStyles()
+    const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
+
+    const [currency, setCurrency] = React.useState("DOLLAR");
 
     const navigate = useNavigate()
 
@@ -41,18 +47,16 @@ const SignUpForm: React.FC = () => {
             acceptTerms: false,
         },
         validationSchema,
-        onSubmit: (values) => {
+        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = await axios.post(`http://localhost:8081/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}`);
-                    console.log(values);
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
+                    localStorage.setItem("token", (await res).data)
                     swal("you sign up seccessfully", "good", "success");
-                    navigate("/login")
-                    return (res.data);
-                } catch (error) {
-                    console.log(values);
-                    swal("you have a error", `${error}`, "error");
                     navigate("/landingPage")
+                } catch (error) {
+                    swal("you have a error", `${error}`, "error");
+                    navigate("/login")
                 }
             }
             signUpRequest();
@@ -68,35 +72,50 @@ const SignUpForm: React.FC = () => {
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="fullName">Full Name</label><br />
-                <TextField className={classes.text} margin='normal' id="fullName" name="fullName"
+                <FormHelperText>Full Name</FormHelperText>
+                <Text><TextField id="fullName" name="fullName" fullWidth margin='normal'
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.fullName && Boolean(formik.errors.fullName)}
                     helperText={formik.touched.fullName && formik.errors.fullName}
-                />
+                /></Text>
 
-                <br /><label htmlFor="companyName">Company Name</label><br />
-                <TextField className={classes.text} margin='normal' id="companyName" name="companyName"
-                    value={formik.values.companyName}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.companyName && Boolean(formik.errors.companyName)}
-                    helperText={formik.touched.companyName && formik.errors.companyName}
-                />
+                <Text>
+                    <Grid item container xs={12} sm={12}>
+                        <Grid item xs={12} sm={8} sx={{ pr: 2 }}>
+                            <FormHelperText>Company Name</FormHelperText>
+                            <TextField id="companyName" name="companyName" fullWidth margin='normal'
+                                value={formik.values.companyName}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.companyName && Boolean(formik.errors.companyName)}
+                                helperText={formik.touched.companyName && formik.errors.companyName}
+                            />
+                        </Grid>
 
-                <br /><label htmlFor="email">Email Address</label><br />
-                <TextField className={classes.text} margin='normal' id="email" name="email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                />
+                        <Grid item xs={12} sm={4}>
+                            <FormHelperText style={{ marginBottom: '15px' }}>Currency</FormHelperText>
+                            <Autocomplete
+                                id="currency"
+                                className='currency'
+                                value={currency}
+                                defaultValue={currency}
+                                options={listOfCurrencies.map((c: string) => c)}
+                                inputValue={currency}
+                                onInputChange={(event, newInputValue) => {
+                                    setCurrency(newInputValue);
+                                }}
+                                renderInput={(params) => (
+                                    <TextField {...params} />
+                                )}
+                            />
+                        </Grid>
+                    </Grid>
+                </Text>
 
-                <br /><label htmlFor="password">Password</label><br />
-                <TextField className={classes.text} id="password" name="password" margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                <FormHelperText>Password</FormHelperText>
+                <Text><TextField id="password" name="password" fullWidth margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -111,9 +130,18 @@ const SignUpForm: React.FC = () => {
                             </InputAdornment>
                         ),
                     }}
-                />
+                /></Text>
 
-                <FormControlLabel
+                <FormHelperText>Email Address</FormHelperText>
+                <Text><TextField id="email" name="email" fullWidth margin='normal'
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                /></Text>
+
+                <br /><FormControlLabel
                     control={
                         <Checkbox
                             id="acceptTerms"
@@ -132,13 +160,14 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
-                < div className={classes.signUpWrapper}>
+
+                <SignUpWrapper>
                     <Button
-                        sx={{ backgroundColor: PALLETE.YELLOW }}
-                        type="submit" variant="contained" className={classes.signUpButton}>
+                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '1rem' }}
+                        type="submit" variant="contained" >
                         Sign Up
                     </Button>
-                </div>
+                </SignUpWrapper>
             </form >
         </div >
     );
