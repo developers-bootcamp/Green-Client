@@ -1,7 +1,7 @@
-import { IOrderItem } from "./IOrderItem";
-import { IUser } from "./IUser";
+import IOrderItem from "./IOrderItem";
+import IUser from "./IUser";
 
-export interface IOrder {
+export default interface IOrder {
     employee: any,
     customer: IUser,
     totalAmount: number,
@@ -14,7 +14,4 @@ export interface IOrder {
     notificationFlag: boolean,
     auditData: any,
     currency:string,
-    
 }
-
-

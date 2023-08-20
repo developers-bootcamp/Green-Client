@@ -5,7 +5,6 @@ import { log } from "console";
 import { Autocomplete, TextField } from "@mui/material";
 import { string } from "yup";
 interface prp {
-
     getFunction: (prefix: string) => Promise<{ [key: string]: any; }[]>
     setItem: any
     displayField: number
