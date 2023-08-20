@@ -1,45 +1,33 @@
-//import { Button, createStyles, FormControl, Grid, Input, MenuItem, Select, styled, TextField, ThemeProvider } from "@material-ui/core";
-import Autocomplete from '@mui/material/Autocomplete';
-import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
-
-import { FormikHelpers } from "formik/dist/types";
-import { useEffect, useState } from "react";
-//import './newOrder.css'
-
+import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from 'yup';
-import axios from "axios";
-import { log } from "console";
-
-import MyAutocomplete from "../../components/MyAutocomplete";
+import MyAutocomplete from "../../../../../components/MyAutocomplete";
 import { ExecException } from "child_process";
-import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
-import IProduct from "../../interfaces/model/IProduct";
-import IOrderItem from "../../interfaces/model/IOrderItem";
-import IOrder from "../../interfaces/model/IOrder";
-import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
-import { getProductsAutocomplete } from "../../apiCalls/productCalls";
-import IUser from "../../interfaces/model/IUser";
+import { addNewOrder, calculateOrder } from "../../../../../apiCalls/orderCalls";
+import IProduct from "../../../../../interfaces/model/IProduct";
+import IOrderItem from "../../../../../interfaces/model/IOrderItem";
+import IOrder from "../../../../../interfaces/model/IOrder";
+import { getCustomersAutocomplete } from "../../../../../apiCalls/userCalls";
+import { getProductsAutocomplete } from "../../../../../apiCalls/productCalls";
+import IUser from "../../../../../interfaces/model/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-import gifts from '../../images/gifts.png';
-
-import { MyButton,AddButton,BaloonImg } from './NewOrder.style';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/redux/store';
-
 import { MyButton, AddButton, BaloonImg } from './NewOrder.style';
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
     ed: yup.date().required("expire date is required")
-
 });
 
 const NewOrder: React.FC = (props) => {
     const [orderItems, setOrderItems] = useState([] as IOrderItem[])
     const [sumPrice, setSumPrice] = useState(0);
     const [calculatedOrder, setCalculatedOrder] = useState({} as { [key: string]: any })
-    const listOfCurrencies: string[] = []//useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
+
+    const saveCreditCardDetails = (ccn: string, cvv: string, ed: Date) => {
+
+    }
+
     const theOrder: IOrder = {
         employee: null,
         customer: {} as IUser,
@@ -59,10 +47,6 @@ const NewOrder: React.FC = (props) => {
 
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
-           await setCalculatedOrder(a);
-            if (a["-1"] as { [key: number]: number }) {
-                let sum = await Object.keys(a["-1"])[0];
-
             setCalculatedOrder(a);
             if (calculatedOrder["-1"] as { [key: number]: number }) {
                 let sum = Object.keys(calculatedOrder["-1"])[0];
@@ -175,15 +159,6 @@ const NewOrder: React.FC = (props) => {
                                                     setItem={(chosen: IProduct) => { formik.values.product = chosen }} displayField={1}></MyAutocomplete></Grid>
                                             <Grid item xs={2}>  <TextField variant="outlined" onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)} type="number" /> </Grid>
                                             <Grid item xs={2}>   <select
-
-<!--                                                     onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
-                                                >
-                                                  {listOfCurrencies.map(e=>{return<option>{e}</option>})}
-                                                </select>
-                                             </Grid>
-                                            </div>
-                                        </Grid> -->
-
                                                 onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
                                             >
                                                 <option value={"ISL"}>ISL</option>
@@ -193,11 +168,10 @@ const NewOrder: React.FC = (props) => {
                                         </div>
                                     </Grid>
 
-
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AddButton onClick={() => add()}
-                                            variant="contained">Add</AddButton></Grid>
+                                        <AddButton onClick={() => add()} variant="contained">Add</AddButton>
+                                    </Grid>
                                 </div>
                             </Grid>
                             <Grid item xs={5}>
@@ -246,21 +220,14 @@ const NewOrder: React.FC = (props) => {
                                         onBlur={formik.handleBlur}
                                     /></Grid>
                                 <Grid item xs={2}>
-                                    <MyButton type="submit">buy now</MyButton></Grid></Grid>
+                                    <MyButton type="submit">buy now</MyButton>
+                                </Grid>
+                            </Grid>
                         </form>
-
                     </Grid>
-
                 </Grid >
-                <Grid item xs={4}>
-                    <BaloonImg >
-                        <img src={gifts} alt="baloon" />
-                    </BaloonImg>
-
-                </Grid>
             </Grid >
         </div >
-
     </>)
 }
 
