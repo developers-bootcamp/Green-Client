@@ -50,9 +50,20 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-                    localStorage.setItem("token", (await res).data)
-                    swal("you sign up seccessfully", "good", "success");
+
+                    const res = await axios.post(`http://localhost:8080/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}&currency=SHEKEL`);
+                    console.log(values);
+                    //swal("you sign up seccessfully", "good", "success");
+                    navigate("/login")
+                    return (res.data);
+                } catch (error) {
+                    console.log(values);
+                   // swal("you have a error", `${error}`, "error");
+
+//                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
+//                     localStorage.setItem("token", (await res).data)
+//                     swal("you sign up seccessfully", "good", "success");
+
                     navigate("/landingPage")
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
