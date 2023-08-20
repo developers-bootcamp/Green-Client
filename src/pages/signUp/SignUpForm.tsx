@@ -15,7 +15,6 @@ import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
-import { fontSize } from '@mui/system';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -163,7 +162,7 @@ const SignUpForm: React.FC = () => {
 
                 <SignUpWrapper>
                     <Button
-                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '1rem' }}
+                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '20px' }}
                         type="submit" variant="contained" >
                         Sign Up
                     </Button>
