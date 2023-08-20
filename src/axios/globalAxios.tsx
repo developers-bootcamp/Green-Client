@@ -4,7 +4,6 @@ import { setLoading } from '../redux/redux/loadingSlice'
 import { ErrorModel } from '../components/globalErrorModel/ErrorModel';
 import { setError } from '../redux/redux/errorSlice';
 
-
 const  AxiosInstance =(store:any)=>{
 
 axios.interceptors.request.use(
