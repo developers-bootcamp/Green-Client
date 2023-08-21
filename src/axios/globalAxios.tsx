@@ -26,28 +26,24 @@ axios.interceptors.request.use(
 
 const requestInterceptor= axios.interceptors.request.use(
  (next)=> {
+  console.log("in requestInterceptor seting Loading to true")
     store.dispatch(setLoading(true))
     return next;
   },
-  
-  //  (error) =>{
-  //   return Promise.reject(error);
-  // }
 );
 
 const responseInterceptor=axios.interceptors.response.use(
   (next)=> {
-    console.log("in globalaxios");
+    console.log("in responseInterceptor seting Loading to false");
     store.dispatch(setLoading(false))
     return Promise.resolve(next);
   },
    (error) => {
     console.log("in error globalaxiossssss");
     console.log(error);
-    if(error.response?.status == 500){
-      store.dispatch(setLoading(false));
-      store.dispatch(setError("An error occurred!"));
-      return
+    store.dispatch(setLoading(false))
+    if(error.response?.status == 500)
+    {
       if (error.response.data && error.response.data.message) {
         store.dispatch(setError(error.response.data.message));
         return;

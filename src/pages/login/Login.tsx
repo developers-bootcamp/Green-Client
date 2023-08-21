@@ -42,15 +42,15 @@ const Login: React.FC = () => {
       }
       else
      {
-       const errorMessage = err.response?.data.message || 'An error occurred!';
-      store.dispatch(setError(errorMessage));
+       const errorMessage = err?.response?.data?.message || 'An error occurred!';
+       store.dispatch(setError(errorMessage));
      }
 
     }
   }
 
     const login = async () => {
-      const res = await axios.get(`http://localhost:8081/user/${email}/${password}`);// {
+      const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
       //   withCredentials: false,
       console.log(res);
       return res;

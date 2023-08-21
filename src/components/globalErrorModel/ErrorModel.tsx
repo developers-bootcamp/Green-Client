@@ -9,7 +9,7 @@ import {clearError, setError} from '../../redux/redux/errorSlice';
 
 export const ErrorModel:React.FC = () => {
   debugger
-const open = useSelector((state: RootState) => state.error?.isOpen || false);
+const open = useSelector((state: RootState) => state.error?.isOpen || true);
 console.log("open:",open)
 const errorMessage = useSelector((state:RootState)=>state.error?.errorMessage || "error");
 console.log("errorMessage:",errorMessage)
