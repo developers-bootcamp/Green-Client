@@ -17,7 +17,7 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
 
   const handleSearch = async (value: string) => {
     try {
-      const res = await axios.get(`http://localhost:8081/${path}/${value}`, {
+      const res = await axios.get(`http://localhost:8080/${path}/${value}`, {
         withCredentials: true,
       });
       setDataTerm(res.data);

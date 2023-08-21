@@ -14,6 +14,7 @@ import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
 
 const validationSchema = yup.object({
@@ -49,13 +50,14 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-                    localStorage.setItem("token", (await res).data)
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
+                    console.log(values);
                     swal("you sign up seccessfully", "good", "success");
-                    navigate("/landingPage")
+                    navigate("/login")
+                    return (res);
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
-                    navigate("/login")
+                    navigate("/landingPage")
                 }
             }
             signUpRequest();
