@@ -14,8 +14,8 @@ import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
-import { fontSize } from '@mui/system';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -50,24 +50,14 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-
-                    const res = await axios.post(`http://localhost:8080/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}&currency=SHEKEL`);
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
                     console.log(values);
-                    //swal("you sign up seccessfully", "good", "success");
+                    swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
-                    return (res.data);
-                } catch (error) {
-                    console.log(values);
-                   // swal("you have a error", `${error}`, "error");
-
-//                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-//                     localStorage.setItem("token", (await res).data)
-//                     swal("you sign up seccessfully", "good", "success");
-
-                    navigate("/landingPage")
+                    return (res);
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
-                    navigate("/login")
+                    navigate("/landingPage")
                 }
             }
             signUpRequest();

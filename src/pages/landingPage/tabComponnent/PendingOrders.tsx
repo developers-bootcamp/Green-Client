@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState } from "react"
-import { IOrder } from "../../../interfaces/IOrder"
-import { IUser } from "../../../interfaces/IUser"
+import IOrder from "../../../interfaces/model/IOrder"
+import IUser from "../../../interfaces/model/IUser"
 import { string } from "yup"
 import NewOrder from "../../NewOrderModel/NewOrder"
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
@@ -33,7 +32,7 @@ const columns: GridColDef[] = [
                 return 'yellow'
             if (params.value == 'PAYMENT_FAILED')
                 return 'red'
-                if (params.value == 'PROSSES_FAILED')
+            if (params.value == 'PROSSES_FAILED')
                 return 'orang'
 
             return ''
@@ -52,7 +51,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
     const [rowCountState, setRowCountState] = React.useState(
         10
-      );
+    );
 
     //=========================
     const [show, setShow] = useState(false);
@@ -79,12 +78,12 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
     }, [secondPageNo])
     const firstTable = async (sortBy: string) => {
-         let statuses=['PAYMENT_FAILED','PROSSES_FAILED']
+        let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
         let c = await getAllOrders(sortBy, statuses, firstPageNo);
         setRows(await c);
     }
     const secondTable = async (sortBy: string) => {
-       let statuses=['CREATED','APPROVED','PACKING']
+        let statuses = ['CREATED', 'APPROVED', 'PACKING']
         let c = await getAllOrders(sortBy, statuses, secondPageNo);
         setSecondRows(await c);
     }
@@ -181,10 +180,10 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
             {...data}
             rowCount={rowCountState}
             //loading={isLoading}
-           // pageSizeOptions={[5]}
+            // pageSizeOptions={[5]}
             paginationModel={paginationModel}
             paginationMode="server"
-            onPaginationModelChange={setPaginationModel}            />
+            onPaginationModelChange={setPaginationModel} />
         <button onClick={() => { setFirstPageNo(firstPageNo - 1) }}>prev</button>
         <button onClick={() => { setFirstPageNo(firstPageNo + 1) }}>more</button>
         <hr></hr>
