@@ -1,29 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ILoadingState {
+interface AppState {
   isLoading: boolean;
   requestCounter: number,
 }
 
-const initialState: ILoadingState = {
+const initialState: AppState = {
   isLoading: false,
-  requestCounter: 0,
+  requestCounter:0,
 };
 
-export const LoadingSlice = createSlice({
-  name: 'loadingReducer',
+const appSlice = createSlice({
+  name: 'app',
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
-      if (action.payload)
+      console.log("in setLoading");
+      if(action.payload)
         state.requestCounter++;
       else
         state.requestCounter--;
-      state.isLoading = state.requestCounter > 0;
+      state.isLoading = state.requestCounter>0;
     },
   },
 });
 
-export const { setLoading } = LoadingSlice.actions;
+export const { setLoading } = appSlice.actions;
 
-export default LoadingSlice.reducer;
+export default appSlice.reducer;
