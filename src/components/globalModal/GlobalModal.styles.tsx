@@ -2,13 +2,13 @@ import { styled } from '@mui/system';
 import { PALLETE } from '../../config/config';
 
 export const MyImg = styled('img')({
-    width: "100% ",
-    marginBottom: "25%",
-    marginTop: "70%",
+    width: "100%",
+    marginBottom: "2rem",
+    marginTop: "5rem",
 })
 
 export const MySideTxt = styled('div')({
-    fontSize: "14px",
+    fontSize: "20px",
     fontWeight: "bold",
     textAlign: "center",
     paddingLeft: "25px",
