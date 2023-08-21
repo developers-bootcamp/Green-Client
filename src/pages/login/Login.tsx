@@ -9,7 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
 import { setError } from '../../redux/slices/errorSlice';
-import store from '../../redux/redux/store';
+import {store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 
 const Login: React.FC = () => {
@@ -38,7 +38,6 @@ const Login: React.FC = () => {
         console.log("in 404 if");
         store.dispatch(setError("signup"));
         navigate("/signup")
-        //alert("sighnup")
       }
       else
      {
@@ -52,6 +51,7 @@ const Login: React.FC = () => {
     const login = async () => {
       const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
       //   withCredentials: false,
+      console.log("!!!!!!!!!!");
       console.log(res);
       return res;
       //localStorage.setItem("token", res.data)

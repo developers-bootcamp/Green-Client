@@ -4,8 +4,6 @@ import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
 
 import { FormikHelpers } from "formik/dist/types";
 import { useEffect, useState } from "react";
-//import './newOrder.css'
-
 import * as yup from 'yup';
 import axios from "axios";
 import { log } from "console";
@@ -20,7 +18,7 @@ import { getCustomersAutocomplete } from "../../../../../apiCalls/userCalls";
 import { getProductsAutocomplete } from "../../../../../apiCalls/productCalls";
 import IUser from "../../../../../interfaces/model/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-import gifts from '../../images/gifts.png';
+import gifts from '../../../../../images/gifts.png';
 import { MyButton, AddButton, BaloonImg } from './NewOrder.style';
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
