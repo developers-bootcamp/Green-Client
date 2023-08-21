@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { LOG_IN } from "../config/config"
-import { setLoading } from '../redux/redux/loadingSlice'
+import { setLoading } from '../redux/slices/loadingSlice'; 
 import { ErrorModel } from '../components/globalErrorModel/ErrorModel';
-import { setError } from '../redux/redux/errorSlice';
+import { setError } from '../redux/slices/errorSlice';
 
 const  AxiosInstance =(store:any)=>{
 

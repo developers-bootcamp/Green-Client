@@ -1,3 +1,13 @@
+
+ import { PALLETE } from '../../config/config';
+ import { styled } from '@mui/system';
+ import Tab from '@mui/material/Tab';
+
+export const MyTab = styled(Tab)({
+    textTransform: "none",
+    fontSize:"125%",
+    color: "black"
+})
 //  import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 //  import { PALLETE } from '../../config/config';
 //  import { styled } from '@mui/system';

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IOrder } from "../interfaces/IOrder"
+import IOrder from "../interfaces/model/IOrder"
 import { ORDER } from "../config/config";
 
 export const addNewOrder = async (order: IOrder) => {
@@ -26,6 +26,20 @@ export const calculateOrder = async (order: IOrder) => {
   });
   console.log(await ans.data)
   return await ans.data
+
+}
+export const getOrders=async(sortBy:string,pageNo:number,orderStatus:string[])=>{
+  debugger
+  console.log("base_url")
+  console.log(ORDER)
+let token=localStorage.getItem("token");
+if (token == undefined)
+    token = ""
+    const config = { headers: { 'Authorization': token} };
+    const url=`${ORDER}?orderBy=${sortBy}&orderStatus=${orderStatus}&pageNo=${pageNo}`
+    console.log(url)
+    const ans = await axios.get(url,config)
+    return await ans.data
 
 }
 

@@ -8,7 +8,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
-import { setError } from '../../redux/redux/errorSlice';
+import { setError } from '../../redux/slices/errorSlice';
 import store from '../../redux/redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 
