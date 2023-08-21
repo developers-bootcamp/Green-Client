@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ErrorState {
+interface IErrorState {
   errorMessage: string | null;
   isOpen:boolean | false;
 }
 
-const initialState: ErrorState = {
+const initialState: IErrorState = {
   errorMessage: null,
   isOpen:false,
 };

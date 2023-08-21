@@ -3,15 +3,15 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 import { PALLETE } from '../../config/config';
 import img from '../../images/errorMessage.png';
 import { useSelector } from 'react-redux';
-import store, { RootState } from '../../redux/redux/store';
+import  {store, RootState } from '../../redux/store';
 import axios from 'axios';
-import {clearError, setError} from '../../redux/redux/errorSlice';
+import {clearError, setError} from '../../redux/slices/errorSlice';
 
 export const ErrorModel:React.FC = () => {
   debugger
-const open = useSelector((state: RootState) => state.error?.isOpen || true);
+const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
 console.log("open:",open)
-const errorMessage = useSelector((state:RootState)=>state.error?.errorMessage || "error");
+const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || "error");
 console.log("errorMessage:",errorMessage)
 
     const handleClose = () => {

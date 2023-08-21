@@ -4,8 +4,6 @@ import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
 
 import { FormikHelpers } from "formik/dist/types";
 import { useEffect, useState } from "react";
-//import './newOrder.css'
-
 import * as yup from 'yup';
 import axios from "axios";
 import { log } from "console";

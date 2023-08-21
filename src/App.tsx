@@ -10,7 +10,7 @@ import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 import { ErrorModel } from './components/globalErrorModel/ErrorModel';
 import AxiosInstance from './axios/globalAxios';
-import store from './redux/redux/store';
+import {store} from './redux/store';
 import { useAppDispatch } from './redux/store';
 import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
@@ -19,16 +19,16 @@ function App() {
 
   const dispatch = useAppDispatch()
 
-  const getCurrenciesAsync = async () => {
-    await getCurrencies().then(res => {
-      dispatch(setCurrencies(res.data));
-    });
-  }
+  // const getCurrenciesAsync = async () => {
+  //   await getCurrencies().then(res => {
+  //     dispatch(setCurrencies(res.data));
+  //   });
+  // }
 
 
-  useEffect(() => {
-    getCurrenciesAsync();
-  }, []);
+  // useEffect(() => {
+  //   getCurrenciesAsync();
+  // }, []);
 
   useEffect(() => {
     const cleanupAxios = AxiosInstance(store);
