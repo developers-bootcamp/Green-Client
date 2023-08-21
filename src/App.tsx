@@ -1,33 +1,41 @@
+import React, { useEffect } from 'react';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Routes } from 'react-router';
 import SignUp from './pages/signUp/SignUp';
-import LandingPage from './pages/landingPage/LandingPage';
 import Login from './pages/login/Login';
-import { Provider } from 'react-redux';
-import { Reducer, createStore } from 'redux';
+import Loader from './components/globalLoader/Loader';
+import TabsComponent from './pages/landingPage/TabsComponent';
+import LandingPage from './pages/landingPage/LandingPage';
+import { useAppDispatch } from './redux/store';
+import { setCurrencies } from './redux/slices/currencySlice';
+import { getCurrencies } from './apiCalls/currencyCalls';
 
 function App() {
 
-  const rootReducer: Reducer<any, any> = (state = {}, action) => {
-    switch (action.type) {
-      default:
-        return state
-    }
+  const dispatch = useAppDispatch()
+
+  const getCurrenciesAsync = async () => {
+    await getCurrencies().then(res => {
+      dispatch(setCurrencies(res.data));
+    });
   }
 
-  const store = createStore(rootReducer)
+  useEffect(() => {
+    getCurrenciesAsync();
+  }, []);
 
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/landingPage' element={<LandingPage />} />
-          <Route path='/signUp' element={<SignUp />} />
-        </Routes>
-      </div>
-    </Provider>
+    <div className="App">
+      {<Loader />}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/landingPage" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/tabsComponent" element={<TabsComponent />} />
+        <Route path="/signUp" element={<SignUp />} />
+      </Routes>
+    </div>
   );
 }
 

@@ -1,11 +1,21 @@
-import dotenv from 'dotenv'
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-dotenv.config();
+const GET_ALL_ORDERS_URL = `${BASE_URL}/order`;
+const ORDER = `${BASE_URL}/order`
+const GET_USERS = `${BASE_URL}/user`;
+const GET_PRODUCTS = `${BASE_URL}/product`;
+const LOG_IN = `${BASE_URL}/user`;
+const SIGN_UP = `${BASE_URL}/user/signUp`;
+const GET_CURRENCIES = `${BASE_URL}/currency`;
 
-const BASE_URL= process.env.DASHBOARD_API_BASE_URL;
+export { GET_ALL_ORDERS_URL, LOG_IN, BASE_URL, GET_USERS, GET_PRODUCTS, ORDER, SIGN_UP, GET_CURRENCIES }
 
-const GET_ALL_ORDERS_URL = `${BASE_URL}/orders`;
-
-const LOG_IN = `${BASE_URL}/login/logIn`
-
-export {GET_ALL_ORDERS_URL, LOG_IN}
+export const PALLETE = {
+    BLUE: '#6794CF',
+    YELLOW: '#FAE282',
+    RED: '#EE696A',
+    GREEN: '#7ED787',
+    ORANGE: '#EB9F6E',
+    WHITE: '#FFFFFF',
+    GRAY: '#F2F2F2',
+}
