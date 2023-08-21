@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-<<<<<<<< HEAD:src/redux/slices/loadingSlice.ts
 interface AppState {
 interface ILoadingState {
 >>>>>>>> 2d2acaa7ea6ce98d06cbf97780f1952e55908a23:src/redux/slices/loadingSlice.tsx
