@@ -50,11 +50,8 @@ const Login: React.FC = () => {
 
     const login = async () => {
       const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
-      //   withCredentials: false,
-      console.log("!!!!!!!!!!");
       console.log(res);
       return res;
-      //localStorage.setItem("token", res.data)
     }
 
     return (
