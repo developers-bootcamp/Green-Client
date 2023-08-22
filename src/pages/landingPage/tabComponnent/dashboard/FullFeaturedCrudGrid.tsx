@@ -36,7 +36,6 @@ interface EditToolbarProps {
   ) => void;
   setType:(newType:(oldType:any)=>any,)=>void
 }
-
 function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel,setType } = props;
   let t:any="";
