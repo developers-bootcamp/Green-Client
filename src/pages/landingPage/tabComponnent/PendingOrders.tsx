@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react"
-import IOrder from "../../../interfaces/model/IOrder"
-import NewOrder from "../../landingPage/tabComponnent/pendingOrders/newOrderModel/NewOrder";
+
+import { string } from "yup"
+import NewOrder from "../../NewOrderModel/NewOrder"
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
 import { get } from "http"
 import { getOrders } from "../../../apiCalls/orderCalls"
 import { MyTypography } from "./PendingOrders.style"
 import { GridColDef, DataGrid, GridCellParams } from '@mui/x-data-grid';
 import './pendingOrders.css'
+import IOrder from "../../../interfaces/model/IOrder"
 
 interface prop {
     name: string | undefined,
@@ -93,12 +95,11 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': "null", 'products': "bla bla empty" })
             else {
                 let p = ""
-                debugger
                 e.orderItemsList.forEach(prod => {
                     if (prod.product != null)
                         p += `${prod.quantity} ${prod.product.name}, `
                 })
-                currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': e.customer.fullName, 'products': p })
+                currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': "e.customer", 'products': p })
             }
         })
         return currentRows

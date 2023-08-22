@@ -16,6 +16,8 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
+import { fontSize } from '@mui/system';
+import axios from 'axios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -54,11 +56,20 @@ const SignUpForm: React.FC = () => {
                     console.log(values);
                     swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
-                    return (res);
+                    return (res.data);
                 } catch (error) {
-                    swal("you have a error", `${error}`, "error");
-                    navigate("/landingPage")
-                }
+                    console.log(values);
+                   // swal("you have a error", `${error}`, "error");
+
+//                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
+//                     localStorage.setItem("token", (await res).data)
+//                     swal("you sign up seccessfully", "good", "success");
+
+                    navigate("/landingPage")}
+                // } catch (error) {
+                //     swal("you have a error", `${error}`, "error");
+                //     navigate("/login")
+                // }
             }
             signUpRequest();
         }

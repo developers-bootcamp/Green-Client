@@ -2,16 +2,15 @@ import axios from "axios";
 
 import { BASE_URL, GET_USERS, SIGN_UP } from "../config/config";
 //import {BASE_URL} from '../config/config'
+export const getCustomersAutocomplete=async (prefix:string) :Promise<{ [key: string]: any; }[]> =>{
+let t=localStorage.getItem("token");
+if(t==undefined)
+    t=""
+const config = { headers: { 'Authorization': t} };
+let url=`${GET_USERS}/${prefix}`
 
-export const getCustomersAutocomplete = async (prefix: string): Promise<{ [key: string]: any; }[]> => {
-    let t = localStorage.getItem("token");
-    if (t == undefined)
-        t = ""
-    const config = { headers: { 'Authorization': t } };
-    let url = `${GET_USERS}/${prefix}`
-
-    const x = await axios.get(url, config);
-    return (await x).data;
+const x= await axios.get(url,config);
+return  (await x).data;
 }
 
 export const signUp = async (fullName: string, companyName: string, email: string, password: string, currency: string) => {
