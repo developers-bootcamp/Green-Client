@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ILoadingState {
   isLoading: boolean;
-  requestCounter: number,
+  requestCounter: number;
 }
 
 const initialState: ILoadingState = {
@@ -10,11 +10,12 @@ const initialState: ILoadingState = {
   requestCounter: 0,
 };
 
-export const LoadingSlice = createSlice({
-  name: 'loadingReducer',
+const loadingSlice = createSlice({
+  name: 'loading', 
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
+      console.log("in setLoading");
       if (action.payload)
         state.requestCounter++;
       else
@@ -24,6 +25,6 @@ export const LoadingSlice = createSlice({
   },
 });
 
-export const { setLoading } = LoadingSlice.actions;
+export const { setLoading } = loadingSlice.actions; 
 
-export default LoadingSlice.reducer;
+export default loadingSlice.reducer;

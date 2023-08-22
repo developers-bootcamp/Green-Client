@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
-import { PALLETE } from '../../config/config';
+import { PALLETE } from '../../../../../config/config';
 import { Button } from '@mui/material';
 
 const MyButton = styled(Button)({
