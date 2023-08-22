@@ -1,5 +1,4 @@
 
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -52,9 +51,9 @@ function EditToolbar(props: EditToolbarProps) {
   return (
     <>
       <GridToolbarContainer>
-        <AddButtons color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
           Add {t}
-        </AddButtons>
+        </Button>
       </GridToolbarContainer>
       {/* <GridToolbarContainer>
         <GridToolbarExport />
@@ -221,7 +220,16 @@ export default function FullFeaturedCrudGrid(props: any) {
           paddingLeft: '7px!important', borderBottom: '5px solid #FFFF!important',
           borderRight: '5px solid #FFFF!important',
           Padding:"0pxIimportant"
-        }
+        },
+        '& .css-5wly58-MuiDataGrid-root .MuiDataGrid-row': {
+          border: '5px',
+          borderLeftStyle: 'solid',
+          borderLeftColor: props.color,
+          paddingBottom: '5px',
+          padding: '0px !important',
+          height: '10px !important',
+          backgroundColor: "white!important",
+          borderBottom: '5px solid #FFFF !important'},
       }}
     >
       <DataGrid

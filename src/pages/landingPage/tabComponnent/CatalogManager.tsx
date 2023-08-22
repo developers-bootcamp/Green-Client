@@ -75,8 +75,8 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   }, [changeProductCategory])
   return (
     <>
-      {allProduct != null && allCategoryName != null&&<FullFeaturedCrudGrid type="Product" rows={allProduct} head={productHead} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd}></FullFeaturedCrudGrid>}
-      {allCategory != null && <FullFeaturedCrudGrid type="Product_Categories" rows={allCategory} head={head} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd}></FullFeaturedCrudGrid>}
+          {allCategory != null && <FullFeaturedCrudGrid type="Product_Categories" rows={allCategory} head={head} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd} color={'#EE696A'}></FullFeaturedCrudGrid>}
+      {allProduct != null && allCategoryName != null&&<FullFeaturedCrudGrid type="Product" rows={allProduct} head={productHead} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd} color={'#FAE282'}></FullFeaturedCrudGrid>}
 
     </>
   );
