@@ -1,49 +1,20 @@
-import Grid from '@mui/material/Grid';
-import { MainDialog, LeftGrid, RightGrid, MainGrid, Pic, SignUpButton, SignUpWrapper } from './SignUp.styles'
 import SignUpForm from './SignUpForm';
-import { DialogContent, Dialog, Link } from '@mui/material';
-import {useState}  from 'react';
+import { useState } from 'react';
+import img from '../../images/gifts.png';
+import GlobalModal from '../../components/globalModal/GlobalModal';
 
 const SignUp: React.FC = () => {
 
     const [open, setOpen] = useState(true);
 
-    const handleOpenDialog = () => {
-        setOpen(true)
-    }
-
-    const handleCloseDialog = () => {
+    const handleClose = () => {
         setOpen(false)
     }
 
     return <>
-        {/*<SignUpButton> {!open && <Link onClick={handleOpenDialog} >sign Up</Link >} </SignUpButton> */}
-        <MainDialog>
-            <dialog onClose={handleCloseDialog} open={open}>
-                <DialogContent>
-                    <MainGrid>
-                        <Grid container maxWidth='md' item zeroMinWidth wrap="nowrap" >
-                            <LeftGrid>
-                                <Grid container item zeroMinWidth wrap="nowrap" xs={8} md={8} >
-                                    <div>
-                                        <h2>Set up your account</h2>
-                                        <SignUpForm />
-                                    </div>
-                                </Grid>
-                            </LeftGrid>
-                            <RightGrid>
-                                <Grid container item zeroMinWidth wrap="nowrap" xs={4} md={4}  >
-                                    <div>
-                                        {/* <Pic><img src={img} alt="img" /></Pic> */}
-                                        <h3>Fill in your details so you can login later</h3>
-                                    </div>
-                                </Grid>
-                            </RightGrid>
-                        </Grid>
-                    </MainGrid>
-                </DialogContent>
-            </dialog>
-        </MainDialog >
+        <GlobalModal header={"Set up your account"} isOpen={open} handleClose={handleClose} img={img} sideTxt={"Fill in your details so you can login later"}>
+            <SignUpForm />
+        </GlobalModal>
     </>
 }
 
