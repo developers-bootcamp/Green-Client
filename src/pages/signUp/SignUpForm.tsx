@@ -16,6 +16,7 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
+import axios from 'axios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -64,11 +65,11 @@ const SignUpForm: React.FC = () => {
 //                     localStorage.setItem("token", (await res).data)
 //                     swal("you sign up seccessfully", "good", "success");
 
-                    navigate("/landingPage")
-                } catch (error) {
-                    swal("you have a error", `${error}`, "error");
-                    navigate("/login")
-                }
+                    navigate("/landingPage")}
+                // } catch (error) {
+                //     swal("you have a error", `${error}`, "error");
+                //     navigate("/login")
+                // }
             }
             signUpRequest();
         }

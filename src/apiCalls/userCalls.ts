@@ -11,7 +11,7 @@ let url=`${GET_USERS}/${prefix}`
 
 const x= await axios.get(url,config);
 return  (await x).data;
-
+}
 
 export const signUp = async (fullName: string, companyName: string, email: string, password: string, currency: string) => {
     return await axios.post(`${SIGN_UP}?fullName=${fullName}&companyName=${companyName}&email=${email}&password=${password}&currency=${currency}`)

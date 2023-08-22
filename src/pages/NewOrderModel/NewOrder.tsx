@@ -1,17 +1,18 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from 'yup';
-import MyAutocomplete from "../../../../../components/MyAutocomplete";
+import MyAutocomplete from "../../components/MyAutocomplete";
 import { ExecException } from "child_process";
-import { addNewOrder, calculateOrder } from "../../../../../apiCalls/orderCalls";
-import IProduct from "../../../../../interfaces/model/IProduct";
-import IOrderItem from "../../../../../interfaces/model/IOrderItem";
-import IOrder from "../../../../../interfaces/model/IOrder";
-import { getCustomersAutocomplete } from "../../../../../apiCalls/userCalls";
-import { getProductsAutocomplete } from "../../../../../apiCalls/productCalls";
-import IUser from "../../../../../interfaces/model/IUser";
+import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
+// import IProduct from "../../interfaces/model/IProduct";
+import IOrderItem from "../../interfaces/model/IOrderItem";
+import IOrder from "../../interfaces/model/IOrder";
+import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
+import { getProductsAutocomplete } from "../../apiCalls/productCalls";
+import IUser from "../../interfaces/model/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
 import { MyButton, AddButton, BaloonImg } from './NewOrder.style';
+import { IProduct } from "../../interfaces/model/IProduct";
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),

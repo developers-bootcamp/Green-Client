@@ -8,7 +8,7 @@ import Loader from './components/globalLoader/Loader';
 import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 import { useAppDispatch } from './redux/store';
-import { setCurrencies } from './redux/slices/currencySlice';
+import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
 
 function App() {
