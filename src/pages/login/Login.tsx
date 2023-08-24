@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Paper, TextField } from '@mui/material';
@@ -31,9 +31,6 @@ const Login: React.FC = () => {
       localStorage.setItem('token',res.data)
       navigate("/")
     } catch (err: any) {
-      console.log("err",err);
-      console.log("err.response?.status",err.response?.status);
-      console.log("err.request",err.request);
       if (err.response?.status == 404) {
         console.log("in 404 if");
         store.dispatch(setError("signup"));
@@ -57,8 +54,10 @@ const Login: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
         <Paper sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '600px', height: '400px' }}>
-          <p style={{ marginTop: '0px' }}>Log in to your account</p>
-          <h4>Enter your email and password</h4>
+          <div>
+            <p style={{ marginBottom: '5px' }}>Log in to your account</p>
+            <h4 style={{ marginTop: '0px' }}>Enter your email and password</h4>
+          </div>
           <div style={{ marginBottom: '10px' }}>
             <TextField id="email" label="Email address" variant="outlined" sx={{ marginBottom: '10px', width: '300px' }}
               onChange={(e) => { setEmail(e.target.value) }} />
@@ -96,8 +95,10 @@ const Login: React.FC = () => {
                   borderRadius: '15px'
                 }}
                 onClick={handleSubmit}>
-                Sign Up
+                LOGIN
               </Button>
+              <br></br><br></br>
+             <p>don't have an account yet? <Link to="/signup">signUp</Link></p>
               {err && <p>{err}</p>}
             </FormControl>
           </div>
