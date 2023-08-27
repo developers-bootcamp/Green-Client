@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { PALLETE } from "../../../config/config";
+
 
 const MyTypography = styled(Typography)({
   
@@ -11,4 +12,23 @@ const MyTypography = styled(Typography)({
     padding:'15px',
 
   });
-  export {MyTypography}
+  const SortButton = styled(Button)({
+  
+    backgroundColor:PALLETE.WHITE,
+    color:PALLETE.BLUE,
+    borderRadius:'1%',
+    marginLeft:'-95%',
+    padding:'5px',
+
+  });
+  const NewOrderButton = styled(Button)({
+  
+    backgroundColor: PALLETE.ORANGE,
+    color:PALLETE.WHITE,
+    borderRadius:'5%',
+    //marginLeft:'-95%',
+    borderColor:PALLETE.ORANGE
+  
+
+  });
+  export {MyTypography,SortButton,NewOrderButton}

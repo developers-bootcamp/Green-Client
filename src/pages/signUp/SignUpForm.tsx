@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import swal from 'sweetalert';
+//import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -14,8 +14,9 @@ import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
-import { signUp } from '../../apiCalls/userCalls';
+import signUp  from '../signUp/SignUp';
 import { fontSize } from '@mui/system';
+import axios from 'axios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -65,10 +66,11 @@ const SignUpForm: React.FC = () => {
 //                     swal("you sign up seccessfully", "good", "success");
 
                     navigate("/landingPage")
-                } catch (error) {
-                    swal("you have a error", `${error}`, "error");
-                    navigate("/login")
-                }
+                } 
+                // catch (error) {
+                //     swal("you have a error", `${error}`, "error");
+                //     navigate("/login")
+                // }
             }
             signUpRequest();
         }

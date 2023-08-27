@@ -1,26 +1,29 @@
 
 import React, { useEffect, useState } from "react"
-import { IOrder } from "../../../interfaces/IOrder"
-import { IUser } from "../../../interfaces/IUser"
+import IOrder from '../../../interfaces/model/IOrder'
+import IUser from "../../../interfaces/model/IUser"
 import { string } from "yup"
 import NewOrder from "../../NewOrderModel/NewOrder"
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
 import { get } from "http"
-import { getOrders } from "../../../apiCalls/orderCalls"
-import { MyTypography } from "./PendingOrders.style"
+import { countOrders, getOrders } from "../../../apiCalls/orderCalls"
+import { MyTypography, NewOrderButton, SortButton } from "./PendingOrders.style"
 import DataTable from "./try.pendingOrders"
 import { GridColDef, DataGrid, GridCellParams } from '@mui/x-data-grid';
 import './pendingOrders.css'
-
+import IProduct from "../../../interfaces/model/IProduct"
+import IOrderItem from "../../../interfaces/model/IOrderItem"
+import SortIcon from '@mui/icons-material/Sort';
 interface prop {
     name: string | undefined,
     type: string | undefined
 }
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'price', headerName: 'Price', width: 70 },
+    { field: 'id', headerName: 'ID', width: 100, cellClassName: 'regularCell' },
+    { field: 'customer', headerName: 'Customer', width: 150, cellClassName: 'regularCell' },
+
     {
-        field: 'status', type: 'string', headerName: 'Status', width: 130,
+        field: 'status', type: 'string', headerName: 'Status', width: 200,
         cellClassName: (params: GridCellParams<any, string>) => {
             if (params.value == null) {
                 return '';
@@ -33,99 +36,106 @@ const columns: GridColDef[] = [
                 return 'yellow'
             if (params.value == 'PAYMENT_FAILED')
                 return 'red'
-                if (params.value == 'PROSSES_FAILED')
+            if (params.value == 'PROSSES_FAILED')
                 return 'orang'
 
             return ''
         },
 
     },
-    { field: 'customer', headerName: 'Customer', width: 130 },
-    { field: 'products', headerName: 'Products', width: 300 },
+
+    { field: 'products', headerName: 'Products', width: 400, cellClassName: 'regularCell' },
+    { field: 'price', headerName: 'Price', width: 100, cellClassName: 'regularCell' },
+    { field: 'createDate', headerName: 'Create Date', width: 300, cellClassName: 'regularCell' },
 ];
 const PendingOrders: React.FC<prop> = ({ name, type }) => {
-    //=========================
-    const [paginationModel, setPaginationModel] = React.useState({
-        page: 0,
-        pageSize: 5,
-    });
-
-    const [rowCountState, setRowCountState] = React.useState(
-        10
-      );
-
-    //=========================
+let count:number=0
     const [show, setShow] = useState(false);
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    const [sortPop, setSortPop] = React.useState<HTMLButtonElement | null>(null);
     const handleShow = () => setShow(true);
-    const [close, setClose] = useState(false);
     const [data, setData] = useState([] as IOrder[])
-    const [firstPageNo, setFirstPageNo] = useState(0)
-    const [secondPageNo, setSecondPageNo] = useState(0)
-    const [rows, setRows] = useState([] as { id: string, price: number, status: string, customer: string, products: string }[])
+    const [rows, setRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
+    const [secondRows, setSecondRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
+    const [firstSumOrders,setFirstSumOrders]=useState(0)
 
-    const [secondRows, setSecondRows] = useState([] as { id: string, price: number, status: string, customer: string, products: string }[])
+    const [secondSumOrders,setSecondSumOrders]=useState(0)
     const handleCloseNewOrder = () => setShow(false);
-    const choose = (value: any) => {
-        firstTable(value);
-        secondTable(value);
-    }
+    
+    //pagination
+    const [firstPaginationModel, setFirstPaginationModel] = React.useState({
+        page: 0,
+        pageSize:1,
+      });
+      const [secondPaginationModel, setSecondPaginationModel] = React.useState({
+        page: 0,
+        pageSize: 1,
+      });
+    //end pagination
+  //שליפות
     useEffect(() => {
         firstTable('')
-        secondTable('')
-    }, [firstPageNo]);
-    useEffect(() => {
+       
+        
+    }, [firstPaginationModel,show]);
+      useEffect(() => {
         secondTable('')
 
-    }, [secondPageNo])
+    }, [secondPaginationModel,show])
+
     const firstTable = async (sortBy: string) => {
-         let statuses=['PAYMENT_FAILED','PROSSES_FAILED']
-        let c = await getAllOrders(sortBy, statuses, firstPageNo);
+        let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
+        let c = await getAllOrders(sortBy, statuses, firstPaginationModel.page);
+        setFirstSumOrders(await countOrders(statuses))
         setRows(await c);
     }
     const secondTable = async (sortBy: string) => {
-       let statuses=['CREATED','APPROVED','PACKING']
-        let c = await getAllOrders(sortBy, statuses, secondPageNo);
+        let statuses = ['CREATED', 'APPROVED', 'PACKING']
+        let c = await getAllOrders(sortBy, statuses, secondPaginationModel.page);
+        setSecondSumOrders(await countOrders(statuses))
+
         setSecondRows(await c);
     }
     const getAllOrders = async (sortBy: string, orderStatus: string[], pageNo: number) => {
         const orders: IOrder[] = await getOrders(sortBy, pageNo, orderStatus);
         setData(orders)
-        let currentRows: { id: string, price: number, status: string, customer: string, products: string }[] = []
+        let currentRows: { id: string, price: string, status: string, customer: string, products: string, createDate: string }[] = []
         orders.forEach(e => {
             if (e.customer == null)
-                currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': "null", 'products': "bla bla empty" })
+                currentRows.push({ 'id':(count++).toString(), 'price': e.totalAmount + "$", 'status': e.orderStatus, 'customer': "null", 'products': "bla bla empty", 'createDate': new Date().toString() })
             else {
                 let p = ""
-                debugger
-                e.orderItemsList.forEach(prod => {
+                e.orderItemsList.forEach((prod: IOrderItem) => {
                     if (prod.product != null)
                         p += `${prod.quantity} ${prod.product.name}, `
                 })
-                currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': e.customer.fullName, 'products': p })
+                currentRows.push({ id: (count++).toString(), 'price': e.totalAmount + "$", 'status': e.orderStatus, 'customer': e.customer.fullName, 'products': p, 'createDate': e.auditData.createDate.toLocaleString() })
             }
         })
         return currentRows
     }
+    
 
-
-
+// end שליפות
+  //sort
+    const choose = (value: any) => {
+        firstTable(value);
+        secondTable(value);
+    }
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
+        setSortPop(event.currentTarget);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setSortPop(null);
     };
+    const open = Boolean(sortPop);
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
+//end sort
     return (<>
         <div>
-            <Button variant="outlined" onClick={handleShow}>
+            <NewOrderButton variant="outlined" onClick={handleShow}>
                 New Order
-            </Button>
+            </NewOrderButton>
             <div className="dialog">
                 <Dialog
                     open={show}
@@ -133,20 +143,19 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                     fullWidth
                     maxWidth="lg"
                 >
-
                     <DialogContent >
                         <div style={{ borderRadius: '50%' }}>
-                            <NewOrder  ></NewOrder></div>
+                            <NewOrder setShow={handleCloseNewOrder} ></NewOrder></div>
                     </DialogContent>
                 </Dialog></div>
         </div>
-        <Button variant="contained" onClick={handleClick}>
-            Sort
-        </Button>
+        <SortButton variant="contained" onClick={handleClick}>
+            Sort <SortIcon />
+        </SortButton>
         <Popover
-            //id={id}
+
             open={open}
-            anchorEl={anchorEl}
+            anchorEl={sortPop}
             onClose={handleClose}
             anchorOrigin={{
                 vertical: 'bottom',
@@ -154,7 +163,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
             }}
         >
             <MyTypography >
-                <h2>Sort by</h2>
+                <h2>Sort by <SortIcon /></h2>
                 <Select onChange={(e) => { choose(e.target.value) }} >
                     <option value={""}></option>
                     <MenuItem value={"totalAmount"}>sum price</MenuItem>
@@ -164,38 +173,26 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 </Select>
             </MyTypography>
         </Popover>
-        <div>{name}of {type}</div>
-
-
         <DataGrid
-            columns={columns}
-            // columns={columns} rows={rows}
-            // {...data}
-            // //rowCount={8}
-            // //loading={isLoading}
-            // pageSizeOptions={[5]}
-            // paginationModel={paginationModel}
-            // paginationMode="server"
-            // onPaginationModelChange={setPaginationModel} 
-            rows={rows}
-            {...data}
-            rowCount={rowCountState}
-            //loading={isLoading}
-           // pageSizeOptions={[5]}
-            paginationModel={paginationModel}
+            columns={columns} rows={rows}
+            rowCount={firstSumOrders}
+            paginationModel={firstPaginationModel}
             paginationMode="server"
-            onPaginationModelChange={setPaginationModel}            />
-        <button onClick={() => { setFirstPageNo(firstPageNo - 1) }}>prev</button>
-        <button onClick={() => { setFirstPageNo(firstPageNo + 1) }}>more</button>
-        <hr></hr>
-        <DataGrid
-            paginationMode="server"
-            rows={secondRows}
-            columns={columns}
+            onPaginationModelChange={setFirstPaginationModel}
 
         />
-        <button onClick={() => { setSecondPageNo(secondPageNo - 1) }}>prev</button>
-        <button onClick={() => { setSecondPageNo(secondPageNo + 1) }}>more</button>
+        
+
+<br></br>
+        <DataGrid
+            columns={columns} rows={secondRows}
+            rowCount={secondSumOrders}
+            paginationModel={secondPaginationModel}
+            paginationMode="server"
+            onPaginationModelChange={setSecondPaginationModel}
+            
+        />
+
 
     </>
     )

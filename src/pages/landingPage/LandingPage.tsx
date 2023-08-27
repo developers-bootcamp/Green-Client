@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import NewOrder from "../newOrderModel/NewOrder"
+import NewOrder from "../NewOrderModel/NewOrder"
 import { Button, Dialog, DialogContent } from "@mui/material"
 
 const LandingPage: React.FC = () => {
@@ -17,10 +17,10 @@ const LandingPage: React.FC = () => {
 
   return <>
     <div>
-      <Button variant="outlined" onClick={handleShow}>
+      {/* <Button variant="outlined" onClick={handleShow}>
         New Order
-      </Button>
-      <div className="dialog">
+      </Button> */}
+      {/* <div className="dialog">
         <Dialog
           open={show}
           onClose={handleClose}
@@ -33,10 +33,9 @@ const LandingPage: React.FC = () => {
         >
 
           <DialogContent >
-            <div style={{ borderRadius: '50%' }}>
-              <NewOrder  ></NewOrder></div>
+           
           </DialogContent>
-        </Dialog></div>
+        </Dialog></div> */}
     </div>
     <p>landingPage component here</p>
   </>

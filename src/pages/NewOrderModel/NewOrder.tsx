@@ -1,28 +1,35 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from 'yup';
-import MyAutocomplete from "../../../../../components/MyAutocomplete";
+import MyAutocomplete from "../../components/MyAutocomplete";
 import { ExecException } from "child_process";
-import { addNewOrder, calculateOrder } from "../../../../../apiCalls/orderCalls";
-import IProduct from "../../../../../interfaces/model/IProduct";
-import IOrderItem from "../../../../../interfaces/model/IOrderItem";
-import IOrder from "../../../../../interfaces/model/IOrder";
-import { getCustomersAutocomplete } from "../../../../../apiCalls/userCalls";
-import { getProductsAutocomplete } from "../../../../../apiCalls/productCalls";
-import IUser from "../../../../../interfaces/model/IUser";
+import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
+import IProduct from "../../interfaces/model/IProduct";
+import IOrderItem from "../../interfaces/model/IOrderItem";
+import IOrder from "../../interfaces/model/IOrder";
+import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
+import { getProductsAutocomplete } from "../../apiCalls/productCalls";
+import IUser from "../../interfaces/model/IUser";
 import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-import { MyButton, AddButton, BaloonImg } from './NewOrder.style';
+import { MyButton, AddButton, BaloonImg } from '../NewOrderModel/NewOrder.style';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import ICurrencyState from "../../interfaces/ICurrencyState";
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
     ed: yup.date().required("expire date is required")
 });
-
-const NewOrder: React.FC = (props) => {
+interface NewOrderProps{
+    setShow:() =>void
+}
+function NewOrder (props:NewOrderProps)  {
     const [orderItems, setOrderItems] = useState([] as IOrderItem[])
     const [sumPrice, setSumPrice] = useState(0);
     const [calculatedOrder, setCalculatedOrder] = useState({} as { [key: string]: any })
+    const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
+
 
     const saveCreditCardDetails = (ccn: string, cvv: string, ed: Date) => {
 
@@ -39,8 +46,13 @@ const NewOrder: React.FC = (props) => {
         expiryOn: new Date(),
         cvc: "",
         notificationFlag: true,
-        auditData: null,
-        currency: ""
+
+        currency: "",
+        
+        auditData: {
+            createDate: new Date(),
+            updateDate: new Date()
+        }
     }
     const calc = async () => {
         try {
@@ -48,14 +60,13 @@ const NewOrder: React.FC = (props) => {
             theOrder.orderStatus = "CREATED"
             const a = await calculateOrder(theOrder);
             setCalculatedOrder(a);
-            if (calculatedOrder["-1"] as { [key: number]: number }) {
-                let sum = Object.keys(calculatedOrder["-1"])[0];
-
-                setSumPrice(parseInt(sum));
+            if (a["-1"] as { [key: number]: number }) {
+                let sum = await Object.keys(a["-1"])[0];
+                await setSumPrice(parseInt(sum));
             }
         }
         catch (e) {
-            console.log(JSON.stringify(e))
+            throw new Error("something went wrong...")
         }
 
     }
@@ -78,6 +89,7 @@ const NewOrder: React.FC = (props) => {
             theOrder.cvc = formik.values.cvv
             theOrder.orderItemsList = orderItems
             addNewOrder(theOrder);
+            props.setShow()
         }
     });
     const itemToString = (e: IOrderItem, i: number): string => {
@@ -161,8 +173,7 @@ const NewOrder: React.FC = (props) => {
                                             <Grid item xs={2}>   <select
                                                 onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
                                             >
-                                                <option value={"ISL"}>ISL</option>
-                                                <option value={"USA"}>USA</option>
+                                                {listOfCurrencies.map(e => { return <option>{e}</option> })}
                                             </select>
                                             </Grid>
                                         </div>
@@ -220,7 +231,7 @@ const NewOrder: React.FC = (props) => {
                                         onBlur={formik.handleBlur}
                                     /></Grid>
                                 <Grid item xs={2}>
-                                    <MyButton type="submit">buy now</MyButton>
+                                    <MyButton type="submit" >buy now</MyButton>
                                 </Grid>
                             </Grid>
                         </form>

@@ -42,6 +42,7 @@ const TabsComponent:React.FC=()=> {
   let SelectedComponent=ComponentArray[numOfOpenTab];
   return (
     <>
+    
     <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
         <Tabs variant="fullWidth"  value={numOfOpenTab} onChange={handleTabChange}>

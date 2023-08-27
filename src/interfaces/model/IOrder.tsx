@@ -1,7 +1,9 @@
+import IAuditData from "./IAuditData";
 import IOrderItem from "./IOrderItem";
 import IUser from "./IUser";
 
 export default interface IOrder {
+    //id:string,
     employee: any,
     customer: IUser,
     totalAmount: number,
@@ -12,6 +14,7 @@ export default interface IOrder {
     expiryOn: Date,
     cvc: string,
     notificationFlag: boolean,
-    auditData: any,
+    auditData: IAuditData,
     currency:string,
+    
 }

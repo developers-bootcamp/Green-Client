@@ -40,7 +40,10 @@ const Login: React.FC = () => {
   }
 
   const login = async () => {
-    const res = await axios.get(`${LOG_IN}/${email}/${password}`);// {
+   
+    let url=`${LOG_IN}/${email}/${password}`
+    console.log(url)
+    const res = await axios.get(url);// {
     //   withCredentials: false,
     console.log(res.data);
 
