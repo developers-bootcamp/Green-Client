@@ -1,25 +1,45 @@
-import { useFormik } from "formik";
-import { useState } from "react";
+//import { Button, createStyles, FormControl, Grid, Input, MenuItem, Select, styled, TextField, ThemeProvider } from "@material-ui/core";
+import Autocomplete from '@mui/material/Autocomplete';
+import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
+
+import { FormikHelpers } from "formik/dist/types";
+import { useEffect, useState } from "react";
 import * as yup from 'yup';
-import MyAutocomplete from "../../components/MyAutocomplete";
+import axios from "axios";
+import { log } from "console";
+
+import MyAutocomplete from "../../../../../components/MyAutocomplete";
 import { ExecException } from "child_process";
-import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
-import IProduct from "../../interfaces/model/IProduct";
-import IOrderItem from "../../interfaces/model/IOrderItem";
-import IOrder from "../../interfaces/model/IOrder";
-import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
-import { getProductsAutocomplete } from "../../apiCalls/productCalls";
-import IUser from "../../interfaces/model/IUser";
-import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-import { MyButton, AddButton, BaloonImg } from '../NewOrderModel/NewOrder.style';
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import ICurrencyState from "../../interfaces/ICurrencyState";
+import IUser from '../../../../../interfaces/model/IUser';
+import IOrder from '../../../../../interfaces/model/IOrder';
+import { addNewOrder, calculateOrder } from '../../../../../apiCalls/orderCalls';
+import IOrderItem from '../../../../../interfaces/model/IOrderItem';
+import { Grid, TextField } from '@mui/material';
+import IProduct from '../../../../../interfaces/model/IProduct';
+import { getProductsAutocomplete } from '../../../../../apiCalls/productCalls';
+import { getCustomersAutocomplete } from '../../../../../apiCalls/userCalls';
+import { AddButton, BaloonImg, MyButton } from './NewOrder.style';
+import ICurrencyState from '../../../../../interfaces/ICurrencyState';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../redux/store';
+// import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
+// import IProduct from "../../interfaces/model/IProduct";
+// import IOrderItem from "../../interfaces/model/IOrderItem";
+// import IOrder from "../../interfaces/model/IOrder";
+// import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
+// import { getProductsAutocomplete } from "../../apiCalls/productCalls";
+// import IUser from "../../interfaces/model/IUser";
+// import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
+// import { MyButton, AddButton, BaloonImg } from '../NewOrderModel/NewOrder.style';
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store";
+// import ICurrencyState from "../../interfaces/ICurrencyState";
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
     cvv: yup.string().min(3, "cvv must have 3 digits").max(3, "cvv must have 3 digits").required("cvv is required").matches(/^\d+$/, 'The field should have digits only'),
     ed: yup.date().required("expire date is required")
+
 });
 interface NewOrderProps{
     setShow:() =>void
@@ -181,8 +201,8 @@ function NewOrder (props:NewOrderProps)  {
 
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AddButton onClick={() => add()} variant="contained">Add</AddButton>
-                                    </Grid>
+                                        <AddButton onClick={() => add()}
+                                            variant="contained">Add</AddButton></Grid>
                                 </div>
                             </Grid>
                             <Grid item xs={5}>
@@ -231,14 +251,21 @@ function NewOrder (props:NewOrderProps)  {
                                         onBlur={formik.handleBlur}
                                     /></Grid>
                                 <Grid item xs={2}>
-                                    <MyButton type="submit" >buy now</MyButton>
-                                </Grid>
-                            </Grid>
+                                    <MyButton type="submit">buy now</MyButton></Grid></Grid>
                         </form>
+
                     </Grid>
+
                 </Grid >
+                <Grid item xs={4}>
+                    <BaloonImg >
+                        <img  alt="baloon" />
+                    </BaloonImg>
+
+                </Grid>
             </Grid >
         </div >
+
     </>)
 }
 

@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from "react"
 import IOrder from '../../../interfaces/model/IOrder'
 import IUser from "../../../interfaces/model/IUser"
 import { string } from "yup"
-import NewOrder from "../../NewOrderModel/NewOrder"
+
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
 import { get } from "http"
 import { countOrders, getOrders } from "../../../apiCalls/orderCalls"
@@ -14,6 +13,7 @@ import './pendingOrders.css'
 import IProduct from "../../../interfaces/model/IProduct"
 import IOrderItem from "../../../interfaces/model/IOrderItem"
 import SortIcon from '@mui/icons-material/Sort';
+import NewOrder from "./pendingOrders/newOrderModel/NewOrder"
 interface prop {
     name: string | undefined,
     type: string | undefined
@@ -198,5 +198,3 @@ let count:number=0
     )
 }
 export default PendingOrders;
-
-

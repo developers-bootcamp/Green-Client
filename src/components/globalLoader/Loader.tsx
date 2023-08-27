@@ -33,7 +33,7 @@ const Loader: React.FC = () => {
   return (
     <div>
       <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ zIndex: (theme:any) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
         <CircularProgress style={circularProgressStyle} />

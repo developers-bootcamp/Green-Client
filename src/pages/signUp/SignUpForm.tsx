@@ -14,9 +14,8 @@ import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
-import signUp  from '../signUp/SignUp';
-import { fontSize } from '@mui/system';
 import axios from 'axios';
+import { signUp } from '../../apiCalls/userCalls';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -51,26 +50,15 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-
-                    const res = await axios.post(`http://localhost:8080/user/signUp?fullName=${values.fullName}&companyName=${values.companyName}&email=${values.email}&password=${values.password}&currency=SHEKEL`);
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
                     console.log(values);
                     //swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
-                    return (res.data);
+                    return (res);
                 } catch (error) {
-                    console.log(values);
-                   // swal("you have a error", `${error}`, "error");
-
-//                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-//                     localStorage.setItem("token", (await res).data)
-//                     swal("you sign up seccessfully", "good", "success");
-
+                    //swal("you have a error", `${error}`, "error");
                     navigate("/landingPage")
-                } 
-                // catch (error) {
-                //     swal("you have a error", `${error}`, "error");
-                //     navigate("/login")
-                // }
+                }
             }
             signUpRequest();
         }
@@ -176,7 +164,7 @@ const SignUpForm: React.FC = () => {
 
                 <SignUpWrapper>
                     <Button
-                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '1rem' }}
+                        sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '20px' }}
                         type="submit" variant="contained" >
                         Sign Up
                     </Button>
