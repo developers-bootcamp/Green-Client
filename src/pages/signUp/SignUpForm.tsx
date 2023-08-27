@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import swal from 'sweetalert';
+//import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -52,11 +52,11 @@ const SignUpForm: React.FC = () => {
                 try {
                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
                     console.log(values);
-                    swal("you sign up seccessfully", "good", "success");
+                    //swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
                     return (res);
                 } catch (error) {
-                    swal("you have a error", `${error}`, "error");
+                    //swal("you have a error", `${error}`, "error");
                     navigate("/landingPage")
                 }
             }

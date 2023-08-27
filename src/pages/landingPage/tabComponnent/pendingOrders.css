@@ -1,3 +1,5 @@
+
+
 .red{
     background-color: red;
 }
@@ -5,7 +7,7 @@
     background-color: green;
 }
 .blue{
-    background-color: blue;
+    background-color:;
 }
 .orang{
     background-color: rgb(234, 106, 8);
@@ -15,4 +17,7 @@
 }
 .yellow{
     background-color: rgb(244, 244, 118);
+}
+.regularCell{
+    background-color: rgb(207, 205, 205);
 }

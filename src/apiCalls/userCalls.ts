@@ -14,6 +14,7 @@ export const getCustomersAutocomplete = async (prefix: string): Promise<{ [key: 
     return (await x).data;
 }
 
+
 export const signUp = async (fullName: string, companyName: string, email: string, password: string, currency: string) => {
     return await axios.post(`${SIGN_UP}?fullName=${fullName}&companyName=${companyName}&email=${email}&password=${password}&currency=${currency}`)
 }

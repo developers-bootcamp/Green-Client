@@ -29,7 +29,7 @@ function MyAutocomplete(props: prp) {
             let DataFromServer: { [key: string]: any } = {} as { [key: string]: any };
             DataFromServer = await props.getFunction(input);
             setData2(DataFromServer);
-            let x = [{ id: "z1", name: "try" }];
+            let x = [{ id: "", name: "" }];
             Object.entries(DataFromServer).forEach(e => { const p = { id: e[0], name: e[1] }; x.push(p) })
             setData(x)
         }
