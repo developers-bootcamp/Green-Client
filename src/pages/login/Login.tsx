@@ -27,9 +27,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const res=await login();
-      localStorage.setItem('token',res.data)
-      navigate("/")
+      const res = await login();
+      console.log({res});
+      localStorage.setItem('token',res.data);
+      navigate("/");
     } catch (err: any) {
       console.log("err",err);
       console.log("err.response?.status",err.response?.status);

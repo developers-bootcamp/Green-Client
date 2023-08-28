@@ -93,7 +93,6 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': "null", 'products': "bla bla empty" })
             else {
                 let p = ""
-                debugger
                 e.orderItemsList.forEach(prod => {
                     if (prod.product != null)
                         p += `${prod.quantity} ${prod.product.name}, `
