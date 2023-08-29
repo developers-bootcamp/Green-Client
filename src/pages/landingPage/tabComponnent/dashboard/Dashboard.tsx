@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
 import { PALLETE, GET_TOP_PRODUCT, GET_DELIVER_CANCEL_ORDERS, GET_TOP_EMPLOYEE } from '../../../../config/config';
 import CreateNewBoard from "./CreateNewBoard";
+import { getDeliverCancelOrders, getTopEmployee, getTopProduct } from "../../../../apiCalls/graphCalls";
 
 
 const Dashboard: React.FC = () => {
@@ -17,21 +18,40 @@ const Dashboard: React.FC = () => {
   const [PieChartData, setPieChartData] = useState([]);
 
   const fetchData = async () => {
-    
-    const responses = await Promise.all([
-      fetch(GET_TOP_PRODUCT),
-      fetch(GET_DELIVER_CANCEL_ORDERS),
-      fetch(GET_TOP_EMPLOYEE),
+
+    getTopProduct().then(res => {
+      setBarChartData(res.data)
+    }).catch(err => {
+      console.log(err)
+    })
+    getDeliverCancelOrders().then(res => {
+      console.log(res.data);
       
-    ]);
+      setLineGraphData(res.data)
+    }).catch(err => {
+      console.log(err)
+    })
 
-   const data:any = await Promise.all(responses.map((response) => response.json()));
+    getTopEmployee().then(res => {
+      setPieChartData(res.data)
+    }).catch(err => {
+      console.error(err)
+    })
     
-    setBarChartData(data[0])
+  //   const responses = await Promise.all([
+  //     fetch(`${GET_TOP_PRODUCT}`),
+  //     fetch(`${GET_DELIVER_CANCEL_ORDERS}`),
+  //     fetch(`${GET_TOP_EMPLOYEE}`),
+      
+  //   ]);
 
-    setLineGraphData(data[1])
+  //  const data:any = await Promise.all(responses.map((response) => response.json()));
     
-    setPieChartData(data[2])
+  //   setBarChartData(data[0])
+
+  //   setLineGraphData(data[1])
+    
+  //   setPieChartData(data[2])
     
   }
 

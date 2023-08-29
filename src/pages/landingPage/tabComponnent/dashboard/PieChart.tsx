@@ -12,9 +12,6 @@ import { styled } from '@mui/material/styles';
   }
   
   const PieChart:React.FC<prop>=({PieChartData})=>{
-
-    console.log(PieChartData);
-    
     
     const MyPieChartData = PieChartData.map(x => [x.user.fullName, x.countOfDeliveredOrders])
     console.log(MyPieChartData);
@@ -37,7 +34,7 @@ import { styled } from '@mui/material/styles';
 
     
     return (
-      MyPieChartData.length > 0 ?
+        MyPieChartData.length > 0 ?
         <Chart
           chartType="PieChart"
           data={data}
