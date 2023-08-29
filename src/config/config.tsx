@@ -7,8 +7,9 @@ const GET_PRODUCTS = `${BASE_URL}/product`;
 const LOG_IN = `${BASE_URL}/user`;
 const SIGN_UP = `${BASE_URL}/user/signUp`;
 const GET_CURRENCIES = `${BASE_URL}/currency`;
+const USER_URL = `${BASE_URL}/user`
 
-export { GET_ALL_ORDERS_URL, LOG_IN, BASE_URL, GET_USERS, GET_PRODUCTS, ORDER, SIGN_UP, GET_CURRENCIES }
+export { GET_ALL_ORDERS_URL, LOG_IN, BASE_URL, GET_USERS, GET_PRODUCTS, ORDER, SIGN_UP, GET_CURRENCIES, USER_URL }
 
 export const PALLETE = {
     BLUE: '#6794CF',

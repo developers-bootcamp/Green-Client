@@ -15,7 +15,7 @@ export const addNewOrder = async (order: IOrder) => {
 
 }
 export const calculateOrder = async (order: IOrder) => {
-  debugger
+  
   let token = localStorage.getItem("token");
   if (token == undefined)
     token = ""
@@ -29,7 +29,7 @@ export const calculateOrder = async (order: IOrder) => {
 
 }
 export const getOrders=async(sortBy:string,pageNo:number,orderStatus:string[])=>{
-  debugger
+  
   console.log("base_url")
   console.log(ORDER)
 let token=localStorage.getItem("token");

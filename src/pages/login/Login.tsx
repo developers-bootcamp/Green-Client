@@ -27,9 +27,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const res=await login();
-      localStorage.setItem('token',res.data)
-      navigate("/")
+      const res = await login();
+      console.log({res});
+      localStorage.setItem('token',res.data);
+      navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {
         console.log("in 404 if");
