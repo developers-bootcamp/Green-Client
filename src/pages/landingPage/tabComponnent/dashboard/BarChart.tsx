@@ -1,20 +1,45 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
+import { styled } from '@mui/material/styles';
 
+interface prop{
+  BarChartData:{[key:string]:any}[]
+}
 
-const BarChart: React.FC = (props) => {
+const BarChart:React.FC<prop>=({BarChartData}) => {
+
+  const MyBarChartitels = BarChartData.map(x => x.product.name)
+
+    const month = BarChartData.map(x => x.month + "/" + x.year)
+    
+
+  const MyBarChartData = BarChartData.map(x => [x.month + "/" + x.year, x.totalQuantity])
+    console.log(MyBarChartData);
+
+    const MyDiv = styled('div')({
+      display: 'flex',
+      alignItems:'center',
+      justifyContent:'center',
+  });
+
+  const MyLabel = styled('label')({
+     fontSize: 20,
+     paddingTop: 130,
+  }); 
 
     return (
+      MyBarChartData.length > 0 ?
         <Chart
           width={"100%"}
           height={"280px"}
           chartType="ColumnChart"
-          data={[
-            ["Duration", "Photo Album", "Collage","Framed Image","Video Clip","Blessing Card"],
-            ["04/23", 20, 38, 15, 30, 20],
-            ["05/23", 10, 10, 15, 30, 20],
-            ["06/23", 10, 10, 15, 30, 20],
+          data={[ 
+            MyBarChartitels.length > 0 ? [...MyBarChartitels] : [""],
+            //["Duration", "Photo Album", "Collage","Framed Image","Video Clip","Blessing Card"],
+            ["04/23", 20, 38, 15],
+            ["05/23", 10, 10, 15],
+            ["06/23", 10, 10, 15],
           ]}
           options={{
             chartArea: { width: "50%" },
@@ -30,6 +55,7 @@ const BarChart: React.FC = (props) => {
           }}
           rootProps={{ "data-testid": "3" }}
         />
+        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
       );
 }
 export default BarChart

@@ -3,6 +3,7 @@ import { LOG_IN } from "../config/config"
 import { setLoading } from '../redux/slices/loadingSlice'; 
 import { ErrorModel } from '../components/globalErrorModel/ErrorModel';
 import { setError } from '../redux/slices/errorSlice';
+import { log } from 'console';
 
 const  AxiosInstance =(store:any)=>{
 
@@ -10,12 +11,12 @@ axios.interceptors.request.use(
   (config: any) => {
     console.log("config:", config);
     console.log("configURL:", config.url);
-    debugger;
     let token = localStorage.getItem("token");
     if (config.url && config.url.indexOf(LOG_IN) === -1 && token) {
       config.headers["Authorization"] = token;
     }
-
+    console.log(config);
+    
     return config;
   },
   (error: any) => {

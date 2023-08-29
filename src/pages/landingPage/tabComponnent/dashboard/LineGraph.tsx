@@ -1,6 +1,7 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
+import { styled } from '@mui/material/styles';
 
 interface prop{
   LineGraphData:{[key:string]:any}[]
@@ -13,6 +14,18 @@ interface prop{
     backgroundColor: PALLETE.GRAY,
   };
 
+  const MyDiv = styled('div')({
+    display: 'flex',
+    alignItems:'center',
+    justifyContent:'center',
+});
+
+const MyLabel = styled('label')({
+   fontSize: 20,
+   paddingTop: 130,
+}); 
+
+
   const LineGraph:React.FC<prop>=({LineGraphData}) => {
 
     const MyLineGraphData = LineGraphData.map(x => [x.month, x.cancelled, x.delivered])
@@ -20,16 +33,12 @@ interface prop{
     console.log(MyLineGraphData);
 
     const data = [
-      ["Year", "Orders Failed", "Orders Done"],
-      //["02/23", 100, 300],
-      //["03/23", 117, 260],
-      //["04/23", 360, 112],
-      //["05/23", 103, 140],
-      //["05/23", 100, 300],
+      ["month", "Orders Failed", "Orders Done"],
       ...MyLineGraphData
     ];
 
     return (
+      MyLineGraphData.length > 0 ?
         <Chart
           chartType="LineChart"
           width="100%"
@@ -37,6 +46,7 @@ interface prop{
           data={data}
           options={options}
         />
+        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
       );
 }
 export default LineGraph
