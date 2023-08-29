@@ -19,9 +19,9 @@ const Dashboard: React.FC = () => {
   const fetchData = async () => {
     
     const responses = await Promise.all([
-      fetch(GET_TOP_PRODUCT),
-      fetch(GET_DELIVER_CANCEL_ORDERS),
-      fetch(GET_TOP_EMPLOYEE),
+      fetch(`${GET_TOP_PRODUCT}`),
+      fetch(`${GET_DELIVER_CANCEL_ORDERS}`),
+      fetch(`${GET_TOP_EMPLOYEE}`),
       
     ]);
 
