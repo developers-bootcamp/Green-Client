@@ -1,5 +1,6 @@
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config'; 
+import { styled } from '@mui/material/styles';
 
   export const options = {
     colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
@@ -7,20 +8,36 @@ import { PALLETE } from '../../../../config/config';
   };
 
   interface prop{
-    pieChartData:{[key:string]:any}[]
+    PieChartData:{[key:string]:any}[]
   }
   
-  const PieChart:React.FC<prop>=({pieChartData})=>{
+  const PieChart:React.FC<prop>=({PieChartData})=>{
 
-    const MyPieChartData = pieChartData.map(x => [x.User.fullName, x.countOfDeliveredOrders])
+    console.log(PieChartData);
+    
+    
+    const MyPieChartData = PieChartData.map(x => [x.user.fullName, x.countOfDeliveredOrders])
     console.log(MyPieChartData);
 
     const data = [
       ["Employee name", "Count Of Delivered Orders"],
       ...MyPieChartData
     ];
+
+    const MyDiv = styled('div')({
+      display: 'flex',
+      alignItems:'center',
+      justifyContent:'center',
+  });
+
+  const MyLabel = styled('label')({
+     fontSize: 20,
+     paddingTop: 130,
+  }); 
+
     
     return (
+      MyPieChartData.length > 0 ?
         <Chart
           chartType="PieChart"
           data={data}
@@ -28,6 +45,7 @@ import { PALLETE } from '../../../../config/config';
           width={"100%"}
           height={"280px"}
         />
+        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
       )
 }
 export default PieChart

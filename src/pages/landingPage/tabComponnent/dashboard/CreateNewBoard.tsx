@@ -8,7 +8,6 @@ const CreateNewBoard: React.FC = () => {
 
     const MyBox = styled(Box)({
         backgroundColor: PALLETE.GRAY,
-        height: 280,
         display: 'flex',
         alignItems:'center',
         justifyContent:'center',
@@ -16,11 +15,13 @@ const CreateNewBoard: React.FC = () => {
 
     const MyLabel = styled('label')({
        fontSize: 20,
+       paddingTop: 100,
     }); 
 
     const MySpan = styled('span')({
         fontSize: 60,
         fontWeight: 400,
+        paddingTop: 100,
         paddingRight: 10,
      }); 
 
