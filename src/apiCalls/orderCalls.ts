@@ -22,22 +22,34 @@ export const calculateOrder = async (order: IOrder) => {
       'Authorization': token
     }
   });
-  console.log(await ans.data)
   return await ans.data
 
 }
 export const getOrders=async(sortBy:string,pageNo:number,orderStatus:string[])=>{
-  console.log("base_url")
-  console.log(ORDER)
+
 let token=localStorage.getItem("token");
 if (token == undefined)
     token = ""
     const config = { headers: { 'Authorization': token} };
     const url=`${ORDER}?orderBy=${sortBy}&orderStatus=${orderStatus}&pageNo=${pageNo}`
     console.log(url)
-    const ans = await axios.get(url,config)
-    return await ans.data
+    const response = await axios.get(url,config)
+    console.log( response.headers);
+
+   
+    var pagination = response.headers["totalcount"];
+    console.log(pagination)
+    console.log(response)
+    return await response.data
 
 }
-
-
+export const countOrders=async(orderStatus:string[])=>{
+  let t=localStorage.getItem("token");
+  if(t==null)
+  t=""
+  const config = { headers: { 'Authorization': t} };
+  const url=`${ORDER}/count?orderStatus=${orderStatus}`
+  console.log(url)
+  const response = await axios.get(url,config)
+  return await response.data
+}

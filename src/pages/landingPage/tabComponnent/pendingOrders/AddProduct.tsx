@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { PALLETE } from '../../../../config/config';
 import MyAutocomplete from '../../../../components/MyAutocomplete';
-import IProduct from '../../../../interfaces/model/IProduct';
+import {IProduct} from '../../../../interfaces/model/IProduct';
 import IUser from '../../../../interfaces/model/IUser';
 import { getProductsAutocomplete } from '../../../../apiCalls/productCalls';
 import { getCustomersAutocomplete } from '../../../../apiCalls/userCalls';

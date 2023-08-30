@@ -4,9 +4,12 @@ import GlobalTable from "../../../components/table/GlobalTable";
 import { getAllCategory, deleteproductCategory, editProductCategory, addProductCategory } from "../../../apiCalls/productCategory";
 import { getProducts, deleteProduct, addProduct, editProduct } from "../../../apiCalls/productCalls";
 import { idText } from "typescript";
-import FullFeaturedCrudGrid from "./dashboard/FullFeaturedCrudGrid";
 import { IProductCategory } from "../../../interfaces/model/IProductCategory";
 import { IProduct } from "../../../interfaces/model/IProduct";
+import { GridPreProcessEditCellProps } from "@mui/x-data-grid";
+import arrow from '../../../images/arrow.png'
+import arrow2 from '../../../images/arrow2.png'
+import { PALLETE } from "../../../config/config";
 
 interface prop {
   name: string | undefined,
@@ -29,7 +32,10 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
     });
 
   }
-  const productHead = [{ headerName: "Name", type: "String", field: "name" }, { headerName: "Description", type: "String", field: "description" }, { headerName: "Inventory", type: "number", field: "inventory" }, { headerName: "Discount", type: "number", field: "discount" }, { headerName: "DiscountType", type: "singleSelect", field: "discountType",valueOptions:["FIXED_AMOUNT","PERCENTAGE"] }, { headerName: "category", type: "singleSelect", field: "productCategoryName",valueOptions: allCategoryName }, { headerName: "Price", type: "number", field: "price" }];
+  const productHead = [{ headerName: "Name", type: "String", field: "name",preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+    const hasError = params.props.value.length < 3;
+    return { ...params.props, error: hasError };
+  }, }, { headerName: "Description", type: "String", field: "description" }, { headerName: "Inventory", type: "number", field: "inventory" }, { headerName: "Discount", type: "number", field: "discount" }, { headerName: "DiscountType", type: "singleSelect", field: "discountType",valueOptions:["FIXED_AMOUNT","PERCENTAGE"] }, { headerName: "category", type: "singleSelect", field: "productCategoryName",valueOptions: allCategoryName }, { headerName: "Price", type: "number", field: "price" }];
 
   const getAllProductAsync = async () => {
     await getProducts().then(res => setallProduct(res.data));
@@ -75,8 +81,8 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   }, [changeProductCategory])
   return (
     <>
-          {allCategory != null && <FullFeaturedCrudGrid type="Product_Categories" rows={allCategory} head={head} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd} color={'#EE696A'}></FullFeaturedCrudGrid>}
-      {allProduct != null && allCategoryName != null&&<FullFeaturedCrudGrid type="Product" rows={allProduct} head={productHead} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd} color={'#FAE282'}></FullFeaturedCrudGrid>}
+          {allCategory != null && <GlobalTable type="Product_Category" rows={allCategory}number={0} head={head}image={arrow} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
+      {allProduct != null && allCategoryName != null&&<GlobalTable type="Product" rows={allProduct}number={1}  head={productHead}image={arrow2} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd} color={PALLETE.YELLOW}headColor={PALLETE.BLUE}></GlobalTable>}
 
     </>
   );

@@ -17,7 +17,6 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
-import axios from 'axios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -56,7 +55,7 @@ const SignUpForm: React.FC = () => {
                     console.log(values);
                     swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
-                    return (res.data);
+                    return (res);
                 } catch (error) {
                     console.log(values);
                    // swal("you have a error", `${error}`, "error");

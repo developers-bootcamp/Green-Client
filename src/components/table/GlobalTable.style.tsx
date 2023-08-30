@@ -36,7 +36,7 @@ const Row = styled(TableRow)({
 const Image = styled('h1')({
     left: "80px",
     position: "absolute",
-    top: "105px",
+    top: "55px",
     marginTop: "0px",
     width: "20px",
     height: "20px",
@@ -47,7 +47,7 @@ const Image = styled('h1')({
 const Img = styled('img')({
     left: "-15px",
     position: "absolute",
-    top: "0px",
+    top: "-50px",
     marginTop: "0px",
     width: "15px",
     height: "15px",
