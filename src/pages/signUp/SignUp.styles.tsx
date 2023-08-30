@@ -9,4 +9,6 @@ export const Text = styled('div')({
 
 export const SignUpWrapper = styled('div')({
     textAlign: 'end',
+    zIndex:10,
+
 })
