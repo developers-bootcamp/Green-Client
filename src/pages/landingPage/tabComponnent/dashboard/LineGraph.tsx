@@ -1,44 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
-import { styled } from '@mui/material/styles';
+import { getDeliverCancelOrders } from "../../../../apiCalls/graphCalls";
+import { MyDiv } from "./Dashboard.style";
 
-interface prop{
-  LineGraphData:{[key:string]:any}[]
-}
-  
+
   export const options = {
-    curveType: "function",
-    legend: { position: "bottom" },
+    legend: { position: "top" },
     colors: [PALLETE.BLUE, PALLETE.RED],
     backgroundColor: PALLETE.GRAY,
   };
 
-  const MyDiv = styled('div')({
-    display: 'flex',
-    alignItems:'center',
-    justifyContent:'center',
-});
+  const LineGraph:React.FC = () => {
 
-const MyLabel = styled('label')({
-   fontSize: 20,
-   paddingTop: 130,
-}); 
+    const [LineGraphData, setLineGraphData] = useState([]);
+      
+    useEffect(() => {
+      getDeliverCancelOrders().then(res => {
+          setLineGraphData(res.data)
+      }).catch(err => {
+        console.error(err)
+      })
+    }, []);
 
-
-  const LineGraph:React.FC<prop>=({LineGraphData}) => {
-
-    const MyLineGraphData = LineGraphData.map(x => [x.month, x.cancelled, x.delivered])
+    const keys = LineGraphData.map((object) => Object.keys(object)).slice(-1);
+    const values = LineGraphData.map((object) => Object.values(object));
+    console.log(values);
     
-    console.log(MyLineGraphData);
-
+    
     const data = [
-      ["month", "Orders Failed", "Orders Done"],
-      ...MyLineGraphData
+      ...keys,
+      ...values
     ];
-
+  
     return (
-      MyLineGraphData.length > 0 ?
+        LineGraphData.length > 0 ?
         <Chart
           chartType="LineChart"
           width="100%"
@@ -46,7 +42,7 @@ const MyLabel = styled('label')({
           data={data}
           options={options}
         />
-        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
+        :<MyDiv>No data</MyDiv>
       );
 }
 export default LineGraph

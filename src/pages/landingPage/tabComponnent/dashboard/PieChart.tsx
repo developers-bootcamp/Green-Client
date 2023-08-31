@@ -1,40 +1,43 @@
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config'; 
-import { styled } from '@mui/material/styles';
+import {getTopEmployee} from "../../../../apiCalls/graphCalls";
+import { MyDiv } from "./Dashboard.style";
 
   export const options = {
-    colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
+    colors: [PALLETE.BLUE, PALLETE.RED, PALLETE.GREEN, PALLETE.ORANGE,  PALLETE.YELLOW],
     backgroundColor: PALLETE.GRAY
   };
-
-  interface prop{
-    PieChartData:{[key:string]:any}[]
-  }
   
-  const PieChart:React.FC<prop>=({PieChartData})=>{
-    
-    const MyPieChartData = PieChartData.map(x => [x.user.fullName, x.countOfDeliveredOrders])
-    console.log(MyPieChartData);
+  const PieChart:React.FC = () => {
+
+    const [PieChartData, setPieChartData] = useState([]);
+
+    useEffect(() => {
+      getTopEmployee().then(res => {
+        console.log(res.data);
+        
+        setPieChartData(res.data)
+      }
+    ).catch(err => {
+      console.error(err)
+    })
+    }, []);
+
+    const keys = PieChartData.map((object) => Object.keys(object)).slice(-1);
+
+    const MyPieChartData =  PieChartData.map((employee:any) => [
+      employee.user.fullName,
+      employee.countOfDeliveredOrders,
+    ]);
 
     const data = [
-      ["Employee name", "Count Of Delivered Orders"],
+      ...keys,
       ...MyPieChartData
     ];
 
-    const MyDiv = styled('div')({
-      display: 'flex',
-      alignItems:'center',
-      justifyContent:'center',
-  });
-
-  const MyLabel = styled('label')({
-     fontSize: 20,
-     paddingTop: 130,
-  }); 
-
-    
     return (
-        MyPieChartData.length > 0 ?
+        PieChartData.length > 0 ?
         <Chart
           chartType="PieChart"
           data={data}
@@ -42,7 +45,7 @@ import { styled } from '@mui/material/styles';
           width={"100%"}
           height={"280px"}
         />
-        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
+        :<MyDiv>No data</MyDiv>
       )
 }
 export default PieChart

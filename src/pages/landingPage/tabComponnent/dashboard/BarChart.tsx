@@ -1,61 +1,131 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
-import { styled } from '@mui/material/styles';
+import { MyDiv } from "./Dashboard.style";
 
-interface prop{
-  BarChartData:{[key:string]:any}[]
+export const options = {
+  chartArea: { width: "50%" },
+  isStacked: true,
+  vAxis: {
+    title: "",
+    gridlines: { color: "none" },
+    textPosition: "none"
+  },
+  bars: "vertical",
+  colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
+  backgroundColor: PALLETE.GRAY,
 }
 
-const BarChart:React.FC<prop>=({BarChartData}) => {
+const BarChart:React.FC = () => {
+      
+  const [BarChartData, setBarChartData] = useState([
+    {
+      "month": 1,
+      "year": 2023,
+      "products": [
+        {
+          "product": "Product 1",
+          "quantity": 20
+        },
+        {
+          "product": "Product 2",
+          "quantity": 40
+        },
+        {
+          "product": "Product 3",
+          "quantity": 50
+        },
+        {
+          "product": "Product 4",
+          "quantity": 30
+        }
+      ]
+    },
+    {
+      "month": 2,
+      "year": 2023,
+      "products": [
+        {
+          "product": "Product 1",
+          "quantity": 10
+        },
+        {
+          "product": "Product 2",
+          "quantity": 20
+        },
+        {
+          "product": "Product 3",
+          "quantity": 30
+        },
+        {
+          "product": "Product 4",
+          "quantity": 40
+        }
+      ]
+    },
+    {
+      "month": 3,
+      "year": 2023,
+      "products": [
+        {
+          "product": "Product 1",
+          "quantity": 40
+        },
+        {
+          "product": "Product 2",
+          "quantity": 70
+        },
+        {
+          "product": "Product 3",
+          "quantity": 10
+        },
+        {
+          "product": "Product 4",
+          "quantity": 15
+        }
+      ]
+    }
+  ]);
 
-  const MyBarChartitels = BarChartData.map(x => x.product.name)
+  // useEffect(() => {
+  //   getTopProduct().then(res => {
+  //         setBarChartData(res.data)
+  //     }).catch(err => {
+  //       console.error(err)
+  //     })
+  //   }, []);
 
-    const month = BarChartData.map(x => x.month + "/" + x.year)
-    
+ 
+    const products =  BarChartData.map((monthlyProductSalesResult) => {
+      return monthlyProductSalesResult.products.map((productData) => {
+        return productData.product;
+      });
+    }).slice(-1).flat();
 
-  const MyBarChartData = BarChartData.map(x => [x.month + "/" + x.year, x.totalQuantity])
-    console.log(MyBarChartData);
+    const monthAndQuantity =BarChartData.map((monthlyProductSalesResult) => {
+      return [
+       monthlyProductSalesResult.month > 10 ? monthlyProductSalesResult.month + "/" + String(monthlyProductSalesResult.year).slice(2):
+        "0" + monthlyProductSalesResult.month + "/" + String(monthlyProductSalesResult.year).slice(2),
+        ...monthlyProductSalesResult.products.map((productData) => productData.quantity),
+      ];
+    });
 
-    const MyDiv = styled('div')({
-      display: 'flex',
-      alignItems:'center',
-      justifyContent:'center',
-  });
-
-  const MyLabel = styled('label')({
-     fontSize: 20,
-     paddingTop: 130,
-  }); 
+    const data =[ 
+      ["products",...products],
+      ...monthAndQuantity
+    ]
 
     return (
-      MyBarChartData.length > 0 ?
+      BarChartData.length > 0 ?
         <Chart
           width={"100%"}
           height={"280px"}
           chartType="ColumnChart"
-          data={[ 
-            MyBarChartitels.length > 0 ? [...MyBarChartitels] : [""],
-            //["Duration", "Photo Album", "Collage","Framed Image","Video Clip","Blessing Card"],
-            ["04/23", 20, 38, 15],
-            ["05/23", 10, 10, 15],
-            ["06/23", 10, 10, 15],
-          ]}
-          options={{
-            chartArea: { width: "50%" },
-            isStacked: true,
-            vAxis: {
-              title: "",
-              gridlines: { color: "none" },
-              textPosition: "none"
-            },
-            bars: "vertical",
-            colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
-            backgroundColor: PALLETE.GRAY,
-          }}
+          data={data}
+          options={options}
           rootProps={{ "data-testid": "3" }}
         />
-        :<MyDiv><MyLabel>No data</MyLabel></MyDiv>
+        :<MyDiv>No data</MyDiv>
       );
 }
 export default BarChart
