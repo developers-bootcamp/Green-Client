@@ -6,55 +6,47 @@ import { useSelector } from 'react-redux';
 import  {store, RootState } from '../../redux/store';
 import axios from 'axios';
 import {clearError, setError} from '../../redux/slices/errorSlice';
+import zIndex from '@mui/material/styles/zIndex';
+import GlobalModal from '../globalModal/GlobalModal';
+import { LeftSide, RightSide } from "../globalModal/GlobalModal.styles"
+import { text } from 'node:stream/consumers';
+import { borderColor } from '@mui/system';
+import { styled } from '@mui/system';
+
 
 export const ErrorModel:React.FC = () => {
+  
 const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
-const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || "error");
+console.log("open:",open)
+const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || " something went wrong a error occurred");
+console.log("errorMessage:",errorMessage)
 
     const handleClose = () => {
      store.dispatch(clearError());
     };
+     const MyImg = styled('img')({
+      width: "100%",
+  })
   
     return (
-      <div >
-       <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+      <Dialog fullWidth sx={ {maxHeight: "40vh",top: "23vh"}}  open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+      <DialogContent sx={{ p: 0, height: '45rem'}} style={{ borderRadius: '100px' }}>
+          <LeftSide>
+              <DialogTitle sx={{ fontSize: 30, pl: "3rem", paddingLeft: "3rem" }}>Error</DialogTitle>
+              <DialogContent style={{ paddingRight: "3rem", paddingLeft: "3rem" }}>{errorMessage}</DialogContent>
+            <Button
+      onClick={handleClose}
+      style={{ color: 'white', textAlign: "center", paddingLeft: "45px", paddingRight: "45px",   backgroundColor: 'orange', 
+       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '40px', 
       }}
     >
-      <DialogTitle>Error</DialogTitle>
-      <DialogContent id="alert-dialog-description">
-        <Grid container>
-          <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <DialogContentText>
-              {errorMessage}
-            </DialogContentText>
-            <DialogActions sx={{ justifyContent: 'center', mt: 2 }}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: PALLETE.YELLOW,
-                  borderRadius: '15px',
-                  width: '35%',
-                }}
-                onClick={handleClose}
-              >
-                Close
-              </Button>
-            </DialogActions>
-          </Grid>
-          <Grid item xs={8} md={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'stretch' }}>
-            <img src={img}  alt="Image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </Grid>
-        </Grid>
+      Close
+    </Button>
+          </LeftSide >
+          <RightSide>
+              <MyImg src={img} alt={img}></MyImg>
+          </RightSide>
       </DialogContent>
-    </Dialog>
-      </div>
+  </Dialog>
     );
   };

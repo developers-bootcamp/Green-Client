@@ -8,6 +8,8 @@ const  AxiosInstance =(store:any)=>{
 
 axios.interceptors.request.use(
   (config: any) => {
+    console.log("config:", config);
+    console.log("configURL:", config.url);
     let token = localStorage.getItem("token");
     if (config.url && config.url.indexOf(LOG_IN) === -1 && token) {
       config.headers["Authorization"] = token;
@@ -23,6 +25,7 @@ axios.interceptors.request.use(
 
 const requestInterceptor= axios.interceptors.request.use(
  (next)=> {
+  console.log("in requestInterceptor seting Loading to true")
     store.dispatch(setLoading(true))
     return next;
   },
@@ -30,10 +33,13 @@ const requestInterceptor= axios.interceptors.request.use(
 
 const responseInterceptor=axios.interceptors.response.use(
   (next)=> {
+    console.log("in responseInterceptor seting Loading to false");
     store.dispatch(setLoading(false))
     return Promise.resolve(next);
   },
    (error) => {
+    console.log("in error globalaxiossssss");
+    console.log(error);
     store.dispatch(setLoading(false))
     if(error.response?.status == 500)
     {
