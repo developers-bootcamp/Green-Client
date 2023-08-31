@@ -6,11 +6,7 @@ import { MyDiv } from "./Dashboard.style";
 export const options = {
   chartArea: { width: "50%" },
   isStacked: true,
-  vAxis: {
-    title: "",
-    gridlines: { color: "none" },
-    textPosition: "none"
-  },
+  title:"Top products",
   bars: "vertical",
   colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
   backgroundColor: PALLETE.GRAY,
@@ -37,6 +33,10 @@ const BarChart:React.FC = () => {
         },
         {
           "product": "Product 4",
+          "quantity": 60
+        },
+        {
+          "product": "Product 5",
           "quantity": 30
         }
       ]
@@ -60,6 +60,10 @@ const BarChart:React.FC = () => {
         {
           "product": "Product 4",
           "quantity": 40
+        },
+        {
+          "product": "Product 5",
+          "quantity": 80
         }
       ]
     },
@@ -82,9 +86,13 @@ const BarChart:React.FC = () => {
         {
           "product": "Product 4",
           "quantity": 15
+        },
+        {
+          "product": "Product 5",
+          "quantity": 10
         }
       ]
-    }
+    },
   ]);
 
   // useEffect(() => {

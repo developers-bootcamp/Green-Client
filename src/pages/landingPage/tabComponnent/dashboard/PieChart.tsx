@@ -5,6 +5,7 @@ import {getTopEmployee} from "../../../../apiCalls/graphCalls";
 import { MyDiv } from "./Dashboard.style";
 
   export const options = {
+    title:"Top employees",
     colors: [PALLETE.BLUE, PALLETE.RED, PALLETE.GREEN, PALLETE.ORANGE,  PALLETE.YELLOW],
     backgroundColor: PALLETE.GRAY
   };
