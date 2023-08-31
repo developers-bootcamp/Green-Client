@@ -16,7 +16,7 @@ const {filterTables}=props;
   const changeFieldName =async (filter: string, index: number) => {
     const updatedFilters = [...filters];
     updatedFilters[index] = { ...updatedFilters[index], fieldName: filter };
-    setFilters(updatedFilters);   console.log("f",filters);
+    setFilters(updatedFilters); 
   };
   const changeFilterValue =async (filter: string, index: number) => {
     const updatedFilters = [...filters];
@@ -34,7 +34,6 @@ const {filterTables}=props;
     filterTables(arrayToDictionary());
   }
   useEffect(()=>{
-    console.log("filters",filters);
   },[filters])
   return (
     <>

@@ -52,12 +52,10 @@ const SignUpForm: React.FC = () => {
             async function signUpRequest() {
                 try {
                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
-                    console.log(values);
                     swal("you sign up seccessfully", "good", "success");
                     navigate("/login")
                     return (res);
                 } catch (error) {
-                    console.log(values);
                    // swal("you have a error", `${error}`, "error");
 
 //                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)

@@ -28,7 +28,6 @@ export const deleteUser=async(id:string)=>{
     let t=localStorage.getItem("token");
     if(t==undefined)
         t="qqq"
-        console.log(t);
         
     const config = { headers: { 'Authorization': t} };
 return await axios.delete(`${USER_CALLS}/${id}`,config);
@@ -37,10 +36,8 @@ export const editUser = async (id:any,product:IUser) => {
     let t = localStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
-        console.log(product);
         
     const config = {headers: { 'Authorization': t } };
-console.log(`${USER_CALLS}/${id}`,product, config,"jkjkjkjkjkjkj");
 
     return await axios.put(`${USER_CALLS}/${id}`,product, config);
 } 
@@ -48,10 +45,8 @@ export const addUser = async (product:IUser) => {
     let t = localStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
-        console.log(product);
         
     const config = {headers: { 'Authorization': t } };
-console.log("hfhhdhsjsjs");
 
     return await axios.post(`${USER_CALLS}`,product, config);
 }  

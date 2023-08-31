@@ -9,9 +9,7 @@ import {clearError, setError} from '../../redux/slices/errorSlice';
 
 export const ErrorModel:React.FC = () => {
 const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
-console.log("open:",open)
 const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || "error");
-console.log("errorMessage:",errorMessage)
 
     const handleClose = () => {
      store.dispatch(clearError());

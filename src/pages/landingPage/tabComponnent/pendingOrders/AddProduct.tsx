@@ -23,7 +23,6 @@ const AddProduct: React.FC = (props) => {
         validationSchema,
         onSubmit: (values: { customer: IUser, product: IProduct }) => {
             // props.saveCreditCardDetails(values)
-            console.log(values);
         }
     });
 

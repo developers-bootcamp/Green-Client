@@ -31,11 +31,7 @@ const Login: React.FC = () => {
       localStorage.setItem('token',res.data)
       navigate("/")
     } catch (err: any) {
-      console.log("err",err);
-      console.log("err.response?.status",err.response?.status);
-      console.log("err.request",err.request);
       if (err.response?.status == 404) {
-        console.log("in 404 if");
         store.dispatch(setError("signup"));
         navigate("/signup")
       }
@@ -50,7 +46,6 @@ const Login: React.FC = () => {
 
     const login = async () => {
       const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
-      console.log(res);
       return res;
     }
 
