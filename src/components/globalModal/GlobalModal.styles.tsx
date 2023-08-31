@@ -4,7 +4,7 @@ import { PALLETE } from '../../config/config';
 export const MyImg = styled('img')({
     width: "100%",
     marginBottom: "2rem",
-    marginTop: "5rem",
+    marginTop: "2rem",
 })
 
 export const MySideTxt = styled('div')({
