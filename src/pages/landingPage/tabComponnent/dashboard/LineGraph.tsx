@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
-import { getDeliverCancelOrders } from "../../../../apiCalls/graphCalls";
+import { deliverCancelOrders } from "../../../../apiCalls/graphCalls";
 import { MyDiv } from "./Dashboard.style";
 
 
@@ -17,7 +17,7 @@ import { MyDiv } from "./Dashboard.style";
     const [LineGraphData, setLineGraphData] = useState([]);
       
     useEffect(() => {
-      getDeliverCancelOrders().then(res => {
+      deliverCancelOrders().then(res => {
           setLineGraphData(res.data)
       }).catch(err => {
         console.error(err)

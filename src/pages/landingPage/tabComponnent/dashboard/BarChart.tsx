@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
 import { MyDiv } from "./Dashboard.style";
+import { topProduct } from "../../../../apiCalls/graphCalls";
 
 export const options = {
   chartArea: { width: "50%" },
@@ -96,7 +97,7 @@ const BarChart:React.FC = () => {
   ]);
 
   // useEffect(() => {
-  //   getTopProduct().then(res => {
+  //   topProduct().then(res => {
   //         setBarChartData(res.data)
   //     }).catch(err => {
   //       console.error(err)

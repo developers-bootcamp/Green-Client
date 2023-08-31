@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config'; 
-import {getTopEmployee} from "../../../../apiCalls/graphCalls";
+import {topEmployee} from "../../../../apiCalls/graphCalls";
 import { MyDiv } from "./Dashboard.style";
 
   export const options = {
@@ -15,7 +15,7 @@ import { MyDiv } from "./Dashboard.style";
     const [PieChartData, setPieChartData] = useState([]);
 
     useEffect(() => {
-      getTopEmployee().then(res => {
+      topEmployee().then(res => {
         console.log(res.data);
         
         setPieChartData(res.data)
