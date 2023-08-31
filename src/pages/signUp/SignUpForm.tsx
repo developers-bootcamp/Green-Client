@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
+import axios from 'axios';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
