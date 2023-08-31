@@ -16,7 +16,7 @@ import { styled } from '@mui/system';
 
 export const ErrorModel:React.FC = () => {
   
-const open = useSelector((state: RootState) => state.errorReducer?.isOpen || true);
+const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
 console.log("open:",open)
 const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || " something went wrong a error occurred");
 console.log("errorMessage:",errorMessage)
@@ -37,7 +37,7 @@ console.log("errorMessage:",errorMessage)
             <Button
       onClick={handleClose}
       style={{ color: 'white', textAlign: "center", paddingLeft: "45px", paddingRight: "45px",   backgroundColor: 'orange', 
-       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '70px', 
+       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '40px', 
       }}
     >
       Close
