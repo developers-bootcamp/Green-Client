@@ -2,8 +2,7 @@ import IAuditData from "./IAuditData";
 import IOrderItem from "./IOrderItem";
 import IUser from "./IUser";
 
-export default interface IOrder {
-    //id:string,
+export default interface c {
     employee: any,
     customer: IUser,
     totalAmount: number,

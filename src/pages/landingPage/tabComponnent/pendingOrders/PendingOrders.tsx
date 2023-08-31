@@ -1,52 +1,10 @@
-// import React, { useState } from "react"
-// import { Button } from "@mui/material"
-// import img from '../../../../images/giftsWithBalloon.png'
-// import NewOrder from "./newOrderModel/NewOrder"
-// import GlobalModal from "../../../../components/globalModal/GlobalModal"
-// import OrderDetails from "./orderDetails/OrderDetails"
 
-// interface prop {
-//     name: string | undefined,
-//     type: string | undefined
-// }
-
-// const PendingOrders: React.FC<prop> = ({ name, type }) => {
-//     const [show, setShow] = useState(false);
-//     const handleShow = () => setShow(true);
-//     const handleCloseNewOrder = () => setShow(false);
-
-//     const [showDetails, setShowDetails] = useState(false);
-//     const handleShowDetails = () => setShowDetails(true);
-//     const handleCloseOrderDetails = () => setShowDetails(false);
-
-//     return (<>
-//         {/* to add new order */}
-//         {/* <div>
-//             <Button variant="outlined" onClick={handleShow}>New Order</Button>
-//             <div className="dialog">
-//                 <GlobalModal header={"New Order"} isOpen={show} handleClose={handleCloseNewOrder} img={img} sideTxt={"We are almost done"}>
-//                     <NewOrder />
-//                 </GlobalModal>
-//             </div>
-//         </div > */}
-
-//         {/* on click on an order will be open the order details window */}
-//         <div>
-//             <Button variant="outlined" onClick={handleShowDetails}>Order Details</Button>
-//             <div className="dialog">
-//                 <GlobalModal header={"Order's details"} isOpen={showDetails} handleClose={handleCloseOrderDetails} img={img} sideTxt={"We are almost done"}>
-//                     <OrderDetails />
-//                 </GlobalModal>
-//             </div>
-//         </div >
-//     </>)
-// }
 
 import React, { useEffect, useState } from "react"
 import IOrder from '../../../../interfaces/model/IOrder'
 import IUser from "../../../../interfaces/model/IUser"
 import { string } from "yup"
-
+import Box from '@mui/material/Box';
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
 import { get } from "http"
 import { countOrders, getOrders } from "../../../../apiCalls/orderCalls"
@@ -54,24 +12,26 @@ import { MyTypography, NewOrderButton, SortButton } from "./PendingOrders.style"
 //import DataTable from "../try.pendingOrders"
 import { GridColDef, DataGrid, GridCellParams } from '@mui/x-data-grid';
 import './pendingOrders.css'
-import IProduct from "../../../../interfaces/model/IProduct"
 import IOrderItem from "../../../../interfaces/model/IOrderItem"
 import SortIcon from '@mui/icons-material/Sort';
 import NewOrder from "../pendingOrders/newOrderModel/NewOrder"
 import GlobalModal from "../../../../components/globalModal/GlobalModal"
 import img from '../../../../images/giftsWithBalloon.png'
 import OrderDetails from "../pendingOrders/orderDetails/OrderDetails"
-
+import GlobalPopOver from "../../../../components/GlobalPopOver"
+import AllFilter from "../pendingOrders/filter/AllFilter"
+import filterImg from "../../../../images/filter.png"
+import { PALLETE } from "../../../../config/config";
 interface prop {
     name: string | undefined,
     type: string | undefined
 }
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 100, cellClassName: 'regularCell' },
     { field: 'customer', headerName: 'Customer', width: 150, cellClassName: 'regularCell' },
 
     {
         field: 'status', type: 'string', headerName: 'Status', width: 200,
+        
         cellClassName: (params: GridCellParams<any, string>) => {
             if (params.value == null) {
                 return '';
@@ -104,35 +64,38 @@ let count:number=0
     const [data, setData] = useState([] as IOrder[])
     const [rows, setRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
     const [secondRows, setSecondRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
-    const [firstSumOrders,setFirstSumOrders]=useState(0)
-   
+    const [firstSumOrders, setFirstSumOrders] = useState(0)
 
-     const [showDetails, setShowDetails] = useState(false);
-    const [secondSumOrders,setSecondSumOrders]=useState(0)
-    const handleCloseNewOrder = () => setShow(false);   
+
+    const [showDetails, setShowDetails] = useState(false);
+    const [secondSumOrders, setSecondSumOrders] = useState(0)
+    const handleCloseNewOrder = () => setShow(false);
     //order details
     const handleShowDetails = () => setShowDetails(true);
-     const handleCloseOrderDetails = () => setShowDetails(false);
+    const handleCloseOrderDetails = () => setShowDetails(false);
     //pagination
     const [firstPaginationModel, setFirstPaginationModel] = React.useState({
         page: 0,
-        pageSize:1,
-      });
-      const [secondPaginationModel, setSecondPaginationModel] = React.useState({
+        pageSize: 1,
+    });
+    const [secondPaginationModel, setSecondPaginationModel] = React.useState({
         page: 0,
         pageSize: 1,
-      });
+    });
+    const filterTables=(filters:any)=>{
+    
+    }
     //end pagination
-  //שליפות
+    //שליפות
     useEffect(() => {
         firstTable('')
-       
-        
-    }, [firstPaginationModel,show]);
-      useEffect(() => {
+
+
+    }, [firstPaginationModel, show]);
+    useEffect(() => {
         secondTable('')
 
-    }, [secondPaginationModel,show])
+    }, [secondPaginationModel, show])
 
     const firstTable = async (sortBy: string) => {
         let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
@@ -251,17 +214,20 @@ let count:number=0
             onPaginationModelChange={setFirstPaginationModel}
 
         />
-        
 
-<br></br>
-        <DataGrid
-            columns={columns} rows={secondRows}
-            rowCount={secondSumOrders}
-            paginationModel={secondPaginationModel}
-            paginationMode="server"
-            onPaginationModelChange={setSecondPaginationModel}
-            
-        />
+
+        <br></br>
+           
+                    
+                    <DataGrid
+                        columns={columns} rows={secondRows}
+                        rowCount={secondSumOrders}
+                        paginationModel={secondPaginationModel}
+                        paginationMode="server"
+                        onPaginationModelChange={setSecondPaginationModel}
+
+                    />
+ 
 
 
     </>

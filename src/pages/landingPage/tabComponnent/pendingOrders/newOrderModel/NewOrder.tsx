@@ -15,25 +15,14 @@ import IOrder from '../../../../../interfaces/model/IOrder';
 import { addNewOrder, calculateOrder } from '../../../../../apiCalls/orderCalls';
 import IOrderItem from '../../../../../interfaces/model/IOrderItem';
 import { Grid, TextField } from '@mui/material';
-import IProduct from '../../../../../interfaces/model/IProduct';
 import { getProductsAutocomplete } from '../../../../../apiCalls/productCalls';
 import { getCustomersAutocomplete } from '../../../../../apiCalls/userCalls';
 import { AddButton, BaloonImg, MyButton } from './NewOrder.style';
 import ICurrencyState from '../../../../../interfaces/ICurrencyState';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
-// import { addNewOrder, calculateOrder } from "../../apiCalls/orderCalls";
-// import IProduct from "../../interfaces/model/IProduct";
-// import IOrderItem from "../../interfaces/model/IOrderItem";
-// import IOrder from "../../interfaces/model/IOrder";
-// import { getCustomersAutocomplete } from "../../apiCalls/userCalls";
-// import { getProductsAutocomplete } from "../../apiCalls/productCalls";
-// import IUser from "../../interfaces/model/IUser";
-// import { FormControl, Grid, MenuItem, TextField } from '@mui/material';
-// import { MyButton, AddButton, BaloonImg } from '../NewOrderModel/NewOrder.style';
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../redux/store";
-// import ICurrencyState from "../../interfaces/ICurrencyState";
+import { IProduct } from '../../../../../interfaces/model/IProduct';
+
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),

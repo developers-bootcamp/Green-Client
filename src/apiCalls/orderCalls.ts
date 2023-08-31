@@ -32,16 +32,9 @@ if (token == undefined)
     token = ""
     const config = { headers: { 'Authorization': token} };
     const url=`${ORDER}?orderBy=${sortBy}&orderStatus=${orderStatus}&pageNo=${pageNo}`
-    console.log(url)
     const response = await axios.get(url,config)
-    console.log( response.headers);
 
-   
-    var pagination = response.headers["totalcount"];
-    console.log(pagination)
-    console.log(response)
     return await response.data
-
 }
 export const countOrders=async(orderStatus:string[])=>{
   let t=localStorage.getItem("token");
@@ -53,7 +46,3 @@ export const countOrders=async(orderStatus:string[])=>{
   const response = await axios.get(url,config)
   return await response.data
 }
-
-
-
-

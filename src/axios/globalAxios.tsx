@@ -10,7 +10,6 @@ axios.interceptors.request.use(
   (config: any) => {
     console.log("config:", config);
     console.log("configURL:", config.url);
-    debugger;
     let token = localStorage.getItem("token");
     if (config.url && config.url.indexOf(LOG_IN) === -1 && token) {
       config.headers["Authorization"] = token;
