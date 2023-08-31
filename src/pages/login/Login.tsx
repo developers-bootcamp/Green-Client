@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, Paper, TextField } from '@mui/material';
@@ -8,9 +8,12 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
-import { setError } from '../../redux/slices/errorSlice';
-import {store} from '../../redux/store';
+import errorSlice, { setError } from '../../redux/slices/errorSlice';
+import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
+import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +21,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate()
-
+  const errorIsOpen = useSelector((state: RootState) => state.errorReducer.isOpen);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,23 +30,24 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const res=await login();
-      localStorage.setItem('token',res.data)
-      navigate("/")
+      const res = await login();
+      console.log({res});
+      localStorage.setItem('token',res.data);
+      navigate("/");
     } catch (err: any) {
-      console.log("err",err);
-      console.log("err.response?.status",err.response?.status);
-      console.log("err.request",err.request);
       if (err.response?.status == 404) {
-        console.log("in 404 if");
-        store.dispatch(setError("signup"));
-        navigate("/signup")
+        swal("please signup before you login", "", "error");
+        navigate("/signup");
       }
+      else{
+        if(err.response?.status == 401){
+          swal("the password is uncurrect","",  "error");
+        }
       else
      {
        const errorMessage = err?.response?.data?.message || 'An error occurred!';
        store.dispatch(setError(errorMessage));
-     }
+     }}
 
     }
   }
@@ -57,8 +61,10 @@ const Login: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
         <Paper sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '600px', height: '400px' }}>
-          <p style={{ marginTop: '0px' }}>Log in to your account</p>
-          <h4>Enter your email and password</h4>
+          <div>
+            <p style={{ marginBottom: '5px' }}>Log in to your account</p>
+            <h4 style={{ marginTop: '0px' }}>Enter your email and password</h4>
+          </div>
           <div style={{ marginBottom: '10px' }}>
             <TextField id="email" label="Email address" variant="outlined" sx={{ marginBottom: '10px', width: '300px' }}
               onChange={(e) => { setEmail(e.target.value) }} />
@@ -96,8 +102,10 @@ const Login: React.FC = () => {
                   borderRadius: '15px'
                 }}
                 onClick={handleSubmit}>
-                Sign Up
+                LOGIN
               </Button>
+              <br></br><br></br>
+             <p>don't have an account yet? <Link to="/signup">signUp</Link></p>
               {err && <p>{err}</p>}
             </FormControl>
           </div>

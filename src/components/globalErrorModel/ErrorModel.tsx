@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import  {store, RootState } from '../../redux/store';
 import axios from 'axios';
 import {clearError, setError} from '../../redux/slices/errorSlice';
+import zIndex from '@mui/material/styles/zIndex';
 
 export const ErrorModel:React.FC = () => {
 const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
@@ -28,6 +29,7 @@ console.log("errorMessage:",errorMessage)
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex:12,
       }}
     >
       <DialogTitle>Error</DialogTitle>
