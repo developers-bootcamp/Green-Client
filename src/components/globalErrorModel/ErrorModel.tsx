@@ -8,7 +8,7 @@ import axios from 'axios';
 import {clearError, setError} from '../../redux/slices/errorSlice';
 import zIndex from '@mui/material/styles/zIndex';
 import GlobalModal from '../globalModal/GlobalModal';
-import { LeftSide, MySideTxt, RightSide } from "../globalModal/GlobalModal.styles"
+import { LeftSide, RightSide } from "../globalModal/GlobalModal.styles"
 import { text } from 'node:stream/consumers';
 import { borderColor } from '@mui/system';
 import { styled } from '@mui/system';
