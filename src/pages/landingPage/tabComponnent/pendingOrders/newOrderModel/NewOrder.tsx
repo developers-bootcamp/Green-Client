@@ -257,12 +257,12 @@ function NewOrder (props:NewOrderProps)  {
                     </Grid>
 
                 </Grid >
-                <Grid item xs={4}>
+                {/* <Grid item xs={4}>
                     <BaloonImg >
                         <img  alt="baloon" />
                     </BaloonImg>
 
-                </Grid>
+                </Grid> */}
             </Grid >
         </div >
 

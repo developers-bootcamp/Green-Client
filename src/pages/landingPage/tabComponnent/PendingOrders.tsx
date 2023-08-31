@@ -14,6 +14,10 @@ import IProduct from "../../../interfaces/model/IProduct"
 import IOrderItem from "../../../interfaces/model/IOrderItem"
 import SortIcon from '@mui/icons-material/Sort';
 import NewOrder from "./pendingOrders/newOrderModel/NewOrder"
+import GlobalModal from "../../../components/globalModal/GlobalModal"
+import img from '../../../images/giftsWithBalloon.png'
+import OrderDetails from "./pendingOrders/orderDetails/OrderDetails"
+
 interface prop {
     name: string | undefined,
     type: string | undefined
@@ -57,10 +61,14 @@ let count:number=0
     const [rows, setRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
     const [secondRows, setSecondRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
     const [firstSumOrders,setFirstSumOrders]=useState(0)
+   
 
+     const [showDetails, setShowDetails] = useState(false);
     const [secondSumOrders,setSecondSumOrders]=useState(0)
-    const handleCloseNewOrder = () => setShow(false);
-    
+    const handleCloseNewOrder = () => setShow(false);   
+    //order details
+    const handleShowDetails = () => setShowDetails(true);
+     const handleCloseOrderDetails = () => setShowDetails(false);
     //pagination
     const [firstPaginationModel, setFirstPaginationModel] = React.useState({
         page: 0,
@@ -133,7 +141,7 @@ let count:number=0
 //end sort
     return (<>
         <div>
-            <NewOrderButton variant="outlined" onClick={handleShow}>
+            {/* <NewOrderButton variant="outlined" onClick={handleShow}>
                 New Order
             </NewOrderButton>
             <div className="dialog">
@@ -147,7 +155,25 @@ let count:number=0
                         <div style={{ borderRadius: '50%' }}>
                             <NewOrder setShow={handleCloseNewOrder} ></NewOrder></div>
                     </DialogContent>
-                </Dialog></div>
+                </Dialog></div> */}
+                {/* on click on an order will be open the order details window */}
+        <div>
+             <Button variant="outlined" onClick={handleShowDetails}>Order Details</Button>
+            <div className="dialog">
+                <GlobalModal header={"Order's details"} isOpen={showDetails} handleClose={handleCloseOrderDetails} img={img} sideTxt={"We are almost done"}>
+                    <OrderDetails />
+                </GlobalModal>
+            </div>
+        </div >
+                 <div>
+            <Button variant="outlined" onClick={handleShow}>New Order</Button>
+            <div className="dialog">
+                <GlobalModal header={"New Order"} isOpen={show} handleClose={handleCloseNewOrder} img={img} sideTxt={"We are almost done"}>
+                    <NewOrder setShow={handleCloseNewOrder} />
+                </GlobalModal>
+            </div>
+        </div >
+
         </div>
         <SortButton variant="contained" onClick={handleClick}>
             Sort <SortIcon />

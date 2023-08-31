@@ -5,6 +5,7 @@ import AddProduct from '../AddProduct';
 import IOrder from '../../../../../interfaces/model/IOrder';
 import IUser from '../../../../../interfaces/model/IUser';
 import { fontSize, margin } from '@mui/system';
+import IAuditData from '../../../../../interfaces/model/IAuditData';
 
 const OrderDetails: React.FC = (props: any) => {
 
@@ -19,7 +20,7 @@ const OrderDetails: React.FC = (props: any) => {
         expiryOn: new Date(),
         cvc: "",
         notificationFlag: true,
-        auditData: null,
+        auditData: {}as IAuditData,
         currency: ""
     }
 
