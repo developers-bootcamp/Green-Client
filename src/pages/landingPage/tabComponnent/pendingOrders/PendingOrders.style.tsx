@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Button, Typography } from "@mui/material";
-import { PALLETE } from "../../../config/config";
+import { PALLETE } from "../../../../config/config"
 
 
 const MyTypography = styled(Typography)({

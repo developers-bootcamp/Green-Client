@@ -66,9 +66,7 @@ function NewOrder (props:NewOrderProps)  {
         expiryOn: new Date(),
         cvc: "",
         notificationFlag: true,
-
         currency: "",
-        
         auditData: {
             createDate: new Date(),
             updateDate: new Date()
