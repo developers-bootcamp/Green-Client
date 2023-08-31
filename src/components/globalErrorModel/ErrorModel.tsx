@@ -33,7 +33,7 @@ console.log("errorMessage:",errorMessage)
             <Button
       onClick={handleClose}
       style={{ color: 'white', textAlign: "center", paddingLeft: "45px", paddingRight: "45px",   backgroundColor: 'orange', 
-       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '30px', 
+       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '70px', 
       }}
     >
       Close
