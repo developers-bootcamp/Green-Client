@@ -16,6 +16,7 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
+import { Link } from 'react-router-dom';
 
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
@@ -161,7 +162,7 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
-
+                <p>already have an account? <Link to="/login">login</Link></p>
                 <SignUpWrapper>
                     <Button
                         sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '20px' }}
