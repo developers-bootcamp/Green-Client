@@ -8,9 +8,10 @@ import axios from 'axios';
 import {clearError, setError} from '../../redux/slices/errorSlice';
 import zIndex from '@mui/material/styles/zIndex';
 import GlobalModal from '../globalModal/GlobalModal';
-import { LeftSide, MyImg, MySideTxt, RightSide } from "../globalModal/GlobalModal.styles"
+import { LeftSide, MySideTxt, RightSide } from "../globalModal/GlobalModal.styles"
 import { text } from 'node:stream/consumers';
 import { borderColor } from '@mui/system';
+import { styled } from '@mui/system';
 
 
 export const ErrorModel:React.FC = () => {
@@ -23,9 +24,12 @@ console.log("errorMessage:",errorMessage)
     const handleClose = () => {
      store.dispatch(clearError());
     };
+     const MyImg = styled('img')({
+      width: "100%",
+  })
   
     return (
-      <Dialog fullWidth sx={ {maxHeight: "60vh",top: "13vh"}}  open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+      <Dialog fullWidth sx={ {maxHeight: "40vh",top: "23vh"}}  open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
       <DialogContent sx={{ p: 0, height: '45rem'}} style={{ borderRadius: '100px' }}>
           <LeftSide>
               <DialogTitle sx={{ fontSize: 30, pl: "3rem", paddingLeft: "3rem" }}>Error</DialogTitle>
