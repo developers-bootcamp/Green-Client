@@ -80,7 +80,7 @@ export default function GlobalTable(props: any) {
     const processRowUpdate = async (newRow: GridRowModel) => {
           try {
             if (newRow.isNew)          
-              await props.onAdd(newRow)
+              await props.onAdd(newRow,props.type)
             else
               props.onEdit(idEdit, newRow)
             const updatedRow = { ...newRow, isNew: false };
@@ -89,8 +89,8 @@ export default function GlobalTable(props: any) {
             return updatedRow;
           }
           catch (err: any) {
-            if (err.response.status === 409)
-            setSnackbar({ children: "name already exist", severity: 'error' });
+            console.log(err,"hello ");            
+            setSnackbar({ children: err.response.data, severity: 'error' });
        
           }
       

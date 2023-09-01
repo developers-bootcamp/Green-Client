@@ -18,31 +18,26 @@ interface prop {
   type: string | undefined
 }
 const UsersManagement: React.FC<prop> = ({ name, type }) => {
-
-  
-const[allUser,setAllUser]=useState();
-  const [allCustomers, setAllCustomers] = useState<any>([]);
-  const [allManagers, setAllManagers] = useState<any>([]);
-  const [allEmployees, setAllEmployees] = useState<any>([]);
-  const head = [{ headerName: "FullName", type: "string", field: "fullName" },{ headerName: "Password", type:"password", field: "password" },{ headerName: "Email", type: "string", field: "email" },{ headerName: "Address", type: "string", field: "address" },{ headerName: "Phone", type: "string", field: "telephone"} ,{headerName:"Date",type:"date",field:"date"}]
+  const [allCustomers, setAllCustomers] = useState<any>();
+  const [allManagers, setAllManagers] = useState<any>();
+  const [allEmployees, setAllEmployees] = useState<any>();
+  const head = [{ headerName: "FullName", type: "string", field: "fullName" },{ headerName: "Password", type:"password", field: "password" },{ headerName: "Email", type: "string", field: "email" },{ headerName: "Address", type: "string", field: "address" },{ headerName: "Phone", type: "string", field: "telephone"} ]
   const getAllUserAsync = async () => {
     await getUsers().then(res => {
       let managers:any=[];
       let employees:any=[];
       let costumers:any=[];
         res.data.map((u:IUser)=>{ 
-          console.log(u,"user usersManagment");
-          if(u.role.name=="ADMIN")
+          if(u.roleName=="ADMIN")
           managers.push(u)
-          if(u.role.name=="EMPLOYEE")
+          if(u.roleName=="EMPLOYEE")
           employees.push(u)
-           if(u.role.name=="CUSTOMER")
+           if(u.roleName=="CUSTOMER")
            costumers.push(u)
         })
         setAllManagers(managers)
         setAllCustomers(costumers)
         setAllEmployees(employees)
-      setAllUser(res.data);
     });
 
   }
@@ -53,21 +48,26 @@ const[allUser,setAllUser]=useState();
   const onUserEdit = async (id: string, user: IUser) => {
     await editUser(id, user)
   }
-  const onUserAdd = async (user: IUser) => {
+  const onUserAdd = async (user: IUser,type:string) => {   
+     
+    user.roleName=type.toUpperCase()
     await addUser(user)
   }
 
   useEffect(() => {
     getAllUserAsync();
+  
+    
+    
+    
   }, [])
   return (
     <>
-          {allUser != null && <GlobalTable type="Manager" rows={allManagers}number={0} head={head}image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
-          {allUser != null && <GlobalTable type="Employee" rows={allEmployees}number={1} head={head}image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW}headColor={PALLETE.YELLOW} ></GlobalTable>}
-          {allUser != null && <GlobalTable type="Customer" rows={allCustomers}number={2} head={head}image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE}headColor={PALLETE.BLUE} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Admin" rows={allManagers}number={0} head={head}image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&&<GlobalTable type="Employee" rows={allEmployees}number={1} head={head}image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW}headColor={PALLETE.YELLOW} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Customer" rows={allCustomers}number={2} head={head}image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE}headColor={PALLETE.BLUE} ></GlobalTable>}
 
     </>
   );
 };
 export default UsersManagement;
-
