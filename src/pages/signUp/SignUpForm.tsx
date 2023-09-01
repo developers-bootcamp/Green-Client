@@ -15,7 +15,7 @@ import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
-
+import { fontSize } from '@mui/system';
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),

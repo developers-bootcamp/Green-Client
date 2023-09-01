@@ -8,9 +8,12 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
-import { setError } from '../../redux/slices/errorSlice';
-import {store} from '../../redux/store';
+import errorSlice, { setError } from '../../redux/slices/errorSlice';
+import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
+import { useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +21,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate()
-
+  const errorIsOpen = useSelector((state: RootState) => state.errorReducer.isOpen);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,20 +30,24 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const res=await login();
-      localStorage.setItem('token',res.data)
-      navigate("/")
+      const res = await login();
+      console.log({res});
+      localStorage.setItem('token',res.data);
+      navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {
-        console.log("in 404 if");
-        store.dispatch(setError("signup"));
-        navigate("/signup")
+        swal("please signup before you login", "", "error");
+        navigate("/signup");
       }
+      else{
+        if(err.response?.status == 401){
+          swal("the password is uncurrect","",  "error");
+        }
       else
      {
        const errorMessage = err?.response?.data?.message || 'An error occurred!';
        store.dispatch(setError(errorMessage));
-     }
+     }}
 
     }
   }

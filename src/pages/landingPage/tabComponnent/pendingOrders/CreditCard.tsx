@@ -23,7 +23,6 @@ const CreditCard: React.FC = (props: any) => {
         validationSchema,
         onSubmit: (values: { ccn: string, cvv: string, ed: Date }) => {
             props.saveCreditCardDetails(values)
-            console.log(values);
         }
     });
 
