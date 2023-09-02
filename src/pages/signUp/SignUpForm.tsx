@@ -14,7 +14,6 @@ import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
 const validationSchema = yup.object({
@@ -34,7 +33,7 @@ const SignUpForm: React.FC = () => {
 
     const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
 
-    const [currency, setCurrency] = React.useState("DOLLAR");
+    const [currency, setCurrency] = React.useState("");
 
     const navigate = useNavigate()
 
@@ -50,22 +49,14 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency);
-                    swal("you sign up seccessfully", "good", "success");
-                    navigate("/login")
-                    return (res);
+                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
+                    localStorage.setItem("token", (await res).data)
+                    swal("you are successfully signed up", "good", "success");
+                    navigate("/landingPage")
                 } catch (error) {
-                   // swal("you have a error", `${error}`, "error");
-
-//                     const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-//                     localStorage.setItem("token", (await res).data)
-//                     swal("you sign up seccessfully", "good", "success");
-
-                    navigate("/landingPage")}
-                // } catch (error) {
-                //     swal("you have a error", `${error}`, "error");
-                //     navigate("/login")
-                // }
+                    swal("you have a error", `${error}`, "error");
+                    navigate("/")
+                }
             }
             signUpRequest();
         }
