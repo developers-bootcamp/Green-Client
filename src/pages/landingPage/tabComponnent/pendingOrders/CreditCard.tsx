@@ -12,7 +12,7 @@ const validationSchema = yup.object({
     ed: yup.date().required("expire date is required")
 });
 
-const CreditCard: React.FC = (props: any) => {
+const CreditCard = (props: any) => {
 
     const formik = useFormik({
         initialValues: {
