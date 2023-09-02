@@ -75,8 +75,6 @@ export default function GlobalTable(props: any) {
     > | null>(null);
   
     const handleCloseSnackbar = () => setSnackbar(null);
-  
-
     const processRowUpdate = async (newRow: GridRowModel) => {
           try {
             if (newRow.isNew)          
