@@ -1,7 +1,7 @@
 import IOrderItem from "./IOrderItem";
 import IUser from "./IUser";
 
-export default interface IOrder {
+export default interface c {
     employee: any,
     customer: IUser,
     totalAmount: number,

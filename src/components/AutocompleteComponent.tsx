@@ -35,7 +35,6 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
       handleSearch(value);
       if (value.length >= 2) {
         setTimeout(() => {
-          console.log(`Searching for ${searchType}:`, value);
         }, 1000);
       }
     }
@@ -49,7 +48,6 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
       getOptionLabel={(option) => option.name} 
       value={null}
       onChange={(event, newValue) => {
-        console.log(`Selected ${searchType}:`, newValue);
       }}
       onInputChange={handleInputChange}
       sx={{ width: '15vw' }}
