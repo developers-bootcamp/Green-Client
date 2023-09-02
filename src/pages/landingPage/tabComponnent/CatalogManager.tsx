@@ -26,12 +26,8 @@ interface prop {
   type: string | undefined
 }
 const CatalogManager: React.FC<prop> = ({ name, type }) => {
-
-
-
   const [allCategory, setAllCategory] = useState();
   const [allCategoryName, setAllCategoryName] = useState();
-
   const [allProduct, setallProduct] = useState();
   const [changeProductCategory, setChangeProductCategory] = useState<string>("GGG");
   const head = [{
@@ -74,15 +70,7 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
     { headerName: "category", type: "singleSelect", field: "productCategoryName", valueOptions: allCategoryName },
     { headerName: "Price", type: "number", field: "price", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" }; } }
   ];
-  // const productHead = [{
-  //   headerName: "Name", type: "String", field: "name",
-  //    preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-  //     const hasError = params.props.value.length < 3;
-  //     return { ...params.props, error: hasError,message:"min 3 char" };
-  //   },
-
-  // }, { headerName: "Description", type: "String", field: "description" }, { headerName: "Inventory", type: "number", field: "inventory" }, { headerName: "Discount", type: "number", field: "discount" }, { headerName: "DiscountType", type: "singleSelect", field: "discountType", valueOptions: ["FIXED_AMOUNT", "PERCENTAGE"] }, { headerName: "category", type: "singleSelect", field: "productCategoryName", valueOptions: allCategoryName }, { headerName: "Price", type: "number", field: "price" }];
-
+  
   const getAllProductAsync = async () => {
     await getProducts().then(res => setallProduct(res.data));
     ;
@@ -91,28 +79,22 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
 
     await deleteproductCategory(id).then(res => { setChangeProductCategory(id);  });
   }
-  const onProductCategoryEdit = async (id: string, productCategory: any) => {
-    const newProductCategory: IProductCategory = { id: productCategory.id, name: productCategory.name, description: productCategory.description };
-    await editProductCategory(id, newProductCategory).then(res => setChangeProductCategory(productCategory.name))
+  const onProductCategoryEdit = async (id: string, productCategory: IProductCategory) => {
+    await editProductCategory(id, productCategory).then(res => setChangeProductCategory(productCategory.name))
 
   }
-  const onProductCategoryAdd = async (productCategory: any) => {
-    const newProductCategory: IProductCategory = { id: productCategory.id, name: productCategory.name, description: productCategory.description };
-
-    await addProductCategory(newProductCategory).then(res => setChangeProductCategory(newProductCategory.name))
+  const onProductCategoryAdd = async (productCategory: IProductCategory,type:any) => {
+    await addProductCategory(productCategory).then(res => setChangeProductCategory(productCategory.name))
   }
   const onProductDelete = async (id: string) => {
 
     await deleteProduct(id);
   }
-  const onProductEdit = async (id: string, product: any) => {
-    const newProduct: IProduct = { id: product.id, name: product.name, description: product.description, price: product.price, discount: product.discount, productCategoryName: product.productCategoryName, discountType: product.discountType, inventory: product.inventory };
-    await editProduct(id, newProduct)
+  const onProductEdit = async (id: string, product: IProduct) => {
+    await editProduct(id, product)
   }
-  const onProductAdd = async (product: any) => {
-    const newProduct: IProduct = { id: product.id, name: product.name, description: product.description, price: product.price, discount: product.discount, productCategoryName: product.productCategoryName, discountType: product.discountType, inventory: product.inventory };
-
-    await addProduct(newProduct)
+  const onProductAdd = async (product: any,type:IProduct) => {
+    await addProduct(product)
   }
   useEffect(() => {
     getAllProductAsync();

@@ -17,9 +17,7 @@ import { styled } from '@mui/system';
 export const ErrorModel:React.FC = () => {
   
 const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
-console.log("open:",open)
 const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || " something went wrong a error occurred");
-console.log("errorMessage:",errorMessage)
 
     const handleClose = () => {
      store.dispatch(clearError());

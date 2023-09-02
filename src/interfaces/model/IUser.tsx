@@ -11,5 +11,5 @@ export default interface IUser {
     address: string,
     telephone:string,
     company:ICompany,
-    role: IRole,
+    roleName:string,
 }

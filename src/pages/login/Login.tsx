@@ -31,7 +31,6 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const res = await login();
-      console.log({res});
       localStorage.setItem('token',res.data);
       navigate("/");
     } catch (err: any) {
@@ -54,7 +53,6 @@ const Login: React.FC = () => {
 
     const login = async () => {
       const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
-      console.log(res);
       return res;
     }
 
