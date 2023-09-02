@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import MyAutocomplete from '../../../../../components/MyAutocomplete';
 import { getCustomersAutocomplete } from '../../../../../apiCalls/userCalls';
 import { getProductsAutocomplete } from '../../../../../apiCalls/productCalls';
-import IProduct from '../../../../../interfaces/model/IProduct';
+import { IProduct } from '../../../../../interfaces/model/IProduct';
 import { BASE_URL, PALLETE } from '../../../../../config/config';
 import { Autocomplete } from "@mui/material";
 import { useSelector } from 'react-redux';
