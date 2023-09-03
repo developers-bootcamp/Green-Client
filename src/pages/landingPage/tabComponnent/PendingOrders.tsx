@@ -4,9 +4,9 @@ import NewOrder from "../../landingPage/tabComponnent/pendingOrders/newOrderMode
 import { Button, Dialog, DialogContent, MenuItem, Popover, Select, Table, Typography } from "@mui/material"
 import { get } from "http"
 import { getOrders } from "../../../apiCalls/orderCalls"
-import { MyTypography } from "./PendingOrders.style"
 import { GridColDef, DataGrid, GridCellParams } from '@mui/x-data-grid';
 import './pendingOrders.css'
+import { MyTypography } from "./pendingOrders/PendingOrders.style";
 
 interface prop {
     name: string | undefined,
@@ -93,6 +93,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 currentRows.push({ id: e.cvc, 'price': e.totalAmount, 'status': e.orderStatus, 'customer': "null", 'products': "bla bla empty" })
             else {
                 let p = ""
+                debugger
                 e.orderItemsList.forEach(prod => {
                     if (prod.product != null)
                         p += `${prod.quantity} ${prod.product.name}, `
@@ -131,7 +132,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
                     <DialogContent >
                         <div style={{ borderRadius: '50%' }}>
-                            <NewOrder  ></NewOrder></div>
+                            <NewOrder setShow={handleCloseNewOrder}></NewOrder></div>
                     </DialogContent>
                 </Dialog></div>
         </div>

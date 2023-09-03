@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-//import { fetchAllOrders } from '../../redux/'
-import UserManagement from '../landingPage/tubComponents/UserManagement'
+import NewOrder from "../landingPage/tabComponnent/pendingOrders/newOrderModel/NewOrder"
 import { Button, Dialog, DialogContent } from "@mui/material"
 
 const LandingPage: React.FC = () => {
 
-  return <>
-    <p>landingPage component here</p>
-    <UserManagement></UserManagement>
+  const dispatch = useDispatch()
+  const [show, setShow] = useState(false);
 
-    
-    
+  const handleShow = () => setShow(true);
+  const [close, setClose] = useState(false);
+
+  const handleClose = () => setShow(false);
+  useEffect(() => {
+  }, [])
+
+  return <>
+ 
   </>
 }
-
 export default LandingPage
