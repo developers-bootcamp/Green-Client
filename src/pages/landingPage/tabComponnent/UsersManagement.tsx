@@ -1,12 +1,7 @@
 import React from "react"
 import { useEffect, useState } from "react";
 import GlobalTable from "../../../components/table/GlobalTable";
-import { getAllCategory, deleteproductCategory, editProductCategory, addProductCategory } from "../../../apiCalls/productCategory";
 import { getUsers, deleteUser, addUser, editUser } from "../../../apiCalls/userCalls";
-import { idText } from "typescript";
-import { IProductCategory } from "../../../interfaces/model/IProductCategory";
-import { IProduct } from "../../../interfaces/model/IProduct";
-import { GridPreProcessEditCellProps } from "@mui/x-data-grid";
 import arrow from '../../../images/arrow.png'
 import arrow2 from '../../../images/arrow2.png'
 import arrow3 from '../../../images/arrow3.png'
@@ -35,15 +30,17 @@ const UsersManagement: React.FC<prop> = ({ name, type }) => {
     { headerName: "Email", type: "string", field: "email" },
     { headerName: "Address", type: "string", field: "address" },
     { headerName: "Phone", type: "string", field: "telephone"} ]
+
   const getAllUserAsync = async () => {
     await getUsers().then(res => {
-      let managers:any=[];
-      let employees:any=[];
-      let costumers:any=[];
-        res.data.map((u:IUser)=>{ 
-          if(u.roleName=="ADMIN")
+      let managers: any = [];
+      let employees: any = [];
+      let costumers: any = [];
+      res.data.map((u: IUser) => {
+        console.log(u, "user usersManagment");
+        if (u.role.name == "ADMIN")
           managers.push(u)
-          if(u.roleName=="EMPLOYEE")
+        if (u.role.name == "EMPLOYEE")
           employees.push(u)
            if(u.roleName=="CUSTOMER")
            costumers.push(u)
@@ -78,10 +75,9 @@ const UsersManagement: React.FC<prop> = ({ name, type }) => {
   }, [])
   return (
     <>
-          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Admin" rows={allManagers}number={0} head={head}image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
-          {allManagers != null &&allEmployees != null&&allCustomers != null&&<GlobalTable type="Employee" rows={allEmployees}number={1} head={head}image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW}headColor={PALLETE.YELLOW} ></GlobalTable>}
-          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Customer" rows={allCustomers}number={2} head={head}image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE}headColor={PALLETE.BLUE} ></GlobalTable>}
-
+      {allUser != null && <GlobalTable type="Manager" rows={allManagers} number={0} head={head} image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED} headColor={PALLETE.RED} ></GlobalTable>}
+      {allUser != null && <GlobalTable type="Employee" rows={allEmployees} number={1} head={head} image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW} headColor={PALLETE.YELLOW} ></GlobalTable>}
+      {allUser != null && <GlobalTable type="Customer" rows={allCustomers} number={2} head={head} image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE} headColor={PALLETE.BLUE} ></GlobalTable>}
     </>
   );
 };
