@@ -22,7 +22,6 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
       });
       setDataTerm(res.data);
     } catch (err) {
-      console.log(err);
     }
   };
 
