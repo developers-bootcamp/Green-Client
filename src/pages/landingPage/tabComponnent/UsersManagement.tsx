@@ -8,13 +8,29 @@ import arrow3 from '../../../images/arrow3.png'
 import { PALLETE } from "../../../config/config";
 import IUser from "../../../interfaces/model/IUser";
 
-const UsersManagement: React.FC = () => {
+interface prop {
+  name: string | undefined,
+  type: string | undefined
+}
+const UsersManagement: React.FC<prop> = ({ name, type }) => {
+  const [allCustomers, setAllCustomers] = useState<any>();
+  const [allManagers, setAllManagers] = useState<any>();
+  const [allEmployees, setAllEmployees] = useState<any>();
+  const head = [
+    { headerName: "FullName", type: "string", field: "fullName" ,preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
 
-  const [allUser, setAllUser] = useState();
-  const [allCustomers, setAllCustomers] = useState<any>([]);
-  const [allManagers, setAllManagers] = useState<any>([]);
-  const [allEmployees, setAllEmployees] = useState<any>([]);
-  const head = [{ headerName: "FullName", type: "string", field: "fullName" }, { headerName: "Password", type: "password", field: "password" }, { headerName: "Email", type: "string", field: "email" }, { headerName: "Address", type: "string", field: "address" }, { headerName: "Phone", type: "string", field: "telephone" }, { headerName: "Date", type: "date", field: "date" }]
+      const hasError = params.props.value.length < 3;
+      return { ...params.props, error: hasError, message: "min 3 char" };
+    }},
+    { headerName: "Password", type:"password", field: "password",preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+
+      const hasError = params.props.value.length < 3;
+      return { ...params.props, error: hasError, message: "min 3 char" };
+    } },
+    { headerName: "Email", type: "string", field: "email" },
+    { headerName: "Address", type: "string", field: "address" },
+    { headerName: "Phone", type: "string", field: "telephone"} ]
+
   const getAllUserAsync = async () => {
     await getUsers().then(res => {
       let managers: any = [];
@@ -26,13 +42,14 @@ const UsersManagement: React.FC = () => {
           managers.push(u)
         if (u.role.name == "EMPLOYEE")
           employees.push(u)
-        if (u.role.name == "CUSTOMER")
-          costumers.push(u)
-      })
-      setAllManagers(managers)
-      setAllCustomers(costumers)
-      setAllEmployees(employees)
-      setAllUser(res.data);
+           if(u.roleName=="CUSTOMER")
+           costumers.push(u)
+        })
+        console.log(managers);
+        
+        setAllManagers(managers)
+        setAllCustomers(costumers)
+        setAllEmployees(employees)
     });
 
   }
