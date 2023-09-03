@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
 import { setRole } from '../../redux/slices/RoleSlice';
+import { Link } from 'react-router-dom';
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -161,6 +162,7 @@ const SignUpForm: React.FC = () => {
                     <div>{formik.errors.acceptTerms}</div>
                 ) : null}
                 <br />
+                <p>already have an account? <Link to="/login">login</Link></p>
 
                 <SignUpWrapper>
                     <Button
@@ -168,7 +170,9 @@ const SignUpForm: React.FC = () => {
                         type="submit" variant="contained" >
                         Sign Up
                     </Button>
+                    
                 </SignUpWrapper>
+
             </form >
         </div >
     );
