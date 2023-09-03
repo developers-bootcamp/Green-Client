@@ -3,44 +3,24 @@ import { GET_PRODUCTS,PRODUCT_CALLS } from "../config/config";
 import { IProduct } from "../interfaces/model/IProduct";
 export const getProductsAutocomplete = async (prefix: string): Promise<{ [key: string]: any; }[]> => {
 
-    let t = localStorage.getItem("token");
-    if (t == undefined)
-        t = "qqq"
-    const config = { headers: { 'Authorization': t } };
-    const x = await axios.get(`${GET_PRODUCTS}/${prefix}`, config);
-    return (await x).data;
+    return await axios.get(`${GET_PRODUCTS}/${prefix}`);
 
 }
 
 export const getProducts = async () => {
-    let t = localStorage.getItem("token");
-    if (t == undefined)
-        t = "qqq"
-    const config = { headers: { 'Authorization': t } };
-    return await axios.get(`${GET_PRODUCTS}`, config);
+
+    return await axios.get(`${GET_PRODUCTS}`);
 }
 export const deleteProduct=async(id:string)=>{
-    let t=localStorage.getItem("token");
-    if(t==undefined)
-        t="qqq"
-        
-    const config = { headers: { 'Authorization': t} };
-return await axios.delete(`${PRODUCT_CALLS}/${id}`,config);
+
+return await axios.delete(`${PRODUCT_CALLS}/${id}`);
 } 
 export const editProduct = async (id:any,product:IProduct) => {
-    let t = localStorage.getItem("token");
-    if (t == undefined)
-        t = "qqq"
-        
-    const config = {headers: { 'Authorization': t } };
-    return await axios.put(`${PRODUCT_CALLS}/${id}`,product, config);
+
+    return await axios.put(`${PRODUCT_CALLS}/${id}`,product);
 } 
 export const addProduct = async (product:IProduct) => {
-    let t = localStorage.getItem("token");
-    if (t == undefined)
-        t = "qqq"
-        
-    const config = {headers: { 'Authorization': t } };
 
-    return await axios.post(`${PRODUCT_CALLS}`,product, config);
+
+    return await axios.post(`${PRODUCT_CALLS}`,product);
 }  
