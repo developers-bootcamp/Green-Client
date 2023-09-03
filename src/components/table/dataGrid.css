@@ -1,6 +1,6 @@
 .css-5wly58-MuiDataGrid-root .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell {
     border: 5px;
-    background-color: rgb(230, 230, 230) ;
+    background-color: rgb(230, 230, 230);
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     padding-right: 7px !important;
@@ -12,17 +12,6 @@
     min-height: '0px!important';
 }
 
-.css-5wly58-MuiDataGrid-root .MuiDataGrid-row {
-    /* border: 5px;
-    border-left-style: solid;
-    border-left-color: #EE696A !important;
-    padding-bottom: 5px;
-    padding: 0px !important;
-    height: 10px !important;
-    background-color: "white!important";
-    border-bottom: 5px solid #FFFF !important */
-}
-
 .css-3g37jk {
     height: 360px !important;
     width: 100% !important;
@@ -30,7 +19,6 @@
 
 .css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
     position: absolute;
-    /* top: 40px !important; */
 }
 
 .css-128fb87-MuiDataGrid-toolbarContainer {
@@ -44,30 +32,34 @@
 }
 
 .css-189b1kn {
-    padding-top: 0px!important;
+    padding-top: 0px !important;
 }
 
 .css-1iyq7zh-MuiDataGrid-columnHeaders {
-    border-bottom: 0px!important;
-    border-bottom: 1px unset!important;} 
+    border-bottom: 0px !important;
+    border-bottom: 1px unset !important;
+}
 
-    .green{
-        background-color: #7ED787!important;
-        border: 5px;
-          padding-left: 0px!important;
-          border-left-style: solid;
-          border-left-color: #7ED787!important
-          
-    }
-    .blue{
-        background-color: #6794CF!important;
-    }
-    .orang{
-        background-color: #EB9F6E!important;
-    }
-    .red{
-        background-color: #EE696A!important;
-    }
-    .yellow{
-        background-color: #FAE282!important;
-    }
+.green {
+    background-color: #7ED787 !important;
+    border: 5px;
+    padding-left: 0px !important;
+    border-left-style: solid;
+    border-left-color: #7ED787 !important
+}
+
+.blue {
+    background-color: #6794CF !important;
+}
+
+.orang {
+    background-color: #EB9F6E !important;
+}
+
+.red {
+    background-color: #EE696A !important;
+}
+
+.yellow {
+    background-color: #FAE282 !important;
+}

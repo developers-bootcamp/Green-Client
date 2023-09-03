@@ -1,7 +1,7 @@
 import { PALLETE } from '../../config/config';
 import styled from '@emotion/styled';
-import { Padding } from '@mui/icons-material';
-import { Button, TableCell, TableHead, TableRow } from '@mui/material';
+import { Button, TableCell, TableRow } from '@mui/material';
+
 const TableRows = styled(TableRow)({
     border: "5px",
     borderLeftStyle: "solid",
@@ -9,8 +9,8 @@ const TableRows = styled(TableRow)({
     padding: "0px!important",
     height: "10px!important",
     backgroundColor: "white!important",
-
 })
+
 const TableCells = styled(TableCell)({
     border: " 5px",
     backgroundColor: "rgb(220,220,220)!important",
@@ -19,8 +19,9 @@ const TableCells = styled(TableCell)({
     paddingRight: '7px!important',
     paddingLeft: '7px!important', borderBottom: '5px solid #FFFF!important',
     borderRight: '5px solid #FFFF!important',
-    Padding:"0pxIimportant"
+    Padding: "0pxIimportant"
 })
+
 const Head = styled(TableCell)({
     fontWeight: 'bold !important', paddingTop: '0px!important',
     paddingBottom: '0px!important',
@@ -30,9 +31,11 @@ const Head = styled(TableCell)({
     color: "gray!important",
     display: "table-cell!important",
 })
+
 const Row = styled(TableRow)({
     color: "white!important"
 })
+
 const Image = styled('h1')({
     left: "80px",
     position: "absolute",
@@ -44,6 +47,7 @@ const Image = styled('h1')({
     color: `${PALLETE.RED}`,
     fontFamily: "-webkit-body"
 })
+
 const Img = styled('img')({
     left: "-15px",
     position: "absolute",
@@ -52,6 +56,7 @@ const Img = styled('img')({
     width: "15px",
     height: "15px",
 })
+
 const AddButtons = styled(Button)({
     border: "5px",
     backgroundColor: "rgb(220,220,220)!important",
@@ -64,12 +69,10 @@ const AddButtons = styled(Button)({
     borderLeftColor: `${PALLETE.RED} !important`,
     padding: "0px!important",
     height: "30px!important",
-    width:"1130px!important",
+    width: "1130px!important",
     opacity: "0.4",
-    color:"black!important",
-    marginBottom:"0px!important",
-  
-  
+    color: "black!important",
+    marginBottom: "0px!important",
 })
-export { TableRows, Image, TableCells, Head, Row, AddButtons,Img }
 
+export { TableRows, Image, TableCells, Head, Row, AddButtons, Img }

@@ -6,10 +6,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const Loader: React.FC = () => {
   const isLoading = useSelector((state: RootState) => state.loadingReducer
-  ?.isLoading || false);
+    ?.isLoading || false);
 
   const colors = ['#ff0000', '#6794CF', '#FAE282', '#EE696A', '#7ED787', '#EB9F6E', '#0000ff'];
-  
+
   const [colorIndex, setColorIndex] = useState(0);
 
   const updateColor = () => {
@@ -33,7 +33,7 @@ const Loader: React.FC = () => {
   return (
     <div>
       <Backdrop
-        sx={{ zIndex: (theme:any) => theme.zIndex.drawer + 1 }}
+        sx={{ zIndex: (theme: any) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
         <CircularProgress style={circularProgressStyle} />
