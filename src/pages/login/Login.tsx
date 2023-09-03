@@ -13,7 +13,7 @@ import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
-import { setRole } from '../../redux/slices/RoleSlice';
+import { setRole } from '../../redux/slices/roleSlice';
 
 
 const Login: React.FC = () => {

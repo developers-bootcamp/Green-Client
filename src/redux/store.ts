@@ -6,7 +6,7 @@ import loadingReducer from './slices/loadingSlice';
 import { useDispatch } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 import errorReducer from './slices/errorSlice';
-import roleReducer from './slices/RoleSlice';
+import roleReducer from './slices/roleSlice';
 
 export const store = configureStore({
     reducer: {

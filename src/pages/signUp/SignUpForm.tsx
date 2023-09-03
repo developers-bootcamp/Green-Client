@@ -16,7 +16,7 @@ import { RootState, store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
-import { setRole } from '../../redux/slices/RoleSlice';
+import { setRole } from '../../redux/slices/roleSlice';
 import { Link } from 'react-router-dom';
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
