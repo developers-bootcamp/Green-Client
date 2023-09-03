@@ -56,30 +56,30 @@ export default function GlobalTable(props: any) {
     pageSize: 5,
     page: 0,
   });
-
-  const [snackbar, setSnackbar] = React.useState<Pick<
-    AlertProps,
-    'children' | 'severity'
-  > | null>(null);
-
-  const handleCloseSnackbar = () => setSnackbar(null);
-
-  const processRowUpdate = async (newRow: GridRowModel) => {
-    try {
-      if (newRow.isNew)
-        await props.onAdd(newRow)
-      else
-        props.onEdit(idEdit, newRow)
-      const updatedRow = { ...newRow, isNew: false };
-      setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
-      setSnackbar({ children: ' successfully saved', severity: 'success' });
-      return updatedRow;
-    }
-    catch (err: any) {
-      if (err.response.status === 409)
-        setSnackbar({ children: "name already exist", severity: 'error' });
-    }
-  };
+    const [snackbar, setSnackbar] = React.useState<Pick<
+      AlertProps,
+      'children' | 'severity'
+    > | null>(null);
+  
+    const handleCloseSnackbar = () => setSnackbar(null);
+    const processRowUpdate = async (newRow: GridRowModel) => {
+          try {
+            if (newRow.isNew)          
+              await props.onAdd(newRow,props.type)
+            else
+              props.onEdit(idEdit, newRow)
+            const updatedRow = { ...newRow, isNew: false };
+            setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
+            setSnackbar({ children: ' successfully saved', severity: 'success' });
+            return updatedRow;
+          }
+          catch (err: any) {
+            console.log(err,"hello ");            
+            setSnackbar({ children: err.response.data, severity: 'error' });
+       
+          }
+      
+        }; 
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {

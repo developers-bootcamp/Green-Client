@@ -43,12 +43,18 @@ const UsersManagement: React.FC = () => {
   const onUserEdit = async (id: string, user: IUser) => {
     await editUser(id, user)
   }
-  const onUserAdd = async (user: IUser) => {
+  const onUserAdd = async (user: IUser,type:string) => {   
+     
+    user.roleName=type.toUpperCase()
     await addUser(user)
   }
 
   useEffect(() => {
     getAllUserAsync();
+  
+    
+    
+    
   }, [])
   return (
     <>

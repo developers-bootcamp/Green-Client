@@ -14,7 +14,6 @@ const CatalogManager: React.FC = () => {
 
   const [allCategory, setAllCategory] = useState();
   const [allCategoryName, setAllCategoryName] = useState();
-
   const [allProduct, setallProduct] = useState();
   const [changeProductCategory, setChangeProductCategory] = useState<string>("GGG");
 
