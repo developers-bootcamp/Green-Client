@@ -13,6 +13,7 @@ import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import { setRole } from '../../redux/slices/RoleSlice';
 
 
 const Login: React.FC = () => {
@@ -23,7 +24,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate()
   const errorIsOpen = useSelector((state: RootState) => state.errorReducer.isOpen);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
@@ -31,7 +31,8 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const res = await login();
-      localStorage.setItem('token',res.data);
+      localStorage.setItem('token',res.data.split(":")[0]);
+      store.dispatch(setRole(res.data.split(":")[1]));
       navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {
