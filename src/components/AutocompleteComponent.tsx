@@ -8,8 +8,8 @@ interface SearchType {
 }
 
 interface AutocompleteComponentProps {
-  path: string;
-  searchType: string;
+  path: string; 
+  searchType: string; 
 }
 
 const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, searchType }) => {
@@ -44,7 +44,7 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
       disablePortal
       id="customer-autocomplete"
       options={dataTerm}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.name} 
       value={null}
       onChange={(event, newValue) => {
       }}
@@ -56,3 +56,4 @@ const AutocompleteComponent: React.FC<AutocompleteComponentProps> = ({ path, sea
 };
 
 export default AutocompleteComponent;
+
