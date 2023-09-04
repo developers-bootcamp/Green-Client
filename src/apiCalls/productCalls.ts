@@ -14,7 +14,5 @@ export const editProduct = async (id:any,product:IProduct) => {
     return await axios.put(`${PRODUCT_CALLS}/${id}`,product);
 } 
 export const addProduct = async (product:IProduct) => {
-
-
     return await axios.post(`${PRODUCT_CALLS}`,product);
 }  
