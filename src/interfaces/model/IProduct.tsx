@@ -7,4 +7,7 @@ export interface IProduct {
     productCategoryName: string, 
     discountType: string,
     inventory: number,
+
 }
+
+
