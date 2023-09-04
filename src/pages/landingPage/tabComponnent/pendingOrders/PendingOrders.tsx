@@ -23,7 +23,7 @@ const columns: GridColDef[] = [
 
     {
         field: 'status', type: 'string', headerName: 'Status', width: 200,
-
+        
         cellClassName: (params: GridCellParams<any, string>) => {
             if (params.value == null) {
                 return '';
@@ -34,9 +34,9 @@ const columns: GridColDef[] = [
                 return 'blue'
             if (params.value == 'PACKING')
                 return 'yellow'
-            if (params.value == 'PAYMENT_CANCELED')
+            if (params.value == 'PAYMENT_FAILED')
                 return 'red'
-            if (params.value == 'PROCESS_CANCELED')
+            if (params.value == 'PROSSES_FAILED')
                 return 'orang'
 
             return ''
@@ -74,8 +74,8 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
         page: 0,
         pageSize: 1,
     });
-    const filterTables = (filters: any) => {
-
+    const filterTables=(filters:any)=>{
+    
     }
     //end pagination
     //שליפות
@@ -90,7 +90,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
     }, [secondPaginationModel, show])
 
     const firstTable = async (sortBy: string) => {
-        let statuses = ['PAYMENT_CANCELED', 'PROCESS_CANCELED']
+        let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
         let c = await getAllOrders(sortBy, statuses, firstPaginationModel.page);
         setFirstSumOrders(await countOrders(statuses))
         setRows(await c);
@@ -157,10 +157,8 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 </Dialog></div> */}
             {/* on click on an order will be open the order details window */}
             <div>
-                <Button style={{
-                    "backgroundColor": PALLETE.ORANGE,
-                    "color": PALLETE.WHITE, "borderColor": PALLETE.WHITE
-                }} variant="outlined" onClick={handleShowDetails}>Order Details</Button>
+                <Button style={{ "backgroundColor":PALLETE.ORANGE,
+    "color":PALLETE.WHITE,"borderColor":PALLETE.WHITE}}variant="outlined" onClick={handleShowDetails}>Order Details</Button>
                 <div className="dialog">
                     <GlobalModal header={"Order's details"} isOpen={showDetails} handleClose={handleCloseOrderDetails} img={img} sideTxt={"We are almost done"}>
                         <OrderDetails />
@@ -168,23 +166,21 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
                 </div>
             </div >
             <div>
-                <Button style={{
-                    "backgroundColor": PALLETE.ORANGE,
-                    "color": PALLETE.WHITE, "borderColor": PALLETE.WHITE
-                }} variant="outlined" onClick={handleShow}>New Order</Button>
+                <Button style={{ "backgroundColor":PALLETE.ORANGE,
+    "color":PALLETE.WHITE,"borderColor":PALLETE.WHITE}} variant="outlined" onClick={handleShow}>New Order</Button>
                 <div className="dialog">
                     <GlobalModal header={"New Order"} isOpen={show} handleClose={handleCloseNewOrder} img={img} sideTxt={"We are almost done"}>
                         <NewOrder setShow={handleCloseNewOrder} />
                     </GlobalModal>
                 </div>
             </div >
-            <GlobalPopOver
-                style={{ top: "0px!important", position: "absolute!important" }}
-                name={"filter"}
-                Pop={AllFilter}
-                image={filterImg}
-                filterTables={filterTables}
-            ></GlobalPopOver>
+          <GlobalPopOver
+          style={{top:"0px!important",position:"absolute!important"}}
+            name={"filter"}
+            Pop={AllFilter}
+            image={filterImg}
+            filterTables={filterTables}
+          ></GlobalPopOver>
         </div>
         <SortButton variant="contained" onClick={handleClick}>
             Sort <SortIcon />
@@ -221,17 +217,17 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
 
         <br></br>
+           
+                    
+                    <DataGrid
+                        columns={columns} rows={secondRows}
+                        rowCount={secondSumOrders}
+                        paginationModel={secondPaginationModel}
+                        paginationMode="server"
+                        onPaginationModelChange={setSecondPaginationModel}
 
-
-        <DataGrid
-            columns={columns} rows={secondRows}
-            rowCount={secondSumOrders}
-            paginationModel={secondPaginationModel}
-            paginationMode="server"
-            onPaginationModelChange={setSecondPaginationModel}
-
-        />
-
+                    />
+ 
 
 
     </>
