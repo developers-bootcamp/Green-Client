@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,11 +9,17 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import { GridRowsProp, GridRowModesModel, GridRowModes, DataGrid, GridColDef, GridToolbarContainer, GridActionsCellItem, GridEventListener, GridRowId, GridRowModel, GridRowEditStopReasons, GridToolbarExport, GridRenderEditCellParams, GridEditInputCell, } from '@mui/x-data-grid';
 import { randomId } from '@mui/x-data-grid-generator';
+import { PALLETE } from "../../config/config";
 import './dataGrid.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert, { AlertProps } from '@mui/material/Alert';
+import { IProduct } from '../../interfaces/model/IProduct';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
+
+
+
+
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -20,8 +27,8 @@ interface EditToolbarProps {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
   ) => void;
   setType: (newType: (oldType: any) => any,) => void
-}
 
+}
 function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel, setType } = props;
   let t: any = "";
@@ -32,8 +39,11 @@ function EditToolbar(props: EditToolbarProps) {
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+
     }));
+
   }
+
 
   return (
     <>
@@ -42,6 +52,9 @@ function EditToolbar(props: EditToolbarProps) {
           Add {t}
         </Button>
       </GridToolbarContainer>
+      {/* <GridToolbarContainer>
+        <GridToolbarExport />
+      </GridToolbarContainer> */}
     </>
   );
 }
@@ -80,7 +93,6 @@ export default function GlobalTable(props: any) {
           }
       
         }; 
-
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -100,6 +112,8 @@ export default function GlobalTable(props: any) {
 
   const handleDeleteClick = (id: GridRowId) => () => {
     props.onDelete(id).then(setRows(rows.filter((row: any) => row.id !== id)));
+
+    // setRows(rows.filter((row:any) => row.id !== id));
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -112,12 +126,14 @@ export default function GlobalTable(props: any) {
     if (editedRow!.isNew) {
       setRows(rows.filter((row: any) => row.id !== id));
     }
+
   };
+
+ 
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
-
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
@@ -125,7 +141,6 @@ export default function GlobalTable(props: any) {
       </GridToolbarContainer>
     );
   }
-
   const width = 1030 / props.head.length
   const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -142,7 +157,7 @@ export default function GlobalTable(props: any) {
       </StyledTooltip>
     );
   }
-
+  
   function validation(params: GridRenderEditCellParams) {
 
     return <NameEditInputCell {...params} />;
@@ -152,12 +167,15 @@ export default function GlobalTable(props: any) {
     r.headerClassName = 'super-app-theme--header';
     r.headerAlign = "center"
     r.width = width;
-    if (r.preProcessEditCellProps)
-      r.renderEditCell = validation;
+    if(r.preProcessEditCellProps)
+    r.renderEditCell=validation;
+
+
   })
 
   const columns: GridColDef[] = [
     ...props.head,
+
     {
       field: 'actions',
       type: 'actions',
@@ -167,6 +185,7 @@ export default function GlobalTable(props: any) {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
         if (isInEditMode) {
           return [
             <GridActionsCellItem
@@ -321,14 +340,17 @@ export default function GlobalTable(props: any) {
         }}
       >
         <DataGrid
+
           rowHeight={30}
           rows={rows}
           columns={columns}
           editMode="row"
+          // paginationModel={paginationModel}
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+
 
           initialState={{
             pagination: { paginationModel: { pageSize: 3 } },
@@ -337,6 +359,7 @@ export default function GlobalTable(props: any) {
           pageSizeOptions={[3, 5, 7]}
           slots={{
             toolbar: EditToolbar
+
           }}
 
           slotProps={{
@@ -344,16 +367,18 @@ export default function GlobalTable(props: any) {
           }}
         />
         {!!snackbar && (
-          <Snackbar style={{ position: "absolute", top: -(props.number * 150) - 50 + "px" }}
-            open
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            onClose={handleCloseSnackbar}
-            autoHideDuration={6000}
-          >
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
-        )}
+        <Snackbar style={{position:"absolute",top:-(props.number * 150) - 50 + "px"}}
+          open
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          onClose={handleCloseSnackbar}
+          autoHideDuration={6000}
+        >
+          <Alert {...snackbar} onClose={handleCloseSnackbar} />
+        </Snackbar>
+      )}
       </Box >
     </>
   );
 }
+
+

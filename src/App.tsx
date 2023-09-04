@@ -10,23 +10,24 @@ import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 import { ErrorModel } from './components/globalErrorModel/ErrorModel';
 import AxiosInstance from './axios/globalAxios';
-import { store } from './redux/store';
+import {store} from './redux/store';
 import { useAppDispatch } from './redux/store';
-import { setCurrencies } from './redux/slices/currencySlice';
+import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
 function App() {
 
   const dispatch = useAppDispatch()
 
-  const getCurrenciesAsync = async () => {
-    await getCurrencies().then(res => {
-      dispatch(setCurrencies(res.data));
-    });
-  }
+  // const getCurrenciesAsync = async () => {
+  //   await getCurrencies().then(res => {
+  //     dispatch(setCurrencies(res.data));
+  //   });
+  // }
 
-  useEffect(() => {
-    getCurrenciesAsync();
-  }, []);
+
+  // useEffect(() => {
+  //   getCurrenciesAsync();
+  // }, []);
 
   useEffect(() => {
     const cleanupAxios = AxiosInstance(store);
@@ -34,19 +35,19 @@ function App() {
     //   cleanupAxios(); // Cleanup Axios interceptors when the component is unmounted
     // };
   }, []);
-
   return (
-    <div className="App">
-      {<ErrorModel></ErrorModel>}
-      {<Loader />}
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/landingPage" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/tabsComponent" element={<TabsComponent />} />
-        <Route path="/signUp" element={<SignUp />} />
-      </Routes>
-    </div>
+      <div className="App">
+
+        {<ErrorModel></ErrorModel>}
+        {<Loader />}
+        <Routes>
+          <Route path="/" element={<TabsComponent/>} />
+          <Route path="/landingPage" element={<LandingPage/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/tabsComponent" element={<TabsComponent/>} />
+          <Route path="/signUp" element={<SignUp />} />
+        </Routes>
+      </div>
 
   );
 }
