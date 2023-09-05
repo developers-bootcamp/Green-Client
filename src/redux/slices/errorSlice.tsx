@@ -10,8 +10,6 @@ const initialState: IErrorState = {
   isOpen:false,
 };
 
-
-
 const errorSlice = createSlice({
   name: 'error',
   initialState,
