@@ -17,6 +17,10 @@ return  (await x).data;
 export const signUp = async (fullName: string, companyName: string, email: string, password: string, currency: string) => {
     return await axios.post(`${SIGN_UP}?fullName=${fullName}&companyName=${companyName}&email=${email}&password=${password}&currency=${currency}`)
 }
+export const login = async (email:string,password:string) => {
+    const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);
+    return res;
+  }
 export const getUsers = async () => {
     let t = localStorage.getItem("token");
     if (t == undefined)
