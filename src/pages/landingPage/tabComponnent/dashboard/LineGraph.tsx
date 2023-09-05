@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
+import { deliverCancelOrders } from "../../../../apiCalls/graphCalls";
+import { MyDiv } from "./Dashboard.style";
 
-export const data = [
-    ["Year", "Order Failed", "Orders Done"],
-    ["02/23", 100, 300],
-    ["03/23", 117, 260],
-    ["04/23", 360, 112],
-    ["05/23", 103, 140],
-    ["05/23", 100, 300],
-  ];
-  
+
   export const options = {
-    curveType: "function",
-    legend: { position: "bottom" },
+    title: "orders status",
+    legend: { position: "top" },
     colors: [PALLETE.RED, PALLETE.BLUE],
     backgroundColor: PALLETE.GRAY,
   };
 
-const LineGraph: React.FC = () => {
+  const LineGraph:React.FC = () => {
+
+    const [LineGraphData, setLineGraphData] = useState([]);
+      
+    useEffect(() => {
+      deliverCancelOrders().then(res => {
+          setLineGraphData(res.data)
+      }).catch(err => {
+        console.error(err)
+      })
+    }, []);
+    
+
+    const MyLineGraphData =  LineGraphData.map((element:any) => [
+      element.month > 10 ? element.month + "/" + String(element.year).slice(2):
+        "0" + element.month + "/" + String(element.year).slice(2),
+      element.cancelled,
+      element.delivered
+    ]);
+
+    const data = [
+      ["date", "orders Failed", "orders Done"],
+      ...MyLineGraphData
+    ];
+  
     return (
+        LineGraphData.length > 0 ?
         <Chart
           chartType="LineChart"
           width="100%"
@@ -27,6 +46,7 @@ const LineGraph: React.FC = () => {
           data={data}
           options={options}
         />
+        :<MyDiv>No data</MyDiv>
       );
 }
 export default LineGraph

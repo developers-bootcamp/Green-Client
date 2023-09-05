@@ -10,6 +10,7 @@ const GET_CURRENCIES = `${BASE_URL}/currency`;
 const GET_TOP_PRODUCT = `${BASE_URL}/graph/topProduct`;
 const GET_DELIVER_CANCEL_ORDERS = `${BASE_URL}/graph/getDeliverCancelOrders`;
 const GET_TOP_EMPLOYEE = `${BASE_URL}/graph/topEmployee`;
+
 const GET_DASHBOARD_GENERATOR = `${BASE_URL}/graph/dynamicGraph`
 const USER_URL = `${BASE_URL}/user`
 

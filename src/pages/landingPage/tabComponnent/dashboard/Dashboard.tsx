@@ -3,10 +3,12 @@ import PieChart from './PieChart';
 import LineGraph from './LineGraph';
 import BarChart from './BarChart';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Item, DashboardGeneratorItem } from "./Dashboard.style";
 import CreateNewBoard from "./CreateNewBoard";
+import { Item, DashboardGeneratorItem } from "./Dashboard.style";
 import Dialog from '@mui/material/Dialog';
 import DashboardGenerator from "./DashboardGenerator";
+
+const Dashboard: React.FC = () => {
 
 const Dashboard: React.FC = () => {
 
@@ -21,7 +23,6 @@ const Dashboard: React.FC = () => {
   };
 
       return (
-        <>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid xs={6} >
                   <Item><BarChart/></Item>
@@ -46,8 +47,6 @@ const Dashboard: React.FC = () => {
                   </Dialog>
                 </Grid>
           </Grid>
-          <br></br>
-      </>
       );
 }
 export default Dashboard

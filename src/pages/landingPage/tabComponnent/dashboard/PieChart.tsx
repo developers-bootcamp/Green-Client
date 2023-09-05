@@ -1,24 +1,42 @@
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config'; 
+import {topEmployee} from "../../../../apiCalls/graphCalls";
+import { MyDiv } from "./Dashboard.style";
 
   export const options = {
-    colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
+    title:"Top employees",
+    colors: [PALLETE.BLUE, PALLETE.RED, PALLETE.GREEN, PALLETE.ORANGE,  PALLETE.YELLOW],
     backgroundColor: PALLETE.GRAY
   };
-
   
-  const PieChart:React.FC=()=>{
+  const PieChart:React.FC = () => {
+
+    const [PieChartData, setPieChartData] = useState([]);
+
+    useEffect(() => {
+      topEmployee().then(res => {
+        setPieChartData(res.data)
+      }
+    ).catch(err => {
+      console.error(err)
+    })
+    }, []);
+
+    const keys = PieChartData.map((object) => Object.keys(object)).slice(-1);
+
+    const MyPieChartData =  PieChartData.map((employee:any) => [
+      employee.user.fullName,
+      employee.countOfDeliveredOrders,
+    ]);
 
     const data = [
-      ["Employee name", "Count Of Delivered Orders"],
-      ["Work", 6],
-      ["Eat", 4],
-      ["Commute", 3],
-      ["Watch TV", 2],
-      ["Sleep", 1],
+      ...keys,
+      ...MyPieChartData
     ];
-    
+
     return (
+        PieChartData.length > 0 ?
         <Chart
           chartType="PieChart"
           data={data}
@@ -26,6 +44,7 @@ import { PALLETE } from '../../../../config/config';
           width={"100%"}
           height={"280px"}
         />
+        :<MyDiv>No data</MyDiv>
       )
 }
 export default PieChart
