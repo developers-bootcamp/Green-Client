@@ -21,6 +21,8 @@ import {
 import { styled } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
+import  {store, RootState } from '../../../redux/store';
 interface prop {
   name: string | undefined,
   type: string | undefined
@@ -30,6 +32,7 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   const [allCategoryName, setAllCategoryName] = useState();
   const [allProduct, setallProduct] = useState();
   const [changeProductCategory, setChangeProductCategory] = useState<string>("GGG");
+  const role = useSelector((state: RootState) => state.roleReducer?.role || "");
   const head = [{
     headerName: "Product", type: "string", field: "name", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
 
@@ -102,8 +105,8 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   }, [changeProductCategory])
   return (
     <>
-      {allCategory != null && <GlobalTable type="Product_Category" rows={allCategory} number={0} head={head} image={arrow} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd} color={PALLETE.RED} headColor={PALLETE.RED} ></GlobalTable>}
-      {allProduct != null && allCategoryName != null && <GlobalTable type="Product" rows={allProduct} number={1} head={productHead} image={arrow2} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd} color={PALLETE.YELLOW} headColor={PALLETE.BLUE}></GlobalTable>}
+      {allCategory != null && <GlobalTable permission={role} type="Product_Category" rows={allCategory} number={0} head={head} image={arrow} onDelete={onProductCategoryDelete} onEdit={onProductCategoryEdit} onAdd={onProductCategoryAdd} color={PALLETE.RED} headColor={PALLETE.RED} ></GlobalTable>}
+      {allProduct != null && allCategoryName != null && <GlobalTable permission={role} type="Product" rows={allProduct} number={1} head={productHead} image={arrow2} onDelete={onProductDelete} onEdit={onProductEdit} onAdd={onProductAdd} color={PALLETE.YELLOW} headColor={PALLETE.BLUE}></GlobalTable>}
 
     </>
   );

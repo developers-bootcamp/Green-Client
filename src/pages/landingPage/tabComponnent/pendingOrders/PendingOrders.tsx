@@ -22,6 +22,9 @@ import GlobalPopOver from "../../../../components/GlobalPopOver"
 import AllFilter from "../pendingOrders/filter/AllFilter"
 import filterImg from "../../../../images/filter.png"
 import { PALLETE } from "../../../../config/config";
+import { Client, Message } from '@stomp/stompjs';
+import { useSelector } from 'react-redux';
+import  {store, RootState } from '../../../../redux/store';
 interface prop {
     name: string | undefined,
     type: string | undefined
@@ -65,7 +68,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
     const [rows, setRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
     const [secondRows, setSecondRows] = useState([] as { id: string, price: string, status: string, customer: string, products: string, createDate: string }[])
     const [firstSumOrders, setFirstSumOrders] = useState(0)
-
+    const[socket,setSocket]=useState<any>();
 
     const [showDetails, setShowDetails] = useState(false);
     const [secondSumOrders, setSecondSumOrders] = useState(0)
@@ -85,6 +88,10 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
     const filterTables=(filters:any)=>{
     
     }
+    const companyId = useSelector((state: RootState) => state.companyIdReducer?.companyId || "");
+
+    console.log(companyId,"ggfsdsdsdda");
+
     //end pagination
     //שליפות
     useEffect(() => {
@@ -97,6 +104,28 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
     }, [secondPaginationModel, show])
 
+    const handleWebSocketMessage = (message: Message) => {
+        const order: IOrder = JSON.parse(message.body);
+        firstTable('')
+        secondTable('')
+
+        console.log(order);
+        console.log(order,"order");
+    }
+    useEffect(() => {
+        const newSocket = new Client();
+        newSocket.configure({
+            brokerURL: 'ws://localhost:8080/ws',
+            onConnect: () => {
+                newSocket.subscribe('/user/'+companyId+'/private', handleWebSocketMessage);
+            }
+        });
+        newSocket.activate();
+        setSocket(newSocket);
+        return () => {
+            newSocket.deactivate();
+        };
+    }, [])
     const firstTable = async (sortBy: string) => {
         let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
         let c = await getAllOrders(sortBy, statuses, firstPaginationModel.page);

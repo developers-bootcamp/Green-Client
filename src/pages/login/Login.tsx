@@ -13,7 +13,8 @@ import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
-
+import { setCompanyId } from '../../redux/slices/CompanyIdSlice';
+import { setRole } from '../../redux/slices/RoleSlice';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +32,10 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const res = await login();
-      localStorage.setItem('token',res.data);
+      localStorage.setItem('token',res.data.token);
+      store.dispatch(setRole(res.data.role));
+      store.dispatch(setCompanyId(res.data.companyId));
+
       navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {

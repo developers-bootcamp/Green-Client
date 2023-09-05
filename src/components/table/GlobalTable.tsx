@@ -172,8 +172,13 @@ export default function GlobalTable(props: any) {
 
 
   })
+  let columns: GridColDef[] = [
+    ...props.head
+]
+console.log(props.permission);
 
-  const columns: GridColDef[] = [
+if(props.permission==="ADMIN")
+   columns=  [
     ...props.head,
 
     {

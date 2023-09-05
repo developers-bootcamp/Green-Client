@@ -12,7 +12,8 @@ import arrow2 from '../../../images/arrow2.png'
 import arrow3 from '../../../images/arrow3.png'
 import { PALLETE } from "../../../config/config";
 import IUser from "../../../interfaces/model/IUser";
-
+import { useSelector } from 'react-redux';
+import  {store, RootState } from '../../../redux/store'
 interface prop {
   name: string | undefined,
   type: string | undefined
@@ -21,6 +22,9 @@ const UsersManagement: React.FC<prop> = ({ name, type }) => {
   const [allCustomers, setAllCustomers] = useState<any>();
   const [allManagers, setAllManagers] = useState<any>();
   const [allEmployees, setAllEmployees] = useState<any>();
+  const role = useSelector((state: RootState) => state.roleReducer?.role || "hello");
+  console.log(role);
+  
   const head = [
     { headerName: "FullName", type: "string", field: "fullName" ,preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
 
@@ -78,9 +82,9 @@ const UsersManagement: React.FC<prop> = ({ name, type }) => {
   }, [])
   return (
     <>
-          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Admin" rows={allManagers}number={0} head={head}image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
-          {allManagers != null &&allEmployees != null&&allCustomers != null&&<GlobalTable type="Employee" rows={allEmployees}number={1} head={head}image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW}headColor={PALLETE.YELLOW} ></GlobalTable>}
-          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable type="Customer" rows={allCustomers}number={2} head={head}image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE}headColor={PALLETE.BLUE} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable permission={role}type="Admin" rows={allManagers}number={0} head={head}image={arrow} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.RED}headColor={PALLETE.RED} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&&<GlobalTable permission={role} type="Employee" rows={allEmployees}number={1} head={head}image={arrow3} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.YELLOW}headColor={PALLETE.YELLOW} ></GlobalTable>}
+          {allManagers != null &&allEmployees != null&&allCustomers != null&& <GlobalTable permission={role}type="Customer" rows={allCustomers}number={2} head={head}image={arrow2} onDelete={onUserDelete} onEdit={onUserEdit} onAdd={onUserAdd} color={PALLETE.BLUE}headColor={PALLETE.BLUE} ></GlobalTable>}
 
     </>
   );

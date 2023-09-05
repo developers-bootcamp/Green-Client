@@ -12,10 +12,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { PALLETE } from '../../config/config';
 import { SignUpWrapper, Text } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
-import { RootState } from '../../redux/store';
+import { RootState, store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
+import { setCompanyId } from '../../redux/slices/CompanyIdSlice';
+import { setRole } from '../../redux/slices/RoleSlice';
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -49,13 +51,16 @@ const SignUpForm: React.FC = () => {
         onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res = signUp(values.fullName, values.companyName, values.email, values.password, currency)
-                    localStorage.setItem("token", (await res).data)
+                    const res =await signUp(values.fullName, values.companyName, values.email, values.password, currency)
+                    localStorage.setItem("token", res.data.token)
+                    store.dispatch(setRole(res.data.role));
+                    store.dispatch(setCompanyId(res.data.companyId));
+
                     swal("you are successfully signed up", "good", "success");
-                    navigate("/landingPage")
+                    navigate("/");
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
-                    navigate("/")
+                    navigate("/landingPage")
                 }
             }
             signUpRequest();
