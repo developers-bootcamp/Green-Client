@@ -15,7 +15,6 @@ const loadingSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
-      console.log("in setLoading");
       if (action.payload)
         state.requestCounter++;
       else

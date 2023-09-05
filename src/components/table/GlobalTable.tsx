@@ -7,26 +7,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
-import arrow from '../../../../images/arrow.png'
-// import { TableCells, Head, TableRows, Row, Image, AddButtons, Img } from '../../../../components/table/GlobalTable.style';
-import {
-  GridRowsProp,
-  GridRowModesModel,
-  GridRowModes,
-  DataGrid,
-  GridColDef,
-  GridToolbarContainer,
-  GridActionsCellItem,
-  GridEventListener,
-  GridRowId,
-  GridRowModel,
-  GridRowEditStopReasons,
-  GridToolbarExport,
-} from '@mui/x-data-grid';
-import {
-  randomId,
-} from '@mui/x-data-grid-generator';
-// import '../../../landingPage/tabComponnent/dashboard/a.css';
+import { GridRowsProp, GridRowModesModel, GridRowModes, DataGrid, GridColDef, GridToolbarContainer, GridActionsCellItem, GridEventListener, GridRowId, GridRowModel, GridRowEditStopReasons, GridToolbarExport, GridRenderEditCellParams, GridEditInputCell, } from '@mui/x-data-grid';
+import { randomId } from '@mui/x-data-grid-generator';
+import { PALLETE } from "../../config/config";
+import './dataGrid.css';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertProps } from '@mui/material/Alert';
+import { IProduct } from '../../interfaces/model/IProduct';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
+
+
+
+
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -34,6 +27,7 @@ interface EditToolbarProps {
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
   ) => void;
   setType: (newType: (oldType: any) => any,) => void
+
 }
 function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel, setType } = props;
@@ -41,12 +35,15 @@ function EditToolbar(props: EditToolbarProps) {
   setType(oldType => t = oldType)
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
+    setRows((oldRows) => [{ id, name: '', age: '', isNew: true }, ...oldRows]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+
     }));
-  };
+
+  }
+
 
   return (
     <>
@@ -63,7 +60,6 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export default function GlobalTable(props: any) {
-  console.log(props.rows, "GlobalTable");
 
   const [rows, setRows] = React.useState(props.rows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
@@ -73,7 +69,30 @@ export default function GlobalTable(props: any) {
     pageSize: 5,
     page: 0,
   });
-  console.log(paginationModel.pageSize, paginationModel.page);
+    const [snackbar, setSnackbar] = React.useState<Pick<
+      AlertProps,
+      'children' | 'severity'
+    > | null>(null);
+  
+    const handleCloseSnackbar = () => setSnackbar(null);
+    const processRowUpdate = async (newRow: GridRowModel) => {
+          try {
+            if (newRow.isNew)          
+              await props.onAdd(newRow,props.type)
+            else
+              props.onEdit(idEdit, newRow)
+            const updatedRow = { ...newRow, isNew: false };
+            setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
+            setSnackbar({ children: ' successfully saved', severity: 'success' });
+            return updatedRow;
+          }
+          catch (err: any) {
+            console.log(err,"hello ");            
+            setSnackbar({ children: err.response.data, severity: 'error' });
+       
+          }
+      
+        }; 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -83,6 +102,7 @@ export default function GlobalTable(props: any) {
   const handleEditClick = (id: GridRowId) => () => {
     setIdEdit(id)
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
@@ -106,19 +126,10 @@ export default function GlobalTable(props: any) {
     if (editedRow!.isNew) {
       setRows(rows.filter((row: any) => row.id !== id));
     }
+
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    if (newRow.isNew)
-      props.onAdd(newRow)
-    else
-      props.onEdit(idEdit, newRow)
-
-
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
+ 
 
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
@@ -131,12 +142,35 @@ export default function GlobalTable(props: any) {
     );
   }
   const width = 1030 / props.head.length
+  const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: props.color,
+      color: "white",
+    },
+  }));
+  function NameEditInputCell(props: GridRenderEditCellParams) {
+    return (
+      <StyledTooltip open={!!props.error} title={props.message}>
+        <GridEditInputCell {...props} />
+      </StyledTooltip>
+    );
+  }
+  
+  function validation(params: GridRenderEditCellParams) {
 
+    return <NameEditInputCell {...params} />;
+  }
   props.head.map((r: any) => {
     r.editable = true;
     r.headerClassName = 'super-app-theme--header';
     r.headerAlign = "center"
     r.width = width;
+    if(r.preProcessEditCellProps)
+    r.renderEditCell=validation;
+
+
   })
 
   const columns: GridColDef[] = [
@@ -193,7 +227,24 @@ export default function GlobalTable(props: any) {
 
   return (
     <>
-       {/* <Image><Img src={arrow} />{props.type}</Image> */}
+      <h1 style={
+        {
+          left: "80px",
+          position: "absolute",
+          top: (props.number * 250) + 50 + "px",
+          marginTop: "0px",
+          width: "20px",
+          height: "20px",
+          fontSize: "10px",
+          color: props.headColor,
+          fontFamily: "-webkit-body"
+        }
+      }><img style={{
+        left: "-15px",
+        position: "absolute",
+        width: "15px",
+        height: "15px",
+      }} src={props.image} alt={props.image} />{props.type}</h1>
       <Box
         sx={{
           height: ((paginationModel.pageSize * 30) + 100) + 'px',
@@ -245,36 +296,47 @@ export default function GlobalTable(props: any) {
             borderLeftColor: props.color,
             padding: "0px!important",
             height: "30px!important",
-            width: "1137px!important",
+            width: "1145px!important",
             opacity: "0.4",
             color: "black!important",
             marginBottom: "0px!important",
-            textAlign:'left!important',
+            textAlign: 'left!important',
             justifyContent: 'left!important',
-            top:  ((paginationModel.pageSize * 30) -15) + 'px',
-            left:'-5px!important'
+            top: ((paginationModel.pageSize * 30) - 20) + 'px',
+            left: '-5px!important'
+          },
+
+          '&.css-16c50h-MuiInputBase-root-MuiTablePagination-select': {
+            width: "0px!important",
+            height: "0px!important"
+          },
+          '&.css-5wly58-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer': {
+            justifyContent: 'left!important',
+            textAlign: 'left!important'
+          },
+          '& .css-5wly58-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer': {
+            justifyContent: "left"
+          },
+          '&  .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar': {
+            position: 'absolute',
+            top: '180px',
+            left: '700px'
+          },
+          '& .css-axafay-MuiDataGrid-virtualScroller': {
+            height: '120px!important'
           },
           '& .css-wop1k0-MuiDataGrid-footerContainer': {
-             borderTop: '0px solid!important'
-        },
-        '&.css-16c50h-MuiInputBase-root-MuiTablePagination-select':{
-          width:"0px!important",
-          height:"0px!important"
-        },
-        '&.css-5wly58-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer': {
-          justifyContent: 'left!important',
-          textAlign:'left!important'
-      },
-     '& .css-5wly58-MuiDataGrid-root .MuiDataGrid-columnHeader--alignCenter .MuiDataGrid-columnHeaderTitleContainer' : {
-        justifyContent: "left"
-    },
-   '&  .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar':{
-    position:'absolute',
-      top: '180px',
-      left:'700px'
-   }  ,
+            borderTop: '0px solid!important',
+            minHeight: '90px'
+          },
+          '& .css-5wly58-MuiDataGrid-root .MuiDataGrid-cellContent': {
+            paddingLeft: '5px'
+          },
+          '& .css-5wly58-MuiDataGrid-root .MuiDataGrid-columnHeader .MuiDataGrid-menuIcon': {
+            visibility: "hidden"
+          }
 
-   
+
         }}
       >
         <DataGrid
@@ -284,11 +346,12 @@ export default function GlobalTable(props: any) {
           columns={columns}
           editMode="row"
           // paginationModel={paginationModel}
-          // onPaginationModelChange={setPaginationModel}
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+
+
           initialState={{
             pagination: { paginationModel: { pageSize: 3 } },
           }}
@@ -303,7 +366,19 @@ export default function GlobalTable(props: any) {
             toolbar: { setRows, setRowModesModel, setType },
           }}
         />
-      </Box>
+        {!!snackbar && (
+        <Snackbar style={{position:"absolute",top:-(props.number * 150) - 50 + "px"}}
+          open
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          onClose={handleCloseSnackbar}
+          autoHideDuration={6000}
+        >
+          <Alert {...snackbar} onClose={handleCloseSnackbar} />
+        </Snackbar>
+      )}
+      </Box >
     </>
   );
 }
+
+

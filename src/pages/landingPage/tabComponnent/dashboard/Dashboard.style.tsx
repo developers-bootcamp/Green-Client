@@ -2,9 +2,6 @@ import { styled } from '@mui/system';
 import { PALLETE } from '../../../../config/config';
 
 export const MyDiv = styled('div')({
-    display: 'flex',
-    alignItems:'center',
-    justifyContent:'center',
     fontSize: 20,
     paddingTop: 130,
 });
@@ -15,3 +12,25 @@ export const Item = styled('div')({
     borderRadius: 15,
     height: 300,
   });
+
+export const DashboardGeneratorItem = styled('div')({
+    backgroundColor: PALLETE.GRAY,
+    padding: 30,
+    height: "75vh",
+})
+
+export const AutocompleteDiv = styled('div')({
+    display: 'flex',
+    justifyContent: 'center'
+})
+
+export const AutocompleteItem = styled('div')({
+    padding:25,
+})
+
+export const NoDataGenericDiv = styled('div')({
+    fontSize: 20,
+    display: 'flex',
+    justifyContent:'center',
+    paddingTop: '20%',
+})

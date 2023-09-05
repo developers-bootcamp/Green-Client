@@ -34,8 +34,6 @@ const responseInterceptor=axios.interceptors.response.use(
     return Promise.resolve(next);
   },
    (error) => {
-    console.log("in error globalaxiossssss");
-    console.log(error);
     store.dispatch(setLoading(false))
     if(error.response?.status == 500)
     {
