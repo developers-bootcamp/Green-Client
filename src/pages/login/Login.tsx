@@ -46,7 +46,7 @@ const Login: React.FC = () => {
       else
      {
        const errorMessage = err?.response?.data?.message || 'An error occurred!';
-       store.dispatch(setError(errorMessage));
+       swal("you have a error", `${err}`, "error");
      }}
 
     }
