@@ -8,8 +8,8 @@ export default interface IUser {
     fullName: string,
     password: String,
     email: string;
-    address: IAddress,
-    role: IRole,
-    companyId: ICompany,
-    AuditData: IAuditData,
+    address: string,
+    telephone:string,
+    company:ICompany,
+    roleName:string,
 }
