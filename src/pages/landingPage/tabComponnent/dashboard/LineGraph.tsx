@@ -8,7 +8,7 @@ import { MyDiv } from "./Dashboard.style";
   export const options = {
     title: "orders status",
     legend: { position: "top" },
-    colors: [PALLETE.BLUE, PALLETE.RED],
+    colors: [PALLETE.RED, PALLETE.BLUE],
     backgroundColor: PALLETE.GRAY,
   };
 
