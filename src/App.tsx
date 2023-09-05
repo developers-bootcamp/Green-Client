@@ -12,7 +12,7 @@ import { ErrorModel } from './components/globalErrorModel/ErrorModel';
 import AxiosInstance from './axios/globalAxios';
 import {store} from './redux/store';
 import { useAppDispatch } from './redux/store';
-import { setCurrencies } from './redux/slices/CurrencySlice';
+import { setCurrencies } from './redux/slices/currencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
 function App() {
 
