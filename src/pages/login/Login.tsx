@@ -31,8 +31,9 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const res = await login(email,password);
-      localStorage.setItem('token',res.data.split(":")[0]);
-      store.dispatch(setRole(res.data.split(":")[1]));
+      console.log(res);
+      localStorage.setItem('token',res.data.token);
+      store.dispatch(setRole(res.data.role));
       navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {

@@ -52,8 +52,8 @@ const SignUpForm: React.FC = () => {
             async function signUpRequest() {
                 try {
                     const res =await signUp(values.fullName, values.companyName, values.email, values.password, currency)
-                      localStorage.setItem('token',res.data.split(":")[0]);
-                      store.dispatch(setRole(res.data.split(":")[1]));
+                    localStorage.setItem('token',res.data.token);
+                    store.dispatch(setRole(res.data.role));
                       swal("you are successfully signed up", "good", "success");
                       navigate("/")
                 } catch (error) {
