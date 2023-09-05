@@ -37,8 +37,12 @@ const Dashboard: React.FC = () => {
                   <Dialog
                     open={open}
                     onClose={handleClose}
+                    maxWidth="lg"
+                    fullWidth
                   >
-                  <DashboardGeneratorItem><DashboardGenerator/></DashboardGeneratorItem>
+                  <DashboardGeneratorItem>
+                    <DashboardGenerator/>
+                  </DashboardGeneratorItem>
                   </Dialog>
                 </Grid>
           </Grid>

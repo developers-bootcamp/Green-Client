@@ -21,6 +21,7 @@ export const DashboardGeneratorItem = styled('div')({
 
 export const AutocompleteDiv = styled('div')({
     display: 'flex',
+    justifyContent: 'center'
 })
 
 export const AutocompleteItem = styled('div')({
@@ -31,5 +32,5 @@ export const NoDataGenericDiv = styled('div')({
     fontSize: 20,
     display: 'flex',
     justifyContent:'center',
-    paddingTop: '50%',
+    paddingTop: '20%',
 })

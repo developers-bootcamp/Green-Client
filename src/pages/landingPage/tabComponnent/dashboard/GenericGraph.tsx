@@ -2,21 +2,7 @@ import React ,{useEffect, useState} from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
 import { theGenericGraph } from "../../../../apiCalls/graphCalls";
-import moment from "moment";
 import { NoDataGenericDiv } from "./Dashboard.style";
-
-const colors = [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW]
-
-const options = {
-  // chart: {
-  //   title: "Company Performance",
-  //   subtitle: "Sales, Expenses, and Profit: 2014-2017",
-  // },
-  legend: {
-    position: "none"
-  },
-  backgroundColor: PALLETE.GRAY,
-};
 
 interface props{
   collection:string | null,
@@ -25,570 +11,76 @@ interface props{
 
 const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
 
-  const [genericGraph, setGenericGraph] = useState(
-    [
-    {
-      "count": 123,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
+  const options = {
+  
+    title: collection + " " + groupBy,
+    legend: {
+      position: "none"
     },
-    {
-      "count": 145,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 125,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 165,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 345,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 1234,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 123,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 145,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 125,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 165,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 345,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 1234,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 123,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 145,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 125,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 165,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 12345,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-    {
-      "count": 345,
-      "field": {
-        "id": "12345",
-        "employee": {
-          "id": "12345",
-          "name": "John Doe"
-        },
-        "customer": {
-          "id": "67890",
-          "name": "Jane Doe"
-        },
-        "totalAmount": 100.00,
-        "orderItemsList": [
-          {
-            "productId": 1234,
-            "quantity": 1,
-            "price": 10.00
-          },
-          {
-            "productId": 67890,
-            "quantity": 2,
-            "price": 5.00
-          }
-        ],
-        "orderStatus": "Pending",
-        "company": {
-          "id": "12345",
-          "name": "Acme Corporation"
-        },
-        "creditCardNumber": "1234-5678-9012-3456",
-        "expiryOn": "2023-12-31",
-        "cvc": "123",
-        "notificationFlag": true,
-        "auditData": {
-          "createdBy": "John Doe",
-          "createdOn": "2023-03-03T10:46:53.000Z",
-          "lastModifiedBy": "John Doe",
-          "lastModifiedOn": "2023-03-03T10:46:53.000Z"
-        }
-      }
-    },
-  ]
-  )
+    backgroundColor: PALLETE.GRAY,
+  };
 
-  // useEffect(() => {
-  //   theGenericGraph(props.collection, props.groupBy).then(res => {
-  //       setGenericGraph(res.data)
-  //     }).catch(err => {
-  //       console.error(err)
-  //     })
-  //   }, []);
+  const [genericGraph, setGenericGraph] = useState([])
+  const color = PALLETE.BLUE
+  const colors = [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW]
+    
+  useEffect(() => {
+    if(collection && groupBy){
+      theGenericGraph(collection, groupBy).then(res => {
+        setGenericGraph(res.data)
+        console.log(res.data);
+        
+      }).catch(err => {
+        console.error(err)
+      })
+    }
+    }, [collection,groupBy]);
 
   let MyGenericGraphData:any[];
 
   switch (groupBy) {
-    case "month-year":
-      MyGenericGraphData = genericGraph.map((element, index) => [
-        moment(element.field.auditData.createdOn).format("MM/YY"),
+    case "monthYear":
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field,
         element.count,
-        colors[index % 5],
+        genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
       break;
     case "employee":
-      MyGenericGraphData = genericGraph.map((element, index) => [
-        element.field.employee.name,
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field.fullName,
         element.count,
-        colors[index % 5],
+        genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
       break;
     case "customer":
-      MyGenericGraphData = genericGraph.map((element, index) => [
-        element.field.customer.name,
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field.fullName,
         element.count,
-        colors[index % 5],
+        genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
       break;
-    // case "id":
-    //   MyGenericGraphData = genericGraph.map((element, index) => [
-    //     element.field.name,
-    //     element.count,
-    //     colors[index % 5],
-    //   ]);
-    //   break;
-    // case "category":
-    //   MyGenericGraphData = genericGraph.map((element, index) => [
-    //     element.field.category,
-    //     element.count,
-    //     colors[index % 5],
-    //   ]);
-    //   break;
-    // default:
-    //   MyGenericGraphData = genericGraph.map((element, index) => [
-    //     element.field.role,
-    //     element.count,
-    //     colors[index % 5],
-    //   ]);
-    //   break;
+    case "id":
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field.name,
+        element.count,
+        genericGraph.length > 5 ?  color : colors[index % 5]
+      ]);
+      break;
+    case "category":
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field.category,
+        element.count,
+        genericGraph.length > 5 ?  color : colors[index % 5]
+      ]);
+      break;
     default:
-      MyGenericGraphData = []
+      MyGenericGraphData = genericGraph.map((element:any, index) => [
+        element.field.role,
+        element.count,
+        genericGraph.length > 5 ?  color : colors[index % 5]
+      ]);
+      break;
   }
 
   const data = [
@@ -601,7 +93,6 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
     MyGenericGraphData.length > 0 ?
         <Chart 
         chartType="ColumnChart" 
-        width="100%" 
         height="500px" 
         data={data}
         options={options}

@@ -7,10 +7,10 @@ import GenericGraph from "./GenericGraph";
 
 const DashboardGenerator: React.FC = () => {
 
-    const collections = ['order', 'product', 'user'];
-    const groupByOrders = ['month-year', 'employee', 'customer'];
-    const groupByProducts = ['month-year', 'id', 'category id'];
-    const groupByUsers = ['month-year', 'role'];
+    const collections = ['Orders', 'Products', 'Users'];
+    const groupByOrders = [ 'monthYear', 'employee', 'customer'];
+    const groupByProducts = ['monthYear', 'id', 'category id'];
+    const groupByUsers = [ 'monthYear', 'role'];
     const [groupByArr, setGroupByArr] = useState<string[]>(groupByOrders);
     const [collection, setCollection] = useState<string | null>(collections[0]);
     const [groupBy, setGroupBy] = useState<string | null>(groupByArr[0]);
@@ -24,12 +24,12 @@ const DashboardGenerator: React.FC = () => {
                     value={collection}
                     onChange={(event: any, newValue: string | null) => {
                       setCollection(newValue);
-                      if(newValue === 'order'){
+                      if(newValue === 'Orders'){
                         setGroupByArr(groupByOrders)
                         setGroupBy(groupByArr[0])
                       } 
                       else{
-                        if(newValue === 'product'){
+                        if(newValue === 'Products'){
                           setGroupByArr(groupByProducts)
                           setGroupBy(groupByArr[0])
                         }

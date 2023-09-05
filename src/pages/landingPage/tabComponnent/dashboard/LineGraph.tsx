@@ -14,7 +14,7 @@ export const data = [
   export const options = {
     curveType: "function",
     legend: { position: "bottom" },
-    colors: [PALLETE.BLUE, PALLETE.RED],
+    colors: [PALLETE.RED, PALLETE.BLUE],
     backgroundColor: PALLETE.GRAY,
   };
 
