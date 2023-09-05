@@ -16,8 +16,6 @@ import { MyDiv } from "./Dashboard.style";
 
     useEffect(() => {
       topEmployee().then(res => {
-        console.log(res.data);
-        
         setPieChartData(res.data)
       }
     ).catch(err => {

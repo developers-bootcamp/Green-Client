@@ -23,15 +23,18 @@ import { MyDiv } from "./Dashboard.style";
         console.error(err)
       })
     }, []);
+    
 
-    const keys = LineGraphData.map((object) => Object.keys(object)).slice(-1);
-    const values = LineGraphData.map((object) => Object.values(object));
-    console.log(values);
-    
-    
+    const MyLineGraphData =  LineGraphData.map((element:any) => [
+      element.month > 10 ? element.month + "/" + String(element.year).slice(2):
+        "0" + element.month + "/" + String(element.year).slice(2),
+      element.cancelled,
+      element.delivered
+    ]);
+
     const data = [
-      ...keys,
-      ...values
+      ["date", "orders Failed", "orders Done"],
+      ...MyLineGraphData
     ];
   
     return (
