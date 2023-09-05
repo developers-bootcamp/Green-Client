@@ -14,7 +14,7 @@ import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import { setRole } from '../../redux/slices/roleSlice';
-
+import {login} from '../../apiCalls/userCalls'
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await login();
+      const res = await login(email,password);
       localStorage.setItem('token',res.data.split(":")[0]);
       store.dispatch(setRole(res.data.split(":")[1]));
       navigate("/");
@@ -52,10 +52,7 @@ const Login: React.FC = () => {
     }
   }
 
-    const login = async () => {
-      const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
-      return res;
-    }
+   
 
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>

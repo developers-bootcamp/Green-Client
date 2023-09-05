@@ -55,7 +55,7 @@ const SignUpForm: React.FC = () => {
                       localStorage.setItem('token',res.data.split(":")[0]);
                       store.dispatch(setRole(res.data.split(":")[1]));
                       swal("you are successfully signed up", "good", "success");
-                      navigate("/landingPage")
+                      navigate("/")
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
                     navigate("/")
