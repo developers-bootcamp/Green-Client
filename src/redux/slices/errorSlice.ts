@@ -17,17 +17,13 @@ const errorSlice = createSlice({
   initialState,
   reducers: {
     setError: (state, action: PayloadAction<string>) => {
-      console.log("in setError");
       state.errorMessage = action.payload;
       state.isOpen=true;
-      console.log("isOpen",state.isOpen);
     }
     ,
     clearError: (state) => {
-      console.log("in clearError");
       state.errorMessage = null;
       state.isOpen=false;
-      console.log("in end of clearError");
 
     },
   },

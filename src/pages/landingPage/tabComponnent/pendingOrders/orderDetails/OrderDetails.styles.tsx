@@ -1,8 +1,12 @@
-import { PALLETE } from '../../../../../config/config';
 import { styled } from '@mui/system'
+import { PALLETE } from '../../../../../config/config'
 
-export const Text = styled('div')({
-    margin: 'normal',
-    borderRadius: ' 15px',
-    width: '100% !important',
+export const Img = styled('img')({
+    width: '2rem',
+})
+
+export const Text = styled('label')({
+    marginLeft: '-2rem',
+    color: PALLETE.ORANGE,
+    fontSize: '15px',
 })

@@ -14,7 +14,6 @@ import {store} from './redux/store';
 import { useAppDispatch } from './redux/store';
 import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
-
 function App() {
 
   const dispatch = useAppDispatch()
@@ -38,6 +37,7 @@ function App() {
   }, []);
   return (
       <div className="App">
+
         {<ErrorModel></ErrorModel>}
         {<Loader />}
         <Routes>
