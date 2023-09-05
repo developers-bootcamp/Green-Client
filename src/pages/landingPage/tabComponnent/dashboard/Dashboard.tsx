@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PieChart from './PieChart';
 import LineGraph from './LineGraph';
 import BarChart from './BarChart';
-import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
-import { PALLETE } from '../../../../config/config';
+import { Item, DashboardGeneratorItem } from "./Dashboard.style";
 import CreateNewBoard from "./CreateNewBoard";
-
+import Dialog from '@mui/material/Dialog';
+import DashboardGenerator from "./DashboardGenerator";
 
 const Dashboard: React.FC = () => {
 
-  const Item = styled('div')({
-    backgroundColor: PALLETE.GRAY,
-    padding: 5,
-    borderRadius: 15,
-  });
+  const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
       return (
         <>
@@ -29,7 +33,17 @@ const Dashboard: React.FC = () => {
                   <Item><LineGraph/></Item>
                 </Grid>
                 <Grid xs={6}>
-                  <Item><CreateNewBoard></CreateNewBoard></Item>
+                  <Item onClick={handleClickOpen}><CreateNewBoard/></Item>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    maxWidth="lg"
+                    fullWidth
+                  >
+                  <DashboardGeneratorItem>
+                    <DashboardGenerator/>
+                  </DashboardGeneratorItem>
+                  </Dialog>
                 </Grid>
           </Grid>
           <br></br>
