@@ -16,6 +16,7 @@ const EDIT_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
 const ADD_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
 const PRODUCT_CALLS=`${BASE_URL}/product`
 const USER_CALLS=`${BASE_URL}/user`
+
 export {
         GET_ALL_ORDERS_URL,
         LOG_IN, BASE_URL,
@@ -35,6 +36,7 @@ export {
         PRODUCT_CALLS,
         USER_CALLS
         }
+
 export const PALLETE = {
     BLUE: '#6794CF',
     YELLOW: '#FAE282',
@@ -43,4 +45,5 @@ export const PALLETE = {
     ORANGE: '#EB9F6E',
     WHITE: '#FFFFFF',
     GRAY: '#F2F2F2',
+  }
 }

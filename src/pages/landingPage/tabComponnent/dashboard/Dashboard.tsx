@@ -21,7 +21,9 @@ const Dashboard: React.FC = () => {
   };
 
       return (
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <>
+        <br/><br/>
+          <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid xs={6} >
                   <Item><BarChart/></Item>
                 </Grid>
@@ -45,6 +47,7 @@ const Dashboard: React.FC = () => {
                   </Dialog>
                 </Grid>
           </Grid>
+        </>
       );
 }
 export default Dashboard

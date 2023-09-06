@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import GlobalTable from "../../../components/table/GlobalTable";
 import { getAllCategory, deleteproductCategory, editProductCategory, addProductCategory } from "../../../apiCalls/productCategory";
 import { getProducts, deleteProduct, addProduct, editProduct } from "../../../apiCalls/productCalls";
-import { idText } from "typescript";
 import { IProductCategory } from "../../../interfaces/model/IProductCategory";
 import { IProduct } from "../../../interfaces/model/IProduct";
-import arrow from '../../../images/arrow.png'
-import arrow2 from '../../../images/arrow2.png'
+import arrow from "../../../images/arrow.png"
+import arrow2 from "../../../images/arrow2.png"
 import { PALLETE } from "../../../config/config";
 import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import {
