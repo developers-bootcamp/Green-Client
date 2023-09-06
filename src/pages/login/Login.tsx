@@ -13,7 +13,8 @@ import {RootState, store} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
-
+import { setRole } from '../../redux/slices/roleSlice';
+import {login} from '../../apiCalls/userCalls'
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,15 +24,16 @@ const Login: React.FC = () => {
   const navigate = useNavigate()
   const errorIsOpen = useSelector((state: RootState) => state.errorReducer.isOpen);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
   const handleSubmit = async () => {
     try {
-      const res = await login();
-      localStorage.setItem('token',res.data);
+      const res = await login(email,password);
+      console.log(res);
+      localStorage.setItem('token',res.data.token);
+      store.dispatch(setRole(res.data.role));
       navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {
@@ -45,16 +47,13 @@ const Login: React.FC = () => {
       else
      {
        const errorMessage = err?.response?.data?.message || 'An error occurred!';
-       store.dispatch(setError(errorMessage));
+       swal("you have a error", `${err}`, "error");
      }}
 
     }
   }
 
-    const login = async () => {
-      const res = await axios.get(`http://localhost:8080/user/${email}/${password}`);// {
-      return res;
-    }
+   
 
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>

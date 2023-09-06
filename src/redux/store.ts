@@ -1,11 +1,12 @@
-import currencyReducer from './slices/CurrencySlice';
-import orderReducer from './slices/OrderSlice';
-import userReducer from './slices/UserSlice';
-import productReducer from './slices/ProductSlice';
+import currencyReducer from './slices/currencySlice';
+import orderReducer from './slices/orderSlice';
+import userReducer from './slices/userSlice';
+import productReducer from './slices/productSlice';
 import loadingReducer from './slices/loadingSlice';
 import { useDispatch } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit';
 import errorReducer from './slices/errorSlice';
+import roleReducer from './slices/roleSlice';
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         userReducer,
         productReducer,
         errorReducer,
+        roleReducer,
     },
 })
 

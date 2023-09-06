@@ -1,5 +1,4 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const GET_ALL_ORDERS_URL = `${BASE_URL}/order`;
 const ORDER = `${BASE_URL}/order`
 const GET_USERS = `${BASE_URL}/user`;
@@ -18,7 +17,7 @@ const ADD_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
 const PRODUCT_CALLS=`${BASE_URL}/product`
 const USER_CALLS=`${BASE_URL}/user`
 
-export { 
+export {
         GET_ALL_ORDERS_URL,
         LOG_IN, BASE_URL,
         GET_USERS,
@@ -46,5 +45,5 @@ export const PALLETE = {
     ORANGE: '#EB9F6E',
     WHITE: '#FFFFFF',
     GRAY: '#F2F2F2',
+  }
 }
-
