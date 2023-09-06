@@ -10,11 +10,33 @@ const GET_CURRENCIES = `${BASE_URL}/currency`;
 const GET_TOP_PRODUCT = `${BASE_URL}/graph/topProduct`;
 const GET_DELIVER_CANCEL_ORDERS = `${BASE_URL}/graph/getDeliverCancelOrders`;
 const GET_TOP_EMPLOYEE = `${BASE_URL}/graph/topEmployee`;
-
 const GET_DASHBOARD_GENERATOR = `${BASE_URL}/graph/dynamicGraph`
-const USER_URL = `${BASE_URL}/user`
+const GET_ALL_PRODUCT_CATEGORY= `${BASE_URL}/productCategory`
+const DELETE_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
+const EDIT_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
+const ADD_PRODUCT_CATEGORY=`${BASE_URL}/productCategory`
+const PRODUCT_CALLS=`${BASE_URL}/product`
+const USER_CALLS=`${BASE_URL}/user`
 
-export { GET_ALL_ORDERS_URL, LOG_IN, BASE_URL, GET_USERS, GET_PRODUCTS, ORDER, SIGN_UP, GET_CURRENCIES, GET_TOP_PRODUCT, GET_DELIVER_CANCEL_ORDERS, GET_TOP_EMPLOYEE,GET_DASHBOARD_GENERATOR, USER_URL}
+export { 
+        GET_ALL_ORDERS_URL,
+        LOG_IN, BASE_URL,
+        GET_USERS,
+        GET_PRODUCTS,
+        ORDER,
+        SIGN_UP,
+        GET_CURRENCIES,
+        GET_TOP_PRODUCT,
+        GET_DELIVER_CANCEL_ORDERS,
+        GET_TOP_EMPLOYEE,
+        GET_DASHBOARD_GENERATOR,
+        GET_ALL_PRODUCT_CATEGORY,
+        DELETE_PRODUCT_CATEGORY,
+        EDIT_PRODUCT_CATEGORY,
+        ADD_PRODUCT_CATEGORY,
+        PRODUCT_CALLS,
+        USER_CALLS
+        }
 
 export const PALLETE = {
     BLUE: '#6794CF',
@@ -25,3 +47,4 @@ export const PALLETE = {
     WHITE: '#FFFFFF',
     GRAY: '#F2F2F2',
 }
+

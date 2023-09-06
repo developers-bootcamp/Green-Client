@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import GlobalTable from "../../../components/table/GlobalTable";
 import { getAllCategory, deleteproductCategory, editProductCategory, addProductCategory } from "../../../apiCalls/productCategory";
 import { getUsers, deleteUser, addUser, editUser } from "../../../apiCalls/userCalls";
-import { idText } from "typescript";
 import { IProductCategory } from "../../../interfaces/model/IProductCategory";
 import { IProduct } from "../../../interfaces/model/IProduct";
 import { GridPreProcessEditCellProps } from "@mui/x-data-grid";
-import arrow from '../../../images/arrow.png'
-import arrow2 from '../../../images/arrow2.png'
-import arrow3 from '../../../images/arrow3.png'
+import arrow from "../../../images/arrow.png"
+import arrow2 from "../../../images/arrow2.png"
+import arrow3 from "../../../images/arrow3.png"
 import { PALLETE } from "../../../config/config";
 import IUser from "../../../interfaces/model/IUser";
 

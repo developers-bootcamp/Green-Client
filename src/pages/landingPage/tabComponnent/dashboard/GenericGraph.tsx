@@ -28,8 +28,6 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
     if(collection && groupBy){
       theGenericGraph(collection, groupBy).then(res => {
         setGenericGraph(res.data)
-        console.log(res.data);
-        
       }).catch(err => {
         console.error(err)
       })
@@ -76,7 +74,7 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
       break;
     default:
       MyGenericGraphData = genericGraph.map((element:any, index) => [
-        element.field.role,
+        element.field.name,
         element.count,
         genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
