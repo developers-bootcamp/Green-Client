@@ -7,9 +7,9 @@ import GenericGraph from "./GenericGraph";
 
 const DashboardGenerator: React.FC = () => {
 
-    const collections = ['Orders', 'Products', 'Users'];
+    const collections = ['Orders', 'Product', 'Users'];
     const groupByOrders = [ 'monthYear', 'employee', 'customer'];
-    const groupByProducts = ['monthYear', 'id', 'category id'];
+    const groupByProducts = ['monthYear', 'category'];
     const groupByUsers = [ 'monthYear', 'role'];
     const [groupByArr, setGroupByArr] = useState<string[]>(groupByOrders);
     const [collection, setCollection] = useState<string | null>(collections[0]);
@@ -29,7 +29,7 @@ const DashboardGenerator: React.FC = () => {
                         setGroupBy(groupByArr[0])
                       } 
                       else{
-                        if(newValue === 'Products'){
+                        if(newValue === 'Product'){
                           setGroupByArr(groupByProducts)
                           setGroupBy(groupByArr[0])
                         }
