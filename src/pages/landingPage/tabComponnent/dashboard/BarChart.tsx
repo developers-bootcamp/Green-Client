@@ -1,35 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { PALLETE } from '../../../../config/config';
+import { MyDiv } from "./Dashboard.style";
+import { topProduct } from "../../../../apiCalls/graphCalls";
 
+export const options = {
+  chartArea: { width: "50%" },
+  isStacked: true,
+  title:"Top products",
+  bars: "vertical",
+  colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
+  backgroundColor: PALLETE.GRAY,
+}
 
-const BarChart: React.FC = (props) => {
+const BarChart:React.FC = () => {
+      
+  const [BarChartData, setBarChartData] = useState([]);
+    
+  
+
+  useEffect(() => {
+    topProduct().then(res => {
+          setBarChartData(res.data)
+      }).catch(err => {
+        console.error(err)
+      })
+    }, []);
+
+ 
+    const products =  BarChartData.map((monthlyProductSalesResult:any) => {
+      return monthlyProductSalesResult.products.map((productData:any) => {
+        return productData.product;
+      });
+    }).slice(-1).flat();
+
+    const monthAndQuantity =BarChartData.map((monthlyProductSalesResult:any) => {
+      return [
+       monthlyProductSalesResult.month > 10 ? monthlyProductSalesResult.month + "/" + String(monthlyProductSalesResult.year).slice(2):
+        "0" + monthlyProductSalesResult.month + "/" + String(monthlyProductSalesResult.year).slice(2),
+        ...monthlyProductSalesResult.products.map((productData:any) => productData.quantity),
+      ];
+    });
+
+    const data =[ 
+      ["products",...products],
+      ...monthAndQuantity
+    ]
 
     return (
+      BarChartData.length > 0 ?
         <Chart
           width={"100%"}
           height={"280px"}
           chartType="ColumnChart"
-          data={[
-            ["Duration", "Photo Album", "Collage","Framed Image","Video Clip","Blessing Card"],
-            ["04/23", 20, 38, 15, 30, 20],
-            ["05/23", 10, 10, 15, 30, 20],
-            ["06/23", 10, 10, 15, 30, 20],
-          ]}
-          options={{
-            chartArea: { width: "50%" },
-            isStacked: true,
-            vAxis: {
-              title: "",
-              gridlines: { color: "none" },
-              textPosition: "none"
-            },
-            bars: "vertical",
-            colors: [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW],
-            backgroundColor: PALLETE.GRAY,
-          }}
+          data={data}
+          options={options}
           rootProps={{ "data-testid": "3" }}
         />
+        :<MyDiv>No data</MyDiv>
       );
 }
 export default BarChart

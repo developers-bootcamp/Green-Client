@@ -1,12 +1,10 @@
 import { styled } from '@mui/system';
 import { PALLETE } from '../../config/config';
-
 export const MyImg = styled('img')({
     width: "100%",
     marginBottom: "2rem",
     marginTop: "5rem",
 })
-
 export const MySideTxt = styled('div')({
     fontSize: "20px",
     fontWeight: "bold",
@@ -15,13 +13,11 @@ export const MySideTxt = styled('div')({
     paddingRight: "25px",
     marginTop: 0,
 })
-
 export const LeftSide = styled('div')({
     width: "70% !important",
     display: 'inline-block',
     paddingBottom: "1rem",
 })
-
 export const RightSide = styled('div')({
     background: `${PALLETE.GRAY}`,
     height: "100% !important",

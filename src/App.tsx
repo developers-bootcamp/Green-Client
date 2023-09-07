@@ -18,16 +18,16 @@ function App() {
 
   const dispatch = useAppDispatch()
 
-  // const getCurrenciesAsync = async () => {
-  //   await getCurrencies().then(res => {
-  //     dispatch(setCurrencies(res.data));
-  //   });
-  // }
+  const getCurrenciesAsync = async () => {
+    await getCurrencies().then(res => {
+      dispatch(setCurrencies(res.data));
+    });
+  }
 
 
-  // useEffect(() => {
-  //   getCurrenciesAsync();
-  // }, []);
+  useEffect(() => {
+    getCurrenciesAsync();
+  }, []);
 
   useEffect(() => {
     const cleanupAxios = AxiosInstance(store);

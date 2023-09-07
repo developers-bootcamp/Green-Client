@@ -1,3 +1,4 @@
+
 //import { Button, createStyles, FormControl, Grid, Input, MenuItem, Select, styled, TextField, ThemeProvider } from "@material-ui/core";
 import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
@@ -14,7 +15,7 @@ import IUser from '../../../../../interfaces/model/IUser';
 import IOrder from '../../../../../interfaces/model/IOrder';
 import { addNewOrder, calculateOrder } from '../../../../../apiCalls/orderCalls';
 import IOrderItem from '../../../../../interfaces/model/IOrderItem';
-import { Grid, TextField } from '@mui/material';
+import { Button, FormHelperText, Grid, MenuItem, Select, TextField } from '@mui/material';
 import { getProductsAutocomplete } from '../../../../../apiCalls/productCalls';
 import { getCustomersAutocomplete } from '../../../../../apiCalls/userCalls';
 import { AddButton, BaloonImg, MyButton } from './NewOrder.style';
@@ -22,6 +23,7 @@ import ICurrencyState from '../../../../../interfaces/ICurrencyState';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
 import { IProduct } from '../../../../../interfaces/model/IProduct';
+import { PALLETE } from '../../../../../config/config';
 
 
 const validationSchema = yup.object({
@@ -30,10 +32,10 @@ const validationSchema = yup.object({
     ed: yup.date().required("expire date is required")
 
 });
-interface NewOrderProps{
-    setShow:() =>void
+interface NewOrderProps {
+    setShow: () => void
 }
-function NewOrder (props:NewOrderProps)  {
+function NewOrder(props: NewOrderProps) {
     const [orderItems, setOrderItems] = useState([] as IOrderItem[])
     const [sumPrice, setSumPrice] = useState(0);
     const [calculatedOrder, setCalculatedOrder] = useState({} as { [key: string]: any })
@@ -57,7 +59,7 @@ function NewOrder (props:NewOrderProps)  {
         notificationFlag: true,
 
         currency: "",
-        
+
         auditData: {
             createDate: new Date(),
             updateDate: new Date()
@@ -115,7 +117,7 @@ function NewOrder (props:NewOrderProps)  {
 
         const tmp = orderItems.find(e => e.product.id == formik.values.product.id)
         if (tmp != null) {
-            if (window.confirm("you already ordered this product\n would ypu like to order more?")) {
+            if (window.confirm("you already ordered this product\n would you like to order more?")) {
                 orderItems.forEach(e => {
                     if (e.product.id == formik.values.product.id)
                         e.quantity += formik.values.quantity
@@ -155,104 +157,132 @@ function NewOrder (props:NewOrderProps)  {
         await calc()
     }
     return (<>
-        <div className="form">
-            <Grid container spacing={2}>
-                <Grid item xs={8} container>
-                    <Grid item xs={6}> <h3>New Order </h3> </Grid> <Grid item xs={6}><h3>Price {sumPrice}</h3></Grid>
-                    <Grid container>
-                        <form onSubmit={formik.handleSubmit}>
-                            <Grid item xs={7}>
-                                <div className="chooseProduct">
-                                    <div className="customer">
-                                        <label htmlFor="customer" style={{ display: "block" }}>
-                                            Customer
-                                        </label>
+        <div style={{ width: '100%' }} >
+            <form onSubmit={formik.handleSubmit}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center" alignItems="center">
 
-                                        <MyAutocomplete setItem={(chosen: IUser) => { formik.values.customer = chosen }}
-                                            getFunction={getCustomersAutocomplete} displayField={1}></MyAutocomplete>
-                                    </div>
-                                    <label htmlFor="product" className="productLbl">Product</label>
-                                    {/* <label htmlFor="discount" className="discountLbl" > Discount</label> */}
-                                    <Grid className="product" container><Grid item xs={12} >
-                                        <div >
-                                            <Grid item xs={6}>
-                                                <MyAutocomplete getFunction={getProductsAutocomplete}
-                                                    setItem={(chosen: IProduct) => { formik.values.product = chosen }} displayField={1}></MyAutocomplete></Grid>
-                                            <Grid item xs={2}>  <TextField variant="outlined" onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)} type="number" /> </Grid>
-                                            <Grid item xs={2}>   <select
-                                                onChange={(e: { target: { value: string; }; }) => { formik.values.currency = typeof e.target.value === 'string' ? e.target.value : "" }}
-                                            >
-                                                {listOfCurrencies.map(e => { return <option>{e}</option> })}
-                                            </select>
-                                            </Grid>
-                                        </div>
-                                    </Grid>
+                    <Grid container xs={12}>
 
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <AddButton onClick={() => add()}
-                                            variant="contained">Add</AddButton></Grid>
-                                </div>
+                        <Grid item xs={6}>
+                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center" alignItems="center">
+
+                                <Grid item xs={12}>
+                                    <FormHelperText>customer</FormHelperText>
+                                    <MyAutocomplete getFunction={getCustomersAutocomplete}
+                                        setItem={(chosen: IUser) => { formik.values.customer = chosen }} displayField={1}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <FormHelperText>product</FormHelperText>
+                                    <MyAutocomplete getFunction={getProductsAutocomplete}
+                                        setItem={(chosen: IProduct) => { formik.values.product = chosen }} displayField={1} />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormHelperText>quantity</FormHelperText>
+                                    <TextField type="number"
+                                        onChange={(e: { target: { value: string; }; }) => formik.values.quantity = parseInt(e.target.value)}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                                        helperText={formik.touched.quantity && formik.errors.quantity}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormHelperText>currency</FormHelperText>
+                                    <Select fullWidth //value={formik.values.currency}
+                                        onChange={(e: { target: { value: string; }; }) => {
+                                            formik.values.currency = typeof e.target.value === 'string' ? e.target.value : ""
+                                            e.target.value = formik.values.currency
+                                        }}>
+                                        {listOfCurrencies.map((currency) => <MenuItem value={currency}>{currency}</MenuItem>)}
+                                    </Select>
+                                </Grid>
+
+                                <Grid item xs={12} mb={2} mt={1}>
+                                    <Button sx={{ backgroundColor: `${PALLETE.BLUE} !important`, width: '100%', display: 'block' }}
+                                        variant="contained"
+                                        onClick={() => { add() }}>
+                                        add
+                                    </Button>
+                                </Grid>
+
                             </Grid>
-                            <Grid item xs={5}>
-                                <div className="orderedProducts">
-                                    products you orderd:
+                        </Grid>
+
+                        <Grid item xs={6} sx={{ textAlign: 'end' }}>
+                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }} justifyContent="center" alignItems="center">
+
+                                <Grid item xs={12}>
+                                    <h3>{`price: ${sumPrice}`}</h3>
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <h4>products you ordered:</h4>
                                     <ul>
                                         {orderItems.map((e, i) => <li>{itemToString(e, i)}<button onClick={() => deleteItem(i)}>x</button></li>)}
                                     </ul>
-                                </div>
-                            </Grid>
-                            <hr />
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}><label htmlFor="ccn">Credit Card Number</label></Grid>
-
-                                <Grid item xs={12}>  <TextField
-                                    error={formik.touched.ccn && Boolean(formik.errors.ccn)}
-                                    helperText={formik.touched.ccn && formik.errors.ccn}
-                                    variant="outlined"
-                                    id="ccn"
-
-                                    value={formik.values.ccn}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                /></Grid>
-                                <Grid item xs={6}><label htmlFor="ed">Expier Date</label></Grid>
-                                <Grid item xs={6}><label htmlFor="cvv">cvv</label></Grid>
-                                <Grid item xs={5}>   <TextField
-
-                                    variant="outlined"
-                                    type="date"
-                                    id="ed"
-                                    value={formik.values.ed}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                />
                                 </Grid>
-                                <Grid item xs={5}>
-                                    <TextField
-                                        error={formik.touched.cvv && Boolean(formik.errors.cvv)}
-                                        helperText={formik.touched.cvv && formik.errors.cvv}
-                                        label="cvv"
-                                        variant="outlined"
-                                        id="cvv"
-                                        value={formik.values.cvv}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    /></Grid>
-                                <Grid item xs={2}>
-                                    <MyButton type="submit">buy now</MyButton></Grid></Grid>
-                        </form>
+
+                            </Grid>
+                        </Grid>
 
                     </Grid>
 
-                </Grid >
-                {/* <Grid item xs={4}>
-                    <BaloonImg >
-                        <img  alt="baloon" />
-                    </BaloonImg>
+                    <Grid container xs={12} sx={{ borderTop: '1px solid' }}>
+                        <Grid item xs={8}>
+                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center" alignItems="center">
 
-                </Grid> */}
-            </Grid >
+                                <Grid item xs={12}>
+                                    <FormHelperText>credit card number</FormHelperText>
+                                    <TextField id="ccn" name="ccn" fullWidth margin='normal'
+                                        value={formik.values.ccn}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.ccn && Boolean(formik.errors.ccn)}
+                                        helperText={formik.touched.ccn && formik.errors.ccn}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormHelperText>Expires on</FormHelperText>
+                                    <TextField id='ed' name='ed' fullWidth margin='normal'
+                                        type="date"
+                                        value={formik.values.ed}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.ed && Boolean(formik.errors.ed)}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <FormHelperText>cvv</FormHelperText>
+                                    <TextField id="cvv" name="cvv" fullWidth margin='normal'
+                                        value={formik.values.cvv}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.cvv && Boolean(formik.errors.cvv)}
+                                        helperText={formik.touched.cvv && formik.errors.cvv}
+                                    />
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="end">
+                                <Button sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem',marginTop:'12rem' }}
+                                    type="submit" variant="contained" >
+                                    buy now
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+
+            </form>
         </div >
 
     </>)

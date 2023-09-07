@@ -18,6 +18,7 @@ import { signUp } from '../../apiCalls/userCalls';
 import { fontSize } from '@mui/system';
 import { setCompanyId } from '../../redux/slices/CompanyIdSlice';
 import { setRole } from '../../redux/slices/RoleSlice';
+import { setCompanyCurrency } from '../../redux/slices/CompanyCurrencySlice';
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -55,6 +56,7 @@ const SignUpForm: React.FC = () => {
                     localStorage.setItem("token", res.data.token)
                     store.dispatch(setRole(res.data.role));
                     store.dispatch(setCompanyId(res.data.companyId));
+                    store.dispatch(setCompanyCurrency(res.data.currency));
 
                     swal("you are successfully signed up", "good", "success");
                     navigate("/");

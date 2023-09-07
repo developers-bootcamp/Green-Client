@@ -8,6 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import errorReducer from './slices/errorSlice';
 import roleReducer from './slices/RoleSlice';
 import companyIdReducer from './slices/CompanyIdSlice';
+import companyCurrencyReducer from './slices/CompanyCurrencySlice';
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         errorReducer,
         roleReducer,
         companyIdReducer,
+        companyCurrencyReducer
 
     },
 })

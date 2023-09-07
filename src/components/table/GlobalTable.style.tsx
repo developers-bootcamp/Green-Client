@@ -26,7 +26,7 @@ const Head = styled(TableCell)({
     paddingBottom: '0px!important',
     paddingRight: '7px!important',
     paddingLeft: '7px!important',
-    height: "40px!important",
+    height: "30px!important",
     color: "gray!important",
     display: "table-cell!important",
 })

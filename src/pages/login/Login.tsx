@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
 import { setCompanyId } from '../../redux/slices/CompanyIdSlice';
 import { setRole } from '../../redux/slices/RoleSlice';
+import { setCompanyCurrency } from '../../redux/slices/CompanyCurrencySlice';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,16 +36,20 @@ const Login: React.FC = () => {
       localStorage.setItem('token',res.data.token);
       store.dispatch(setRole(res.data.role));
       store.dispatch(setCompanyId(res.data.companyId));
+      store.dispatch(setCompanyCurrency(res.data.currency));
+
+      console.log(res.data.currency,"currency");
+      
 
       navigate("/");
     } catch (err: any) {
       if (err.response?.status == 404) {
-        swal("please signup before you login", "", "error");
+        swal(err.response.data, "", "error");
         navigate("/signup");
       }
       else{
         if(err.response?.status == 401){
-          swal("the password is uncurrect","",  "error");
+          swal(err.response.data, "", "error");
         }
       else
      {

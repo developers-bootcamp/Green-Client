@@ -25,13 +25,17 @@ import { PALLETE } from "../../../../config/config";
 import { Client, Message } from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import  {store, RootState } from '../../../../redux/store';
+import telephoneIcon from '../../../../images/telephone.png'
+import emailIcon from '../../../../images/mail.png';
+import TelephoneAndEmail from './TelephoneAndEmail'
 interface prop {
     name: string | undefined,
     type: string | undefined
 }
 const columns: GridColDef[] = [
     { field: 'customer', headerName: 'Customer', width: 150, cellClassName: 'regularCell' },
-
+    // { field: 'actions',type: 'actions',headerName: 'Actions',width: 100,headerClassName: 'super-app-theme--header',cellClassName: 'actions',getActions: ({ id }) => {console.log(id);
+    //     return []}},
     {
         field: 'status', type: 'string', headerName: 'Status', width: 200,
         
@@ -57,7 +61,7 @@ const columns: GridColDef[] = [
 
     { field: 'products', headerName: 'Products', width: 400, cellClassName: 'regularCell' },
     { field: 'price', headerName: 'Price', width: 100, cellClassName: 'regularCell' },
-    { field: 'createDate', headerName: 'Create Date', width: 300, cellClassName: 'regularCell' },
+    { field: 'createDate', headerName: 'Create Date', width: 280, cellClassName: 'regularCell' },
 ];
 const PendingOrders: React.FC<prop> = ({ name, type }) => {
     let count: number = 0
@@ -90,7 +94,6 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
     }
     const companyId = useSelector((state: RootState) => state.companyIdReducer?.companyId || "");
 
-    console.log(companyId,"ggfsdsdsdda");
 
     //end pagination
     //שליפות
@@ -108,9 +111,6 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
         const order: IOrder = JSON.parse(message.body);
         firstTable('')
         secondTable('')
-
-        console.log(order);
-        console.log(order,"order");
     }
     useEffect(() => {
         const newSocket = new Client();

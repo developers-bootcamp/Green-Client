@@ -41,7 +41,6 @@ const OrderDetails = (props: any) => {
         validationSchema,
         onSubmit: (values: { customer: IUser, product: IProduct, quantity: number, currency: string }) => {
             // props.saveOrderDetails(values.customer, values.product, values.quantity, currency)
-            console.log(formik.values);
             order.customer = values.customer;
             order.orderItemsList = [...order.orderItemsList]
             order.currency = values.currency;

@@ -87,25 +87,26 @@ export default function GlobalTable(props: any) {
             return updatedRow;
           }
           catch (err: any) {
-            console.log(err,"hello ");            
             setSnackbar({ children: err.response.data, severity: 'error' });
        
           }
       
         }; 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {    
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
   const handleEditClick = (id: GridRowId) => () => {
+    
     setIdEdit(id)
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
 
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
+
     setIdEdit(id)
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
@@ -131,7 +132,7 @@ export default function GlobalTable(props: any) {
 
  
 
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {    
     setRowModesModel(newRowModesModel);
   };
   function CustomToolbar() {
@@ -141,7 +142,6 @@ export default function GlobalTable(props: any) {
       </GridToolbarContainer>
     );
   }
-  const width = 1030 / props.head.length
   const StyledTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -162,8 +162,14 @@ export default function GlobalTable(props: any) {
 
     return <NameEditInputCell {...params} />;
   }
+  let width:Number =0;
+if(props.permission!="ADMIN")
+ width = 1130 / props.head.length
+else
+ width = 1030 / props.head.length
+
   props.head.map((r: any) => {
-    r.editable = true;
+ 
     r.headerClassName = 'super-app-theme--header';
     r.headerAlign = "center"
     r.width = width;
@@ -175,7 +181,6 @@ export default function GlobalTable(props: any) {
   let columns: GridColDef[] = [
     ...props.head
 ]
-console.log(props.permission);
 
 if(props.permission==="ADMIN")
    columns=  [
@@ -265,7 +270,7 @@ if(props.permission==="ADMIN")
             paddingBottom: '0px!important',
             paddingRight: '7px!important',
             paddingLeft: '7px!important',
-            height: "40px!important",
+            height: "30px!important",
             color: "gray!important",
             display: "table-cell!important",
           },
@@ -301,7 +306,7 @@ if(props.permission==="ADMIN")
             borderLeftColor: props.color,
             padding: "0px!important",
             height: "30px!important",
-            width: "1145px!important",
+            width: "1136px!important",
             opacity: "0.4",
             color: "black!important",
             marginBottom: "0px!important",

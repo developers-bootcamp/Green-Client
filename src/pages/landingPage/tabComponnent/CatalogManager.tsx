@@ -22,7 +22,7 @@ import { styled } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
-import  {store, RootState } from '../../../redux/store';
+import { store, RootState } from '../../../redux/store';
 interface prop {
   name: string | undefined,
   type: string | undefined
@@ -33,17 +33,39 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   const [allProduct, setallProduct] = useState();
   const [changeProductCategory, setChangeProductCategory] = useState<string>("GGG");
   const role = useSelector((state: RootState) => state.roleReducer?.role || "");
-  const head = [{
-    headerName: "Product", type: "string", field: "name", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+  let currency = useSelector((state: RootState) => state.companyCurrencyReducer?.companyCurrency || "");
+  console.log(currency);
+  let companyCurrency = '';
+  if (currency == 'DOLLAR')
+    companyCurrency = '$';
 
-      const hasError = params.props.value.length < 3;
-      return { ...params.props, error: hasError, message: "min 3 char" };
+  const head = [{
+    headerName: "Name", type: "string", field: "name", editable: true, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+      let hasError = false;
+      let message = '';
+      if (params.props.value == undefined) {
+        hasError = true
+        message = "Name is required"
+      }
+      if (params.props.value != undefined && params.props.value.length < 3) {
+        hasError = true
+        message = "min 3 char"
+      }
+      return { ...params.props, error: hasError, message: message };
     }
   }, {
-    headerName: "Description", type: "string", field: "description", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-
-      const hasError = params.props.value.length < 3;
-      return { ...params.props, error: hasError, message: "min 3 char" };
+    headerName: "Description", type: "string", field: "description", editable: true, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+      let hasError = false;
+      let message = '';
+      if (params.props.value == undefined) {
+        hasError = true
+        message = "Description is required"
+      }
+      if (params.props.value != undefined && params.props.value.length < 3) {
+        hasError = true
+        message = "min 3 char"
+      }
+      return { ...params.props, error: hasError, message: message };
     }
   }];
   const getAllCategoryAsync = async () => {
@@ -55,38 +77,68 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
   }
   const productHead = [
     {
-      headerName: "Name", type: "String", field: "name",
+      headerName: "Name", type: "String", field: "name", editable: true,
       preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-
-        const hasError = params.props.value.length < 3;
-        return { ...params.props, error: hasError, message: "min 3 char" };
+        let hasError = false;
+        let message = '';
+        if (params.props.value == undefined) {
+          hasError = true
+          message = "Name is required"
+        }
+        if (params.props.value != undefined && params.props.value.length < 3) {
+          hasError = true
+          message = "min 3 char"
+        }
+        return { ...params.props, error: hasError, message: message };
       }
 
     }, {
-      headerName: "Description", type: "String", field: "description", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-        const hasError = params.props.value.length < 3; return { ...params.props, error: hasError, message: "min 3 char" };
+      headerName: "Description", type: "String", field: "description", editable: true, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+        let hasError = false;
+        let message = '';
+        if (params.props.value == undefined) {
+          hasError = true
+          message = "Description is required"
+        }
+        if (params.props.value != undefined && params.props.value.length < 3) {
+          hasError = true
+          message = "min 3 char"
+        }
+        return { ...params.props, error: hasError, message: message };
       }
     },
-    { headerName: "Inventory", type: "number", field: "inventory", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" } } },
-    { headerName: "Discount", type: "number", field: "discount", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" }; } },
-    { headerName: "DiscountType", type: "singleSelect", field: "discountType", valueOptions: ["FIXED_AMOUNT", "PERCENTAGE"] },
-    { headerName: "category", type: "singleSelect", field: "productCategoryName", valueOptions: allCategoryName },
-    { headerName: "Price", type: "number", field: "price", preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" }; } }
+    { headerName: "Inventory", type: "number", field: "inventory", editable: true, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" } } },
+    { headerName: "Discount", type: "number", field: "discount", editable: true, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" }; } },
+    { headerName: "DiscountType", type: "singleSelect", field: "discountType", editable: true, valueOptions: [companyCurrency, '%'] },
+    { headerName: "category", type: "singleSelect", field: "productCategoryName", editable: true, valueOptions: allCategoryName },
+    {
+      headerName: "Price", type: "number", field: "price", editable: true, valueGetter: (params: any) => {
+
+        return params.value + companyCurrency
+      }, preProcessEditCellProps: (params: GridPreProcessEditCellProps) => { const hasError = params.props.value < 0; return { ...params.props, error: hasError, message: "min value 0" }; }
+    }
   ];
-  
+
   const getAllProductAsync = async () => {
-    await getProducts().then(res => setallProduct(res.data));
+    await getProducts().then(res => {res.data.map((p: IProduct) => {
+      if (p.discountType == 'PERCENTAGE')
+        p.discountType = '%'
+      else
+        p.discountType = companyCurrency
+    })
+    setallProduct(res.data);}
+    );
     ;
   }
   const onProductCategoryDelete = async (id: string) => {
 
-    await deleteproductCategory(id).then(res => { setChangeProductCategory(id);  });
+    await deleteproductCategory(id).then(res => { setChangeProductCategory(id); });
   }
   const onProductCategoryEdit = async (id: string, productCategory: IProductCategory) => {
     await editProductCategory(id, productCategory).then(res => setChangeProductCategory(productCategory.name))
 
   }
-  const onProductCategoryAdd = async (productCategory: IProductCategory,type:any) => {
+  const onProductCategoryAdd = async (productCategory: IProductCategory, type: any) => {
     await addProductCategory(productCategory).then(res => setChangeProductCategory(productCategory.name))
   }
   const onProductDelete = async (id: string) => {
@@ -94,9 +146,18 @@ const CatalogManager: React.FC<prop> = ({ name, type }) => {
     await deleteProduct(id);
   }
   const onProductEdit = async (id: string, product: IProduct) => {
+    if (product.discountType == '%')
+      product.discountType = 'PERCENTAGE'
+    else
+      product.discountType = 'FIXED_AMOUNT'
+
     await editProduct(id, product)
   }
-  const onProductAdd = async (product: any,type:IProduct) => {
+  const onProductAdd = async (product: any, type: IProduct) => {
+    if (product.discountType == '%')
+      product.discountType = 'PERCENTAGE'
+    else
+      product.discountType = 'FIXED_AMOUNT'
     await addProduct(product)
   }
   useEffect(() => {
