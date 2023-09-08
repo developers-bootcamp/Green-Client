@@ -101,11 +101,14 @@ export default function GlobalTable(props: any) {
   const handleEditClick = (id: GridRowId) => () => {
     
     setIdEdit(id)
+    console.log(idEdit,"productiD");
+    
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
 
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
+console.log(id,"product");
 
     setIdEdit(id)
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });

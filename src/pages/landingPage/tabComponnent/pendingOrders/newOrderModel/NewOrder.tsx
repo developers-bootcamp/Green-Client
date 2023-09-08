@@ -47,6 +47,7 @@ function NewOrder(props: NewOrderProps) {
     }
 
     const theOrder: IOrder = {
+        id:"",
         employee: null,
         customer: {} as IUser,
         totalAmount: sumPrice,

@@ -35,7 +35,7 @@ if (token == undefined)
     const response = await axios.get(url,config)
 
    
-    var pagination = response.headers["totalcount"];
+    var pagination = response.headers["totalcount"];    
     return await response.data
 
 }

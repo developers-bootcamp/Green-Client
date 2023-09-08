@@ -22,7 +22,7 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
 
   const [genericGraph, setGenericGraph] = useState([])
   const color = PALLETE.BLUE
-  const colors = [PALLETE.GREEN, PALLETE.ORANGE, PALLETE.BLUE, PALLETE.RED, PALLETE.YELLOW]
+  const colors = [PALLETE.GREEN, PALLETE.RED, PALLETE.YELLOW, PALLETE.ORANGE, PALLETE.BLUE]
     
   useEffect(() => {
     if(collection && groupBy){
@@ -58,16 +58,9 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
         genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
       break;
-    case "id":
-      MyGenericGraphData = genericGraph.map((element:any, index) => [
-        element.field.name,
-        element.count,
-        genericGraph.length > 5 ?  color : colors[index % 5]
-      ]);
-      break;
     case "category":
       MyGenericGraphData = genericGraph.map((element:any, index) => [
-        element.field.category,
+        element.field.name,
         element.count,
         genericGraph.length > 5 ?  color : colors[index % 5]
       ]);
