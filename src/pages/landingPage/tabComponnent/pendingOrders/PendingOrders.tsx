@@ -108,7 +108,7 @@ const columns: GridColDef[] = [
         field: 'connection',
         type: 'actions',
         headerName: 'Connection',
-        width: 80,
+        width: 100,
         headerClassName: 'super-app-theme--header',
         cellClassName: 'actions',
         getActions: ({ id }) => {
@@ -155,7 +155,7 @@ const columns: GridColDef[] = [
     },
 
   
-    { field: 'createDate', headerName: 'Create Date', width: 200, cellClassName: 'regularCell' },
+    { field: 'createDate', headerName: 'Create Date', width: 180, cellClassName: 'regularCell' },
     {
         field: 'actions',
         type: 'actions',
