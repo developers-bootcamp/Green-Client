@@ -4,7 +4,7 @@ import { BASE_URL, GET_USERS, SIGN_UP, USER_CALLS } from "../config/config";
 import IUser from "../interfaces/model/IUser";
 //import {BASE_URL} from '../config/config'
 export const getCustomersAutocomplete=async (prefix:string) :Promise<{ [key: string]: any; }[]> =>{
-let t=localStorage.getItem("token");
+let t=sessionStorage.getItem("token");
 if(t==undefined)
     t=""
 const config = { headers: { 'Authorization': t} };
@@ -18,14 +18,14 @@ export const signUp = async (fullName: string, companyName: string, email: strin
     return await axios.post(`${SIGN_UP}?fullName=${fullName}&companyName=${companyName}&email=${email}&password=${password}&currency=${currency}`)
 }
 export const getUsers = async () => {
-    let t = localStorage.getItem("token");
+    let t = sessionStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
     const config = { headers: { 'Authorization': t } };
     return await axios.get(`${USER_CALLS}`, config);
 }
 export const deleteUser=async(id:string)=>{
-    let t=localStorage.getItem("token");
+    let t=sessionStorage.getItem("token");
     if(t==undefined)
         t="qqq"
         
@@ -33,7 +33,7 @@ export const deleteUser=async(id:string)=>{
 return await axios.delete(`${USER_CALLS}/${id}`,config);
 } 
 export const editUser = async (id:any,product:IUser) => {
-    let t = localStorage.getItem("token");
+    let t = sessionStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
         
@@ -42,7 +42,7 @@ export const editUser = async (id:any,product:IUser) => {
     return await axios.put(`${USER_CALLS}/${id}`,product, config);
 } 
 export const addUser = async (product:IUser) => {
-    let t = localStorage.getItem("token");
+    let t = sessionStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
         

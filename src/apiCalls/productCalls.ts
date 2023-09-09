@@ -2,7 +2,7 @@ import axios from "axios";
 import { GET_PRODUCTS,PRODUCT_CALLS } from "../config/config";
 import { IProduct } from "../interfaces/model/IProduct";
 export const getProductsAutocomplete = async (prefix: string): Promise<{ [key: string]: any; }[]> => {
-    let t = localStorage.getItem("token");
+    let t = sessionStorage.getItem("token");
     if (t == undefined)
         t = "qqq"
     const config = { headers: { 'Authorization': t } };

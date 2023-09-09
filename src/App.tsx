@@ -41,7 +41,7 @@ function App() {
         {<ErrorModel></ErrorModel>}
         {<Loader />}
         <Routes>
-          <Route path="/" element={<TabsComponent/>} />
+          <Route path="/" element={<Login />} />
           <Route path="/landingPage" element={<LandingPage/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/tabsComponent" element={<TabsComponent/>} />

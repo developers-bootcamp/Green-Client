@@ -80,7 +80,7 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
 
             if (o.id == id) {
 
-                phone = "mailto:" + o.customer.address.email
+                phone =o.customer.address.phone
             }
         })
         window.location.href = `tel:${phone}`;
@@ -94,19 +94,21 @@ const handleEmailClick = (id: GridRowId) => () => {
 
         if (o.id == id) {
 
-            mail = "mailto:" + o.customer.address.email
+            mail =`https://mail.google.com/mail/?view=cm&fs=1&to=${o.customer.address.email}&su=green orders`
         }
     })
     window.location.href = mail;
 };
 const companyId = useSelector((state: RootState) => state.companyIdReducer?.companyId || "");
 const columns: GridColDef[] = [
+    { field: 'products', headerName: 'Products', width: 360, cellClassName: 'regularCell' },
+    { field: 'price', headerName: 'Price', width: 80, cellClassName: 'regularCell' },
     { field: 'customer', headerName: 'Customer', width: 150, cellClassName: 'regularCell' },
     {
         field: 'connection',
         type: 'actions',
         headerName: 'Connection',
-        width: 100,
+        width: 80,
         headerClassName: 'super-app-theme--header',
         cellClassName: 'actions',
         getActions: ({ id }) => {
@@ -130,7 +132,7 @@ const columns: GridColDef[] = [
     },
 
     {
-        field: 'status', type: 'string', headerName: 'Status', width: 200,
+        field: 'status', type: 'string', headerName: 'Status', width: 180,
 
         cellClassName: (params: GridCellParams<any, string>) => {
             if (params.value == null) {
@@ -152,14 +154,13 @@ const columns: GridColDef[] = [
 
     },
 
-    { field: 'products', headerName: 'Products', width: 400, cellClassName: 'regularCell' },
-    { field: 'price', headerName: 'Price', width: 100, cellClassName: 'regularCell' },
-    { field: 'createDate', headerName: 'Create Date', width: 280, cellClassName: 'regularCell' },
+  
+    { field: 'createDate', headerName: 'Create Date', width: 200, cellClassName: 'regularCell' },
     {
         field: 'actions',
         type: 'actions',
         headerName: 'Actions',
-        width: 100,
+        width: 80,
         headerClassName: 'super-app-theme--header',
         cellClassName: 'actions',
         getActions: ({ id }) => {
@@ -338,7 +339,6 @@ return (<>
         onPaginationModelChange={setSecondPaginationModel}
 
     />
-<a href="mailto:avigail4192@gmail.com">Example mailto link</a>
 
 
 </>

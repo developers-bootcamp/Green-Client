@@ -33,7 +33,7 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const res = await login();
-      localStorage.setItem('token',res.data.token);
+      sessionStorage.setItem('token',res.data.token);
       store.dispatch(setRole(res.data.role));
       store.dispatch(setCompanyId(res.data.companyId));
       store.dispatch(setCompanyCurrency(res.data.currency));
@@ -41,10 +41,9 @@ const Login: React.FC = () => {
       console.log(res.data.currency,"currency");
       
 
-      navigate("/");
+      navigate("/tabsComponent");
     } catch (err: any) {
       if (err.response?.status == 404) {
-        swal(err.response.data, "", "error");
         navigate("/signup");
       }
       else{

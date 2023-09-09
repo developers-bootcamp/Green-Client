@@ -3,7 +3,7 @@ import IOrder from "../interfaces/model/IOrder"
 import { ORDER } from "../config/config";
 
 export const addNewOrder = async (order: IOrder) => {
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
   if (token == undefined)
     token = ""
   const res = await axios.post(`${ORDER}`, order, {
@@ -14,7 +14,7 @@ export const addNewOrder = async (order: IOrder) => {
 
 }
 export const calculateOrder = async (order: IOrder) => {
-  let token = localStorage.getItem("token");
+  let token = sessionStorage.getItem("token");
   if (token == undefined)
     token = ""
   const ans = await axios.post(`${ORDER}/calculate`, order, {
@@ -27,7 +27,7 @@ export const calculateOrder = async (order: IOrder) => {
 }
 export const getOrders=async(sortBy:string,pageNo:number,orderStatus:string[])=>{
 
-let token=localStorage.getItem("token");
+let token=sessionStorage.getItem("token");
 if (token == undefined)
     token = ""
     const config = { headers: { 'Authorization': token} };
@@ -40,7 +40,7 @@ if (token == undefined)
 
 }
 export const countOrders=async(orderStatus:string[])=>{
-  let t=localStorage.getItem("token");
+  let t=sessionStorage.getItem("token");
   if(t==null)
   t=""
   const config = { headers: { 'Authorization': t} };
