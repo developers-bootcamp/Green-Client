@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import NewOrder from "../landingPage/tabComponnent/pendingOrders/newOrderModel/NewOrder"
-import { Button, Dialog, DialogContent } from "@mui/material"
+import {useNavigate } from "react-router-dom";
+
 
 const LandingPage: React.FC = () => {
 
@@ -12,8 +12,13 @@ const LandingPage: React.FC = () => {
   const [close, setClose] = useState(false);
 
   const handleClose = () => setShow(false);
+
+  const navigate = useNavigate()
   useEffect(() => {
-  }, [])
+    if (sessionStorage.getItem("token") === null){
+      navigate("/");
+    }
+  },[])
 
   return <>
  

@@ -1,14 +1,12 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PendingOrders from './tabComponnent/pendingOrders/PendingOrders';
 import CatalogManager from './tabComponnent/CatalogManager';
 import UsersManagement from './tabComponnent/UsersManagement';
-
 import { MyTab } from './TabsComponent.styles';
-import { PALLETE } from '../../config/config';
+import {useNavigate } from "react-router-dom";
 
 import Dashboard from './tabComponnent/dashboard/Dashboard';
 
@@ -17,6 +15,15 @@ interface TabPanelProps {
 }
 
 function TabPanel({children}: TabPanelProps) {
+  
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (sessionStorage.getItem("token") === null){
+      navigate("/");
+    }
+  },[])
+    
+
   return (
     <div>
         <Box sx={{ p: 8 }}>
