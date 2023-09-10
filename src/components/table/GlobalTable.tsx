@@ -80,7 +80,7 @@ export default function GlobalTable(props: any) {
             if (newRow.isNew)          
               await props.onAdd(newRow,props.type)
             else
-              props.onEdit(idEdit, newRow)
+            await props.onEdit(idEdit, newRow)
             const updatedRow = { ...newRow, isNew: false };
             setRows(rows.map((row: any) => (row.id === newRow.id ? updatedRow : row)));
             setSnackbar({ children: ' successfully saved', severity: 'success' });
@@ -101,18 +101,29 @@ export default function GlobalTable(props: any) {
   const handleEditClick = (id: GridRowId) => () => {
     
     setIdEdit(id)
+    console.log(idEdit,"productiD");
+    
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
 
   };
 
   const handleSaveClick = (id: GridRowId) => () => {
+console.log(id,"product");
 
     setIdEdit(id)
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
+    try{
     props.onDelete(id).then(setRows(rows.filter((row: any) => row.id !== id)));
+    setSnackbar({ children: ' successfully delete', severity: 'success' });
+
+  }
+    catch(err:any){
+      setSnackbar({ children: err.response.data, severity: 'error' });
+
+    }
 
     // setRows(rows.filter((row:any) => row.id !== id));
   };

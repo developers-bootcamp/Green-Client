@@ -20,7 +20,12 @@ import img from '../../../../../images/arrowIcon.png';
 import { Img, Text } from './OrderDetails.styles';
 import IOrderItem from '../../../../../interfaces/model/IOrderItem';
 
+
+
+
 const OrderDetails = (props: any) => {
+    console.log(props.order,"updatOrder");
+    
 
     const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
 
@@ -49,6 +54,7 @@ const OrderDetails = (props: any) => {
     });
 
     const order: IOrder = {
+        id:"",
         employee: null,
         customer: {} as IUser,
         totalAmount: 0,

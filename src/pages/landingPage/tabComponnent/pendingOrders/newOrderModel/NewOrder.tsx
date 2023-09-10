@@ -1,16 +1,7 @@
-
-//import { Button, createStyles, FormControl, Grid, Input, MenuItem, Select, styled, TextField, ThemeProvider } from "@material-ui/core";
-import Autocomplete from '@mui/material/Autocomplete';
-import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
-
-import { FormikHelpers } from "formik/dist/types";
-import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { useState } from "react";
 import * as yup from 'yup';
-import axios from "axios";
-import { log } from "console";
-
 import MyAutocomplete from "../../../../../components/MyAutocomplete";
-import { ExecException } from "child_process";
 import IUser from '../../../../../interfaces/model/IUser';
 import IOrder from '../../../../../interfaces/model/IOrder';
 import { addNewOrder, calculateOrder } from '../../../../../apiCalls/orderCalls';
@@ -18,13 +9,13 @@ import IOrderItem from '../../../../../interfaces/model/IOrderItem';
 import { Button, FormHelperText, Grid, MenuItem, Select, TextField } from '@mui/material';
 import { getProductsAutocomplete } from '../../../../../apiCalls/productCalls';
 import { getCustomersAutocomplete } from '../../../../../apiCalls/userCalls';
-import { AddButton, BaloonImg, MyButton } from './NewOrder.style';
+import { ButtonWrapper } from './NewOrder.style';
 import ICurrencyState from '../../../../../interfaces/ICurrencyState';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/store';
 import { IProduct } from '../../../../../interfaces/model/IProduct';
 import { PALLETE } from '../../../../../config/config';
-
+import { randomId } from '@mui/x-data-grid-generator';
 
 const validationSchema = yup.object({
     ccn: yup.string().required('Credit card number is required').min(16, "credit card number is too short").max(16, "credit card number is too long").matches(/^\d+$/, 'The field should have digits only'),
@@ -41,12 +32,8 @@ function NewOrder(props: NewOrderProps) {
     const [calculatedOrder, setCalculatedOrder] = useState({} as { [key: string]: any })
     const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
 
-
-    const saveCreditCardDetails = (ccn: string, cvv: string, ed: Date) => {
-
-    }
-
     const theOrder: IOrder = {
+        id:randomId(),
         employee: null,
         customer: {} as IUser,
         totalAmount: sumPrice,
@@ -57,9 +44,7 @@ function NewOrder(props: NewOrderProps) {
         expiryOn: new Date(),
         cvc: "",
         notificationFlag: true,
-
         currency: "",
-
         auditData: {
             createDate: new Date(),
             updateDate: new Date()
@@ -96,6 +81,7 @@ function NewOrder(props: NewOrderProps) {
         onSubmit: async () => {
             theOrder.customer = formik.values.customer
             theOrder.creditCardNumber = formik.values.ccn
+            theOrder.expiryOn = formik.values.ed
             theOrder.orderStatus = "CREATED"
             theOrder.cvc = formik.values.cvv
             theOrder.orderItemsList = orderItems
@@ -107,19 +93,17 @@ function NewOrder(props: NewOrderProps) {
 
         let s = "";
         if (e.product.id in calculatedOrder)
-            s += e.quantity + " " + e.product.name + "price: " + Object.keys(calculatedOrder[e.product.id])[0]//JSON.stringify(calculatedOrder[e.productId.id][])
-
-                + "  discount: " + calculatedOrder[e.product.id][Object.keys(calculatedOrder[e.product.id])[0]]//+ JSON.stringify(calculatedOrder[e.productId.id]);
-        e.product.discountType == "FIXED_AMOUNT" ? s += " " + formik.values.currency + " " : s += "% "
+            s += `${e.quantity} ${e.product.name} price: ${Object.keys(calculatedOrder[e.product.id])[0]} discount: ${calculatedOrder[e.product.id][Object.keys(calculatedOrder[e.product.id])[0]]}`
+        e.product.discountType === "FIXED_AMOUNT" ? s += " " + formik.values.currency + " " : s += "% "
         return s;
     }
     const add = async () => {
 
-        const tmp = orderItems.find(e => e.product.id == formik.values.product.id)
+        const tmp = orderItems.find(e => e.product.id === formik.values.product.id)
         if (tmp != null) {
             if (window.confirm("you already ordered this product\n would you like to order more?")) {
                 orderItems.forEach(e => {
-                    if (e.product.id == formik.values.product.id)
+                    if (e.product.id === formik.values.product.id)
                         e.quantity += formik.values.quantity
                 })
                 theOrder.orderItemsList = orderItems
@@ -157,7 +141,7 @@ function NewOrder(props: NewOrderProps) {
         await calc()
     }
     return (<>
-        <div style={{ width: '100%' }} >
+        <div>
             <form onSubmit={formik.handleSubmit}>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center" alignItems="center">
 
@@ -211,17 +195,17 @@ function NewOrder(props: NewOrderProps) {
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={6} sx={{ textAlign: 'end' }}>
+                        <Grid item xs={6} pl={2}>
                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }} justifyContent="center" alignItems="center">
 
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sx={{ textAlign: 'end' }}>
                                     <h3>{`price: ${sumPrice}`}</h3>
                                 </Grid>
 
-                                <Grid item xs={12}>
-                                    <h4>products you ordered:</h4>
+                                <Grid item xs={12} sx={{ textAlign: 'start' }}>
+                                    <h4>products list:</h4>
                                     <ul>
-                                        {orderItems.map((e, i) => <li>{itemToString(e, i)}<button onClick={() => deleteItem(i)}>x</button></li>)}
+                                        {orderItems.map((product, index) => <li>{itemToString(product, index)}<button onClick={() => deleteItem(index)}>x</button></li>)}
                                     </ul>
                                 </Grid>
 
@@ -231,6 +215,7 @@ function NewOrder(props: NewOrderProps) {
                     </Grid>
 
                     <Grid container xs={12} sx={{ borderTop: '1px solid' }}>
+
                         <Grid item xs={8}>
                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center" alignItems="center">
 
@@ -271,17 +256,17 @@ function NewOrder(props: NewOrderProps) {
                         </Grid>
 
                         <Grid item xs={4}>
-                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="end">
-                                <Button sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem',marginTop:'12rem' }}
+                            <ButtonWrapper>
+                                <Button sx={{ backgroundColor: `${PALLETE.YELLOW} !important`, width: '10rem', marginTop: '12rem' }}
                                     type="submit" variant="contained" >
                                     buy now
                                 </Button>
-                            </Grid>
+                            </ButtonWrapper>
                         </Grid>
+
                     </Grid>
 
                 </Grid>
-
             </form>
         </div >
 

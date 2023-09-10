@@ -2,23 +2,21 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useFormik } from 'formik';
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { Autocomplete, FormHelperText, IconButton, InputAdornment, Grid } from "@mui/material";
+import { TextField, FormHelperText, IconButton, InputAdornment, Grid, Select, MenuItem } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { PALLETE } from '../../config/config';
-import { SignUpWrapper, Text } from "./SignUp.styles";
+import { SignUpWrapper } from "./SignUp.styles";
 import ICurrencyState from '../../interfaces/ICurrencyState';
 import { RootState, store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { signUp } from '../../apiCalls/userCalls';
-import { fontSize } from '@mui/system';
 import { setCompanyId } from '../../redux/slices/CompanyIdSlice';
 import { setRole } from '../../redux/slices/RoleSlice';
-import { setCompanyCurrency } from '../../redux/slices/CompanyCurrencySlice';
+
 const validationSchema = yup.object({
     fullName: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -36,8 +34,6 @@ const SignUpForm: React.FC = () => {
 
     const listOfCurrencies: string[] = useSelector<RootState, ICurrencyState>(state => state.currencyReducer).currencies;
 
-    const [currency, setCurrency] = React.useState("");
-
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -46,18 +42,17 @@ const SignUpForm: React.FC = () => {
             email: '',
             password: '',
             companyName: '',
+            currency: '',
             acceptTerms: false,
         },
         validationSchema,
-        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, acceptTerms: boolean }) => {
+        onSubmit: (values: { fullName: string, companyName: string, email: string, password: string, currency: string, acceptTerms: boolean }) => {
             async function signUpRequest() {
                 try {
-                    const res =await signUp(values.fullName, values.companyName, values.email, values.password, currency)
+                    const res = await signUp(values.fullName, values.companyName, values.email, values.password, values.currency)
                     sessionStorage.setItem("token", res.data.token)
                     store.dispatch(setRole(res.data.role));
                     store.dispatch(setCompanyId(res.data.companyId));
-                    store.dispatch(setCompanyCurrency(res.data.currency));
-
                     swal("you are successfully signed up", "good", "success");
                     navigate("/tabsComponent");
                 } catch (error) {
@@ -79,49 +74,40 @@ const SignUpForm: React.FC = () => {
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <FormHelperText>Full Name</FormHelperText>
-                <Text><TextField id="fullName" name="fullName" fullWidth margin='normal'
+                <TextField id="fullName" name="fullName" fullWidth margin='normal'
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.fullName && Boolean(formik.errors.fullName)}
                     helperText={formik.touched.fullName && formik.errors.fullName}
-                /></Text>
+                />
 
-                <Text>
-                    <Grid item container xs={12} sm={12}>
-                        <Grid item xs={12} sm={8} sx={{ pr: 2 }}>
-                            <FormHelperText>Company Name</FormHelperText>
-                            <TextField id="companyName" name="companyName" fullWidth margin='normal'
-                                value={formik.values.companyName}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.companyName && Boolean(formik.errors.companyName)}
-                                helperText={formik.touched.companyName && formik.errors.companyName}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} sm={4}>
-                            <FormHelperText style={{ marginBottom: '15px' }}>Currency</FormHelperText>
-                            <Autocomplete
-                                id="currency"
-                                className='currency'
-                                value={currency}
-                                defaultValue={currency}
-                                options={listOfCurrencies.map((c: string) => c)}
-                                inputValue={currency}
-                                onInputChange={(event, newInputValue) => {
-                                    setCurrency(newInputValue);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} />
-                                )}
-                            />
-                        </Grid>
+                <Grid item container xs={12} sm={12}>
+                    <Grid item xs={12} sm={8} sx={{ pr: 2 }}>
+                        <FormHelperText>Company Name</FormHelperText>
+                        <TextField id="companyName" name="companyName" fullWidth margin='normal'
+                            value={formik.values.companyName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.companyName && Boolean(formik.errors.companyName)}
+                            helperText={formik.touched.companyName && formik.errors.companyName}
+                        />
                     </Grid>
-                </Text>
+
+                    <Grid item xs={12} sm={4}>
+                        <FormHelperText>currency</FormHelperText>
+                        <Select fullWidth sx={{marginTop:'15px'}} 
+                            onChange={(e: { target: { value: string; }; }) => {
+                                formik.values.currency = typeof e.target.value === 'string' ? e.target.value : ""
+                                e.target.value = formik.values.currency
+                            }}>
+                            {listOfCurrencies.map((currency) => <MenuItem value={currency}>{currency}</MenuItem>)}
+                        </Select>
+                    </Grid>
+                </Grid>
 
                 <FormHelperText>Password</FormHelperText>
-                <Text><TextField id="password" name="password" fullWidth margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
+                <TextField id="password" name="password" fullWidth margin='normal' type={showPassword ? 'text' : 'password'} autoComplete="current-password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -136,16 +122,16 @@ const SignUpForm: React.FC = () => {
                             </InputAdornment>
                         ),
                     }}
-                /></Text>
+                />
 
                 <FormHelperText>Email Address</FormHelperText>
-                <Text><TextField id="email" name="email" fullWidth margin='normal'
+                <TextField id="email" name="email" fullWidth margin='normal'
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
-                /></Text>
+                />
 
                 <br /><FormControlLabel
                     control={

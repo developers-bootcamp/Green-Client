@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 
+import React, { useEffect } from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router';
@@ -10,25 +10,20 @@ import TabsComponent from './pages/landingPage/TabsComponent';
 import LandingPage from './pages/landingPage/LandingPage';
 import { ErrorModel } from './components/globalErrorModel/ErrorModel';
 import AxiosInstance from './axios/globalAxios';
-import {store} from './redux/store';
+import { store } from './redux/store';
 import { useAppDispatch } from './redux/store';
 import { setCurrencies } from './redux/slices/CurrencySlice';
 import { getCurrencies } from './apiCalls/currencyCalls';
 function App() {
-
   const dispatch = useAppDispatch()
-
   const getCurrenciesAsync = async () => {
     await getCurrencies().then(res => {
       dispatch(setCurrencies(res.data));
     });
   }
-
-
   useEffect(() => {
     getCurrenciesAsync();
   }, []);
-
   useEffect(() => {
     const cleanupAxios = AxiosInstance(store);
     // return () => {
@@ -36,20 +31,17 @@ function App() {
     // };
   }, []);
   return (
-      <div className="App">
-
-        {<ErrorModel></ErrorModel>}
-        {<Loader />}
-        <Routes>
-          <Route path="/" element={<Login/>} />
-          <Route path="/landingPage" element={<LandingPage/>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/tabsComponent" element={<TabsComponent/>} />
-          <Route path="/signUp" element={<SignUp />} />
-        </Routes>
-      </div>
-
+    <div className="App">
+      {<ErrorModel></ErrorModel>}
+      {<Loader />}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/landingPage" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/tabsComponent" element={<TabsComponent />} />
+        <Route path="/signUp" element={<SignUp />} />
+      </Routes>
+    </div>
   );
 }
-
 export default App;

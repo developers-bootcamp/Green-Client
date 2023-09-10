@@ -3,43 +3,41 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 import { PALLETE } from '../../config/config';
 import img from '../../images/errorMessage.png';
 import { useSelector } from 'react-redux';
-import  {store, RootState } from '../../redux/store';
+import { store, RootState } from '../../redux/store';
 import axios from 'axios';
-import {clearError, setError} from '../../redux/slices/errorSlice';
+import { clearError, setError } from '../../redux/slices/errorSlice';
 import zIndex from '@mui/material/styles/zIndex';
 import GlobalModal from '../globalModal/GlobalModal';
 import { LeftSide, RightSide } from "../globalModal/GlobalModal.styles"
 import { text } from 'node:stream/consumers';
 import { borderColor } from '@mui/system';
 import { styled } from '@mui/system';
-export const ErrorModel:React.FC = () => {
-const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
-const errorMessage = useSelector((state:RootState)=>state.errorReducer?.errorMessage || " something went wrong a error occurred");
-    const handleClose = () => {
-     store.dispatch(clearError());
-    };
-     const MyImg = styled('img')({
-      width: "100%",
-  })
-    return (
-      <Dialog fullWidth sx={ {maxHeight: "60vh",top: "23vh"}}  open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-      <DialogContent sx={{ p: 0, height: '45rem'}} style={{ borderRadius: '100px' }}>
-          <LeftSide>
-              <DialogTitle sx={{ fontSize: 30, pl: "3rem", paddingLeft: "3rem" }}>Error</DialogTitle>
-              <DialogContent style={{ paddingRight: "3rem", paddingLeft: "3rem" }}>{errorMessage}</DialogContent>
-            <Button
-      onClick={handleClose}
-      style={{ color: 'white', textAlign: "center", paddingLeft: "45px", paddingRight: "45px",   backgroundColor: 'orange',
-       borderColor: 'orange',position: 'absolute', bottom: '0', left: '40%', transform: 'translateX(-50%)', marginBottom: '40px',
-      }}
-    >
-      Close
-    </Button>
-          </LeftSide >
-          <RightSide>
-              <MyImg src={img} alt={img}></MyImg>
-          </RightSide>
-      </DialogContent>
-  </Dialog>
-    );
+import { Text } from '../globalModal/GlobalModal.styles';
+
+
+export const ErrorModel: React.FC = () => {
+
+  const open = useSelector((state: RootState) => state.errorReducer?.isOpen || false);
+  // const open = true
+
+  const errorMessage = useSelector((state: RootState) => state.errorReducer?.errorMessage || " something went wrong a error occurred");
+
+  const handleClose = () => {
+    store.dispatch(clearError());
   };
+
+  return (<>
+    <GlobalModal header={"error"} myWidth={'md'} myHeight={'25rem'} isOpen={open} handleClose={handleClose} img={img} sideTxt={'Oops - something went wrong'}>
+      <Grid container textAlign='center' justifyContent='center' alignItems='center'>
+        <Text>{errorMessage} - please try again later or contact our support team at: support@gmail.com</Text>
+        <Button
+          onClick={handleClose}
+          sx={{ backgroundColor: `${PALLETE.ORANGE} !important`, width: '10rem', marginTop: '5rem', marginBottom: '2rem' }}
+          variant="contained" >
+          close
+        </Button>
+      </Grid>
+    </GlobalModal>
+  </>
+  );
+};

@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
     }
 
     return <>
-        <GlobalModal header={"Set up your account"} isOpen={open} handleClose={handleClose} img={img} sideTxt={"Fill in your details so you can login later"}>
+        <GlobalModal header={"Set up your account"} myWidth={'md'} myHeight={'40rem'} isOpen={open} handleClose={handleClose} img={img} sideTxt={"Fill in your details so you can login later"}>
             <SignUpForm />
         </GlobalModal>
     </>
