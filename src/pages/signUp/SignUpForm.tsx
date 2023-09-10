@@ -54,10 +54,10 @@ const SignUpForm: React.FC = () => {
                     store.dispatch(setRole(res.data.role));
                     store.dispatch(setCompanyId(res.data.companyId));
                     swal("you are successfully signed up", "good", "success");
-                    navigate("/");
+                    navigate("/landingPage")
                 } catch (error) {
                     swal("you have a error", `${error}`, "error");
-                    navigate("/landingPage")
+                    navigate("/signUp")
                 }
             }
             signUpRequest();

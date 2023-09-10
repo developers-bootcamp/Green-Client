@@ -70,8 +70,14 @@ const PendingOrders: React.FC<prop> = ({ name, type }) => {
         pageSize: 1,
     });
     const filterTables = (filters: any) => {
+        console.log(JSON.stringify(filters))
+        let d=JSON.stringify(filters);
+        console.log(d)
+        console.log(`http://localhost:8080/order/get?filter=${d}`)
+        firstTable("",filters)
+        secondTable("",filters)
 
-    }
+      }
     const handlePhoneClick = (id: GridRowId) => () => {
         let allData = data.concat(secondData)
         let phone = ''
@@ -183,19 +189,17 @@ const columns: GridColDef[] = [
 //end pagination
 //שליפות
 useEffect(() => {
-    firstTable('')
-
+    firstTable('',new Map)
 
 }, [firstPaginationModel, show]);
 useEffect(() => {
-    secondTable('')
-
+    secondTable('',new Map)
 }, [secondPaginationModel, show])
 
 const handleWebSocketMessage = (message: Message) => {
     const order: IOrder = JSON.parse(message.body);
-    firstTable('')
-    secondTable('')
+    firstTable('',new Map)
+    secondTable('',new Map)
 }
 useEffect(() => {
     const newSocket = new Client();
@@ -211,21 +215,20 @@ useEffect(() => {
         newSocket.deactivate();
     };
 }, [])
-const firstTable = async (sortBy: string) => {
-    let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED']
-    let c = await getAllOrders(sortBy, statuses, firstPaginationModel.page, "1");
+const firstTable = async (sortBy: string,filters:Map<string,object>) => {
+    let statuses = ['PAYMENT_FAILED', 'PROSSES_FAILED','PAYMENT_CANCELED']
+    let c = await getAllOrders(sortBy, statuses, firstPaginationModel.page,filters,"1");
     setFirstSumOrders(await countOrders(statuses))
-
-    setRows(c);
+    setRows(await c);
 }
-const secondTable = async (sortBy: string) => {
-    let statuses = ['CREATED', 'APPROVED', 'PACKING']
-    let c = await getAllOrders(sortBy, statuses, secondPaginationModel.page, "2");
+const secondTable = async (sortBy: string,filters:Map<string,object>) => {
+    let statuses = ['CREATED', 'APPROVED', 'PACKING','PROCESSING','process_CANCELED','CHARGING','CANCELED']
+   let c = await getAllOrders(sortBy, statuses, secondPaginationModel.page,filters,"2");
     setSecondSumOrders(await countOrders(statuses))
-    setSecondRows(c);
+    setSecondRows(await c);
 }
-const getAllOrders = async (sortBy: string, orderStatus: string[], pageNo: number, num: string) => {
-    const orders: IOrder[] = await getOrders(sortBy, pageNo, orderStatus);
+const getAllOrders = async (sortBy: string, orderStatus: string[], pageNo: number,filters:Map<string,object>, num: string) => {
+    const orders: IOrder[] = await getOrders(sortBy, pageNo, orderStatus,filters);
     if (num == "1")
         setData(orders)
     if (num == "2")
@@ -251,8 +254,8 @@ const getAllOrders = async (sortBy: string, orderStatus: string[], pageNo: numbe
 // end שליפות
 //sort
 const choose = (value: any) => {
-    firstTable(value);
-    secondTable(value);
+    firstTable(value,new Map);
+    secondTable(value,new Map);
 }
 const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSortPop(event.currentTarget);

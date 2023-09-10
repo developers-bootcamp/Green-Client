@@ -5,19 +5,15 @@ export interface FilterItem {
 
 export const DataToFilter: FilterItem[] = [
   {
-    fieldName: "status",
+    fieldName: "orderStatus",
     value: [
-      "new",
-      "Payment failed",
-      "Process failed",
-      "done",
-      "processing",
-      "created",
+      "DONE","PROCESSING","PAYMENT_CANCELED","PROCESS_CANCELED","CREATED","APPROVED","CHARGING","PACKING","CANCELED","PROSSES_FAILED","PAYMENT_FAILED"
+
     ],
   },
   { fieldName: "priority", value: [1, 2, 3, 4, 5] },
   {
-    fieldName: "price",
+    fieldName: "totalAmount",
     value: ["0-200", "201-400", "401-600", "601-800", "801-1000", "1000+"],
   },
   { fieldName: "date" },

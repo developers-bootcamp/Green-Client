@@ -21,14 +21,17 @@ const BarChart:React.FC = () => {
 
   useEffect(() => {
     topProduct().then(res => {
+      console.log(res.data);
+      
           setBarChartData(res.data)
       }).catch(err => {
-        console.error(err)
+        console.error(err,"lll")
       })
     }, []);
 
  
     const products =  BarChartData.map((monthlyProductSalesResult:any) => {
+      debugger;
       return monthlyProductSalesResult.products.map((productData:any) => {
         return productData.product;
       });

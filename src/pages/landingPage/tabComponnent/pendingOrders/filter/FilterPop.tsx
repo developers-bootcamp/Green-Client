@@ -19,6 +19,7 @@ import { ErrorMessage, Formik, useFormik, yupToFormErrors } from "formik";
 
 
 
+
 const FilterPop = (props: any) => {
   const [value, setValue] = useState();
   const [show, setShow] = useState(false);
@@ -28,15 +29,32 @@ const FilterPop = (props: any) => {
   const [fieldToFilter, setFieldToFilter] = useState<string>();
 
   const handleChangeValue = (event:any) => {
-    if((dataToShow?.fieldName === "status") || (dataToShow?.fieldName === "price") || (dataToShow?.fieldName === "priority")){
+    if((dataToShow?.fieldName === "orderStatus") || (dataToShow?.fieldName === "totalAmount") || (dataToShow?.fieldName === "priority")){
       const selectedIndex = parseInt(event.target.value);
       changeFilterValue(DataToFilter[indexData].value[event.target.value],keyIndex);
       return;
     }
     if((dataToShow?.fieldName === "customer") || (dataToShow?.fieldName === "product")){
+      console.log("event val",event)
+      //changeFilterValue(event.name,keyIndex);
+      changeFilterValue(event.id,keyIndex);
+
+      return;
+    }
+    
+    if((dataToShow?.fieldName === "date")){
       changeFilterValue(event,keyIndex);
       return;
     }
+    
+    // if((dataToShow?.fieldName === "date")){
+    //   const dateString = event.target.value;
+    //   const date = DateTime.fromISO(dateString);
+    //   changeFilterValue(date.toFormat("MM/DD/YYYY"),keyIndex);
+    //   // setDate(date.toFormat("MM/DD/YYYY"));
+    //   return;
+    // }
+    
    // changeFilterValue(event.target.value, keyIndex);
     // setValue(event.target.value);
   };
@@ -53,7 +71,7 @@ const FilterPop = (props: any) => {
        setDataToShow(selectedItem);
     }
   };
-  useEffect(() =>{},[keyIndex])
+  useEffect(() =>{console.log(keyIndex)},[keyIndex])
   return (
     <>
       <Box sx={{ minWidth: 450, maxWidth: 1000 }}>
@@ -88,7 +106,7 @@ const FilterPop = (props: any) => {
           <Box>
             <FormControl fullWidth> 
               <InputLabel id="filter" classes={InputLabel}></InputLabel>
-              {(indexData==0||(dataToShow?.fieldName === "status") || (dataToShow?.fieldName === "price") || (dataToShow?.fieldName === "priority")) && (
+              {(indexData==0||(dataToShow?.fieldName === "orderStatus") || (dataToShow?.fieldName === "totalAmount") || (dataToShow?.fieldName === "priority")) && (
                 <Select
                   labelId="filter"
                   id="filter"
@@ -105,27 +123,22 @@ const FilterPop = (props: any) => {
                     ))}
                 </Select>
               )}
-              {/* -------
-                {dataToShow?.fieldName === "customer"  && (
-                <div style={{display:"inline",width:"20%"}}>
-                <MyAutocomplete getFunction={getCustomersAutocomplete} displayField={1}
-                setItem={(chosen: IUser) => { formik.values.customer = chosen }} whatChoose={handleChangeValue}></MyAutocomplete></div>
-              )}
-              -------
+            
               {dataToShow?.fieldName === "customer"  && (
                 <div style={{display:"inline",width:"20%"}}>
-                <MyAutocomplete getFunction={getCustomersAutocomplete}
-
-                  path={`/user/getNamesOfCustomersByPrefix`}
-                  whatChoose={handleChangeValue}
+                 <MyAutocomplete 
+                setItem={handleChangeValue}
+                getFunction={getCustomersAutocomplete}
+                displayField={1}
                 ></MyAutocomplete></div>
               )}
               {dataToShow?.fieldName === "product"&& (
                 <MyAutocomplete
-                  path={"/product/names"}
-                  whatChoose={handleChangeValue}
+                setItem={handleChangeValue}
+                getFunction={getProductsAutocomplete}
+                displayField={1}
                 ></MyAutocomplete>
-              )}  */}
+              )} 
               {dataToShow?.fieldName === "date"&& (
                 <>
                   <MyInput>
@@ -134,16 +147,19 @@ const FilterPop = (props: any) => {
                         <DatePicker
                           label="From date"
                           slotProps={{ textField: { size: "small" } }}
+                          onChange={(event) => handleChangeValue(event)}
                         />
                       </DemoContainer>
                     </LocalizationProvider>
                   </MyInput>
+
                   <MyInput>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={["DatePicker"]}>
                         <DatePicker
                           label="To date"
                           slotProps={{ textField: { size: "small" } }}
+                          onChange={(event) => handleChangeValue(event)}
                         />
                       </DemoContainer>
                     </LocalizationProvider>
@@ -159,6 +175,3 @@ const FilterPop = (props: any) => {
 };
 
 export default FilterPop;
-
-
-

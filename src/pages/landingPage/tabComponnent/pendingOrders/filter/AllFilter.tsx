@@ -5,7 +5,7 @@ import { PALLETE} from "../../../../../config/config";
 import FilterPop from "./FilterPop";
 
 const AllFilter = (props:any) => {
-  const [filters, setFilters] = useState([{ fieldName: "status", filterValue: "DONE" },]);
+  const [filters, setFilters] = useState([{ fieldName: "orderStatus", filterValue: "DONE" },]);
 const {filterTables}=props;
   const addFilter = () => {
     setFilters((prevFilters) => [
