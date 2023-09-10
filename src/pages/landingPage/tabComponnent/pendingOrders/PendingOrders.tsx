@@ -276,9 +276,9 @@ return (<>
         </div >
         <div>
             <Button style={{
-                "backgroundColor": PALLETE.ORANGE,
+                "backgroundColor": PALLETE.ORANGE, "marginTop":'8px',
                 "color": PALLETE.WHITE, "borderColor": PALLETE.WHITE
-            }} variant="outlined" onClick={handleShow}>New Order</Button>
+            }} variant="outlined"  onClick={handleShow}>New Order</Button>
             <div className="dialog">
                 <GlobalModal header={"New Order"} isOpen={show} handleClose={handleCloseNewOrder} img={img} sideTxt={"We are almost done"}>
                     <NewOrder setShow={handleCloseNewOrder} />

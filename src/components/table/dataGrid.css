@@ -1,3 +1,4 @@
+
 .css-5wly58-MuiDataGrid-root .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell {
     border: 5px;
     background-color: rgb(230, 230, 230) ;
@@ -84,21 +85,21 @@
     border-bottom: 1px unset!important;} 
 
     .green{
-        background-color: #7ED787!important;
+        background-color: #E5F6E0!important;
         border: 5px;
           padding-left: 0px!important;
           border-left-style: solid;
-          border-left-color: #7ED787!important
+          border-left-color: #E5F6E0!important
           
     }
     .blue{
         background-color: #6794CF!important;
     }
     .orang{
-        background-color: #EB9F6E!important;
+        background-color: #FBA993!important;
     }
     .red{
-        background-color: #EE696A!important;
+        background-color: #CB706D!important;
     }
     .yellow{
         background-color: #FAE282!important;
