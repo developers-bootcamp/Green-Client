@@ -51,7 +51,7 @@ const BarChart:React.FC = () => {
       BarChartData.length > 0 ?
         <Chart
           width={"100%"}
-          height={"280px"}
+          height={"15rem"}
           chartType="ColumnChart"
           data={data}
           options={options}

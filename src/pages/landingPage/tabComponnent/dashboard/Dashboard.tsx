@@ -40,8 +40,7 @@ const Dashboard: React.FC = () => {
                     open={open}
                     onClose={handleClose}
                     maxWidth="lg"
-                    fullWidth sx={ {maxHeight: "95vh",top: "5vh"}}
-                    style={{ backgroundColor: PALLETE.GRAY }}
+                    fullWidth sx={ {maxHeight: "100vh",top: "5vh"}}
                   >
                   <DashboardGeneratorItem>
                     <DashboardGenerator/>

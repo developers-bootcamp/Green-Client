@@ -42,7 +42,7 @@ import { MyDiv } from "./Dashboard.style";
         <Chart
           chartType="LineChart"
           width="100%"
-          height="280px"
+          height="15rem"
           data={data}
           options={options}
         />

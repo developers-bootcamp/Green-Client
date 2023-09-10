@@ -43,7 +43,7 @@ import { MyDiv } from "./Dashboard.style";
           data={data}
           options={options}
           width={"100%"}
-          height={"280px"}
+          height={"15rem"}
         />
         :<MyDiv>No data</MyDiv>
       )
