@@ -1,22 +1,28 @@
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import NewOrder from "../landingPage/tabComponnent/pendingOrders/newOrderModel/NewOrder"
-import { Button, Dialog, DialogContent } from "@mui/material"
+import { useEffect } from "react"
+import TabsComponent from "./TabsComponent"
+import { useNavigate } from "react-router-dom";
 
 const LandingPage: React.FC = () => {
 
-  const dispatch = useDispatch()
-  const [show, setShow] = useState(false);
+  let navigate = useNavigate()
+  let token: any = null;
 
-  const handleShow = () => setShow(true);
-  const [close, setClose] = useState(false);
-
-  const handleClose = () => setShow(false);
   useEffect(() => {
+    token = sessionStorage.getItem('token')
+    if (token === null) {
+      token = sessionStorage.getItem('token')
+      console.log(token);
+      navigate('/')
+    } else {
+      navigate('/landingPage')
+    }
   }, [])
 
+  const checkToken = () => { return sessionStorage.getItem('token') }
+
   return <>
- 
+    {checkToken() && <TabsComponent />}
   </>
+
 }
 export default LandingPage

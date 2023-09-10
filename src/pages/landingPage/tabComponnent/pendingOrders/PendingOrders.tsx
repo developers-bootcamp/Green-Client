@@ -99,7 +99,7 @@ const handleEmailClick = (id: GridRowId) => () => {
     })
     window.location.href = mail;
 };
-const companyId = useSelector((state: RootState) => state.companyIdReducer?.companyId || "");
+const companyId = useSelector((state: RootState) => state.companyIdReducer).companyId;
 const columns: GridColDef[] = [
     { field: 'products', headerName: 'Products', width: 360, cellClassName: 'regularCell' },
     { field: 'price', headerName: 'Price', width: 80, cellClassName: 'regularCell' },

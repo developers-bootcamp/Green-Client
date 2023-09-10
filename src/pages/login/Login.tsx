@@ -9,7 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { LOG_IN, PALLETE } from '../../config/config';
 import errorSlice, { setError } from '../../redux/slices/errorSlice';
-import {RootState, store} from '../../redux/store';
+import {RootState, store, useAppDispatch} from '../../redux/store';
 import { ErrorModel } from '../../components/globalErrorModel/ErrorModel';
 import { useSelector } from 'react-redux';
 import swal from 'sweetalert';
@@ -29,19 +29,16 @@ const Login: React.FC = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
+  const dispatch = useAppDispatch()
   const handleSubmit = async () => {
     try {
       const res = await login();
       sessionStorage.setItem('token',res.data.token);
-      store.dispatch(setRole(res.data.role));
-      store.dispatch(setCompanyId(res.data.companyId));
-      store.dispatch(setCompanyCurrency(res.data.currency));
-
+      await dispatch(setRole(res.data.role));
+      await dispatch(setCompanyId(res.data.companyId));
+      await dispatch(setCompanyCurrency(res.data.currency));
       console.log(res.data.currency,"currency");
-      
-
-      navigate("/tabsComponent");
+      navigate("/landingPage");
     } catch (err: any) {
       if (err.response?.status == 404) {
         navigate("/signup");

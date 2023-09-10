@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/system';
 import { PALLETE } from '../../../../../config/config';
 import { Button } from '@mui/material';
@@ -26,3 +25,8 @@ position:'absolute',
    
  });
 export{ MyButton,AddButton, BaloonImg}
+
+export const ButtonWrapper = styled('div')({
+  textAlign: 'end',
+  // zIndex:10,
+})
