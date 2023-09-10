@@ -265,38 +265,47 @@ const open = Boolean(sortPop);
 //end sort
 return (<>
     <div>
-
         <div>
-
             <div className="dialog">
                 <GlobalModal header={"Order's details"} isOpen={updateOrder.show} handleClose={handleCloseOrderDetails} img={img} sideTxt={"We are almost done"}>
                     <OrderDetails order={updateOrder.order} />
                 </GlobalModal>
             </div>
         </div >
-        <div>
-            <Button style={{
-                "backgroundColor": PALLETE.ORANGE, "marginTop":'8px',
-                "color": PALLETE.WHITE, "borderColor": PALLETE.WHITE
-            }} variant="outlined"  onClick={handleShow}>New Order</Button>
-            <div className="dialog">
-                <GlobalModal header={"New Order"} isOpen={show} handleClose={handleCloseNewOrder} img={img} sideTxt={"We are almost done"}>
-                    <NewOrder setShow={handleCloseNewOrder} />
-                </GlobalModal>
-            </div>
-        </div >
-        <GlobalPopOver
-            style={{ top: "0px!important", position: "absolute!important" }}
-            name={"filter"}
-            Pop={AllFilter}
-            image={filterImg}
-            filterTables={filterTables}
-        ></GlobalPopOver>
-    </div>
-    <SortButton variant="contained" onClick={handleClick}>
-        Sort <SortIcon />
-    </SortButton>
+        </div>
+       
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px',marginTop: '16px' }}>
+  <Button
+    style={{
+      backgroundColor: PALLETE.ORANGE,
+      color: PALLETE.WHITE,
+      borderColor: PALLETE.WHITE,
+      marginRight: '20px', 
+    }}
+    variant="outlined"
+    onClick={handleShow}
+  >
+    New Order
+  </Button>
+  <GlobalPopOver
+    style={{ top: "0px!important", position: "absolute!important" }}
+    name={"filter"}
+    Pop={AllFilter}
+    image={filterImg}
+    filterTables={filterTables}
+  ></GlobalPopOver>
+  <SortButton
+    style={{ margin: '0px', marginLeft: '20px' }} 
+    variant="contained"
+    onClick={handleClick}
+  >
+    Sort <SortIcon />
+  </SortButton>
+</div>
+
+
     <Popover
+
 
         open={open}
         anchorEl={sortPop}
@@ -306,6 +315,8 @@ return (<>
             horizontal: 'left',
         }}
     >
+           
+
         <MyTypography >
             <h2>Sort by <SortIcon /></h2>
             <Select onChange={(e) => { choose(e.target.value) }} >
@@ -325,7 +336,6 @@ return (<>
         onPaginationModelChange={setFirstPaginationModel}
 
     />
-
 
     <br></br>
 
