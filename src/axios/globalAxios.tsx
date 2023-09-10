@@ -8,7 +8,7 @@ const  AxiosInstance =(store:any)=>{
 
 axios.interceptors.request.use(
   (config: any) => {
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     if (config.url && config.url.indexOf(LOG_IN) === -1 && token) {
       config.headers["Authorization"] = token;
     }

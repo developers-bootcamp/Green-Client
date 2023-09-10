@@ -84,7 +84,7 @@ const GenericGraph: React.FC<props> = ({collection, groupBy}) => {
     MyGenericGraphData.length > 0 ?
         <Chart 
         chartType="ColumnChart" 
-        height="500px" 
+        height="30rem" 
         data={data}
         options={options}
         />

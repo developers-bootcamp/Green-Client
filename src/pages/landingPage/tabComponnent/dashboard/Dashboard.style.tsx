@@ -14,9 +14,9 @@ export const Item = styled('div')({
   });
 
 export const DashboardGeneratorItem = styled('div')({
-    backgroundColor: PALLETE.GRAY,
-    padding: 30,
-    height: "75vh",
+    //backgroundColor: PALLETE.GRAY,
+    //padding: 30,
+    //height: "75vh",
 })
 
 export const AutocompleteDiv = styled('div')({

@@ -7,6 +7,7 @@ import CreateNewBoard from "./CreateNewBoard";
 import { Item, DashboardGeneratorItem } from "./Dashboard.style";
 import Dialog from '@mui/material/Dialog';
 import DashboardGenerator from "./DashboardGenerator";
+import { PALLETE } from '../../../../config/config';
 
 const Dashboard: React.FC = () => {
 
@@ -39,7 +40,8 @@ const Dashboard: React.FC = () => {
                     open={open}
                     onClose={handleClose}
                     maxWidth="lg"
-                    fullWidth
+                    fullWidth sx={ {maxHeight: "95vh",top: "5vh"}}
+                    style={{ backgroundColor: PALLETE.GRAY }}
                   >
                   <DashboardGeneratorItem>
                     <DashboardGenerator/>
